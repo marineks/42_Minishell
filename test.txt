@@ -1,1 +1,22 @@
-TOU ES LA PLUS BELLE MON BABYYYYYYYY 
+Principes de notre team:
+- METTRE LES HEADERS A LA FIN
+- Toujours git pull avant de push
+- Toujours mettre à la norme avant de push
+- Toujours tester avant de push
+- Essayer de faire du code lisible (MACROs, commentaires au dessus des fonctions)
+
+N'hésite pas à rajouter ce qu'il te semble nécessaire :)
+(comme ça on teste les git conflicts hihi)
+
+Rappel de commandes trop cool quand on travaille à plusieurs:
+- git pull : récupérer les potentiels changements qui ont été faits depuis mon dernier push
+- git push : bon tu connais
+- git stash : très utile, car si tu changes un fichier, et que la personne B a changé ce même fichier et a push
+				, tu peux "stash" (aka mettre de côté tes changements) avant de git pull. Pourquoi c'est utile?
+				car quand tu git pull, tu peux potentiellement écraser tes propres changements et les perdre à tout jamais.
+				Or là ce que tu fais, c'est "git stash", puis "git pull", puis "git stash pop". 
+	> git stash pop = tu réappliques les changements que toi tu as faits sur ton dossier updaté avec le git pull.
+	Si tout se passe bien, RAS; si vous avez travaillé sur le même fichier on a plus qu'à traiter les conflits 
+
+SUR LES BRANCHES:
+(https://jameschambers.co.uk/git-team-workflow-cheatsheet)
