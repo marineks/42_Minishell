@@ -27,4 +27,7 @@ enum output {
 # define CYAN "\033[0;36m"
 # define WHITE "\033[0;37m"
 
+// GET PATH
+char *grep_path(char *envp[], char *cmd);
+
 #endif

@@ -1,47 +1,16 @@
-#include "../incl/exec.h"
-
-// faire fonction pour récup le file de la cmd (en gros strjoin du chemin + la cmd visée)
-// ne pas oublier de vérifier les access du file avec fonction access
-char *grep_path(char *envp[], char *cmd)
-{
-	int	i;
-	char **path_tab;
-	char *path;
-
-	(void)cmd;
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], "PATH=", 4) == SUCCESS)
-			break;
-		i++;
-	}
-	printf("C'est notre path <3 : %s\n", envp[i]);
-	path_tab = ft_split(envp[i], ':');
-	// attention on a alloué des trucs
-	i = 0;
-	while (path_tab[i])
-	{
-		path = ft_strjoin(path_tab[i], '/');
-		// ne pas oublier de free path avec le 1er strjoin
-		path = ft_strjoin(path, cmd);
-		i++;
-	}
-	return (path);
-}
-
+#include "exec.h"
 
 int	main(int argc, char **argv, char *envp[])
 {
-	pid_t pid;
-	int status;
-	char *path;
+	pid_t	pid;
+	int		status;
+	char	*path;
 
 	if (argc != 2)
 		printf("%d\n", ERROR);
 	else
 		{
-			
+			path = NULL;
 			pid = fork();
 			if (pid == - 1)
 				return (FAILURE);
@@ -51,17 +20,22 @@ int	main(int argc, char **argv, char *envp[])
 				// elle nous retourne le mot (cmd) qu'on va devoir rajouter à la fin du path
 
 				// 2) fonction grep_path où on lui passe l'evnp et la cmd recupérée juste avant
-				grep_path(envp, "coucou");
-
-				if (execve(path, argv, envp) == -1)
+				path = grep_path(envp, argv[1]);
+				if (execve(path, &argv[1], envp) == -1)
 				{
 					printf("%sExecv Error\n%s", RED, RESET);
 					return (FAILURE);
 				}
 			}
 			wait(&status);
+			if (path)
+				free(path);
 		}
 		return (0);
 }
 
-
+// 2eme de EXCVE
+// cmd = malloc(sizeof(char *) * 3);
+// 	cmd[0] = "ls";
+// 	cmd[1] = "-la";
+// 	cmd[2] = 0;
