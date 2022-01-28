@@ -34,4 +34,7 @@ enum output {
 // ######## GET PATH ########
 char *grep_path(char *envp[], char *cmd);
 
+// PIPE.C
+int	handle_pipe(int argc, char **argv, char *envp[]);
+
 #endif

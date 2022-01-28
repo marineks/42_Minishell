@@ -33,7 +33,8 @@ INC_PATH = ./incl/exec.h
 #			SOURCES	FILES				#
 #########################################
 SRCS = main.c 							\
-	exec/get_path.c 
+	exec/get_path.c 					\
+	exec/pipe.c
 
 SRC	= $(addprefix $(SRCS_DIR),$(SRCS))
 
