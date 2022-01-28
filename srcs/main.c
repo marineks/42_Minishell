@@ -7,7 +7,7 @@ int	main(int argc, char **argv, char *envp[])
 	char	*path;
 
 	if (argc != 2)
-		printf("%d\n", ERROR);
+		printf("Wrong input\n");
 	else
 		{
 			path = NULL;
@@ -35,6 +35,7 @@ int	main(int argc, char **argv, char *envp[])
 }
 
 // 2eme de EXCVE
+// char **cmd;
 // cmd = malloc(sizeof(char *) * 3);
 // 	cmd[0] = "ls";
 // 	cmd[1] = "-la";

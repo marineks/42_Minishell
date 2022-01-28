@@ -60,7 +60,7 @@ char	*grep_path(char *envp[], char *cmd)
 	while (path_tab[i])
 	{
 		path = ft_strjoin_path(path_tab[i], cmd);
-		if (access(path, X_OK | R_OK) == SUCCESS)
+		if (access(path, X_OK) == SUCCESS)
 		{
 			free_path_tab(path_tab);
 			return (path);

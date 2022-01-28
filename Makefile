@@ -1,9 +1,11 @@
 # /* ~~~~~~ SOURCES ~~~~~~ */
-SRCS_DIR = ./srcs/
+SRCS_DIR = srcs/
 SRCS = main.c \
 	exec/get_path.c \
 
-OBJS = ${addprefix ${SRCS_DIR}, ${SRCS:.c=.o}}
+SRC	= $(addprefix $(SRCS_DIR),$(SRCS))
+OBJ_DIR = objs/
+OBJS =	$(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 
 # /* ~~~~~~~ INCLUDING LIBFT ~~~~~~~ */
 LIBFT_DIR = libft
@@ -18,6 +20,7 @@ LFLAGS:= -L $(LIBFT_DIR) -lft
 
 # /* ~~~~~~~ OTHER ~~~~~~~ */
 NAME = minishell
+MKDIR		=	mkdir -p
 RM = rm -f
 
 # /* ~~~~~~~ Colors ~~~~~~~ */
@@ -29,8 +32,9 @@ EOC:="\033[0;0m"
 
 all:	${NAME}
 
-%.o : %.c
-	$(CC) $(CFLAGS) -o $@ -c $< $(IFLAGS) 
+${OBJ_DIR}%.o : ${SRCS_DIR}%.c
+	@$(MKDIR) $(@D)
+	$(CC) $(CFLAGS) $(IFLAGS)  -o $@ -c $< 
 
 $(NAME): $(OBJS)
 	@make -C $(LIBFT_DIR)
@@ -41,7 +45,6 @@ $(NAME): $(OBJS)
 clean:
 		@echo $(PURPLE) "[🧹Cleaning...🧹]" $(EOC)
 		@${RM} ${OBJS}
-		@${RM} ${B_OBJS}
 		@${RM} -r ${OBJ_DIR} 
 		@make -C ${LIBFT_DIR} -f ${LIBFT_MAKE} clean
 

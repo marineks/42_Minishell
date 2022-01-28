@@ -5,13 +5,14 @@
 #include <stdio.h>
 #include <limits.h>
 #include <stdlib.h>
+#include <fcntl.h>              /* Definition of O_* constants */
 #include <sys/types.h>
 #include <sys/wait.h>
 #include "../libft/libft.h"
 
 enum output {
 	SUCCESS = 0,
-	FAILURE = -1,
+	FAILURE = 1,
 	ERROR = 2,
 	TRUE = 3,
 	FALSE = 4
@@ -26,8 +27,8 @@ enum output {
 # define PURPLE "\033[0;35m"
 # define CYAN "\033[0;36m"
 # define WHITE "\033[0;37m"
-
-// GET PATH
+# define ROBIN "<3"
+// ######## GET PATH ########
 char *grep_path(char *envp[], char *cmd);
 
 #endif
