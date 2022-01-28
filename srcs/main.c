@@ -18,7 +18,7 @@ int	main(int argc, char **argv, char *envp[])
 			{
 				// 1) faire une fonction pour récupérer la commande (fonction de parsing qu'on va améliorer)
 				// elle nous retourne le mot (cmd) qu'on va devoir rajouter à la fin du path
-
+				readline("Welcome to hte best minishell ");
 				// 2) fonction grep_path où on lui passe l'evnp et la cmd recupérée juste avant
 				path = grep_path(envp, argv[1]);
 				if (execve(path, &argv[1], envp) == -1)

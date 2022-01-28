@@ -1,14 +1,16 @@
 #ifndef EXEC_H
-#define EXEC_H
+# define EXEC_H
 
-#include <unistd.h>
-#include <stdio.h>
-#include <limits.h>
-#include <stdlib.h>
-#include <fcntl.h>              /* Definition of O_* constants */
-#include <sys/types.h>
-#include <sys/wait.h>
-#include "../libft/libft.h"
+# include <unistd.h>
+# include <stdio.h>
+# include <limits.h>
+# include <stdlib.h>
+# include <fcntl.h>              /* Definition of O_* constants */
+# include <sys/types.h>
+# include <sys/wait.h>
+# include "../libft/libft.h"
+# include <readline/readline.h>
+# include <readline/history.h>
 
 enum output {
 	SUCCESS = 0,
@@ -28,6 +30,7 @@ enum output {
 # define CYAN "\033[0;36m"
 # define WHITE "\033[0;37m"
 # define ROBIN "<3"
+
 // ######## GET PATH ########
 char *grep_path(char *envp[], char *cmd);
 
