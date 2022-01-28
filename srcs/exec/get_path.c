@@ -70,3 +70,36 @@ char	*grep_path(char *envp[], char *cmd)
 	free_path_tab(path_tab);
 	return (NULL);
 }
+
+
+// fonction avec les printf de test pour print les lignes de PATH
+// char	*grep_path(char *envp[], char *cmd)
+// {
+// 	int		i;
+// 	char	**path_tab;
+// 	char	*path;
+
+// 	i = 0;
+// 	while (envp[i])
+// 	{
+// 		if (ft_strncmp(envp[i], "PATH=", 4) == SUCCESS)
+// 			break ;
+// 		i++;
+// 	}
+// 	printf("%s\n", envp[i] + 5);
+// 	path_tab = ft_split(envp[i] + 5, ':');
+// 	i = 0;
+// 	while (path_tab[i])
+// 	{
+// 		path = ft_strjoin_path(path_tab[i], cmd);
+// 		printf("chaque path : %s\n", path);
+// 		if (access(path, X_OK) == SUCCESS)
+// 		{
+// 			free_path_tab(path_tab);
+// 			return (path);
+// 		}
+// 		i++;
+// 	}
+// 	free_path_tab(path_tab);
+// 	return (NULL);
+// }
