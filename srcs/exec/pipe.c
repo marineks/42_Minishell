@@ -31,14 +31,15 @@ static int	exec_cmd1(int *end, char **argv, char *envp[])
 static int	exec_cmd2(int *end, char **argv, char *envp[])
 {
 	char **cmd;
-	cmd = malloc(sizeof(char *) * 2);
-	cmd[0] = "wc";
-	cmd[1] = 0;
+	cmd = malloc(sizeof(char *) * 3);
+	cmd[0] = "grep";
+	cmd[1] = "Makefile";
+	cmd[2] = 0;
 	printf("je suis dans child 2\n");
 	char	*path;
 
 	path = NULL;
-	dup2(end[1], STDIN_FILENO);
+	dup2(end[0], STDIN_FILENO);
 	// dup2(stdout, STDOUT_FILENO);
 	close(end[1]);
 	path = grep_path(envp, argv[2]); 
@@ -71,7 +72,6 @@ int	handle_pipe(int argc, char **argv, char *envp[])
         perror("Pipe");
         return (FAILURE);
     }
-	
 	*pid = fork();
 	if (*pid == - 1)
 	{
@@ -83,7 +83,8 @@ int	handle_pipe(int argc, char **argv, char *envp[])
 		exec_cmd1(end, argv, envp);
 		pid++;
 	}
-	else if (*pid == 0) // child process 2
+	*pid = fork();
+	if (*pid == 0) // child process 2
 	{
 		printf("coucou\n");
 		exec_cmd2(end, argv, envp);
