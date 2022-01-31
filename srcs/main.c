@@ -2,17 +2,22 @@
 
 int	main(int argc, char **argv, char *envp[])
 {
+	t_data data;
 
-	if (argc != 3)
+	data.envp = envp;
+	if (argc < 2)
 		printf("Wrong input\n");
 	else
 		{
-			if (handle_pipe(argc, argv, envp) == FAILURE)
+			if (parse_cmd(&data, argv) == FAILURE)
+				return (FAILURE);
+			if (handle_pipe(argc, argv, envp, &data) == FAILURE)
 			{
 				perror("handle pipe");
 				return (FAILURE);
 			}
 		}
+		escape_to_brazil(&data);
 		return (0);
 }
 

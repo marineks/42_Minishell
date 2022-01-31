@@ -29,12 +29,30 @@ enum output {
 # define PURPLE "\033[0;35m"
 # define CYAN "\033[0;36m"
 # define WHITE "\033[0;37m"
-# define ROBIN "<3"
 
-// ######## GET PATH ########
-char *grep_path(char *envp[], char *cmd);
+typedef struct	s_pipe 
+{	
+	char	**cmd;
+}				t_pipe;
 
-// PIPE.C
-int	handle_pipe(int argc, char **argv, char *envp[]);
+typedef struct	s_data 
+{
+	char	**cmd_tab;
+	t_pipe	*pipe;
+	char 	**envp;
+
+}				t_data;
+
+
+// EXEC --- get_path.c
+char	*grep_path(char *envp[], char *cmd);
+// EXEC --- pipe.c
+int		handle_pipe(int argc, char **argv, char *envp[], t_data *data);
+
+// PARSING --- parse_cmd.c
+int		parse_cmd(t_data *data, char **argv);
+
+// UTILS --- brazil.c
+void	escape_to_brazil(t_data *data);
 
 #endif
