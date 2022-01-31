@@ -12,7 +12,9 @@ static int	exec_cmd1(int *end, char **argv, char *envp[])
 
 	path = NULL;
 	dup2(end[1], STDOUT_FILENO);
+	printf("je suis dans dup2 1\n");
 	close(end[0]);
+	printf("je suis dans close end0 1\n");
 	path = grep_path(envp, argv[1]); 
 	if (execve(path, cmd, envp) == -1)
 	{
