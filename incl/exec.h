@@ -38,8 +38,8 @@ typedef struct	s_pipe
 typedef struct	s_data 
 {
 	char	**cmd_tab;
-	t_pipe	*pipe;
 	char 	**envp;
+	t_pipe	*pipe;
 
 }				t_data;
 
@@ -47,7 +47,7 @@ typedef struct	s_data
 // EXEC --- get_path.c
 char	*grep_path(char *envp[], char *cmd);
 // EXEC --- pipe.c
-int		handle_pipe(int argc, char **argv, char *envp[], t_data *data);
+int		handle_pipe(int argc, char **argv, t_data *data);
 
 // PARSING --- parse_cmd.c
 int		parse_cmd(t_data *data, char **argv);

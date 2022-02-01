@@ -5,25 +5,33 @@ static int	exec_cmd(int *end, char **cmd, t_data *data)
 {
 	char	*path;
 
-	printf("je suis dans child 2\n");
-	dup2(end[0], STDIN_FILENO);
-	close(end[1]);
-	// dup2(end[1], STDOUT_FILENO);
-	// close(end[0]);
+	// if (foo == true)
+	// {
+			close(end[1]);
+			dup2(end[0], STDIN_FILENO);
+	// }
+	// else
+	// {
+		// dup2(end[1], STDOUT_FILENO);
+		// close(end[0]);
+	// }
+	
 	path = grep_path(data->envp, cmd[0]); 
 	if (execve(path, cmd, data->envp) == -1)
 	{
 		perror("Execve");
 		return (FAILURE);
 	}
-	close(end[0]);
-	// close(end[1]);
+	// if ( foo == true)
+		close(end[0]);
+	// else
+		// close(end[1]);
 	if (path)
 		free(path);
 	return (SUCCESS);
 }
 
-int	handle_pipe(int argc, char **argv, char *envp[], t_data *data)
+int	handle_pipe(int argc, char **argv, t_data *data)
 {
 	pid_t	*pid;
 	int		status;
@@ -55,15 +63,11 @@ int	handle_pipe(int argc, char **argv, char *envp[], t_data *data)
 		else if (*pid == 0) // child process
 		{
 			data->pipe->cmd = ft_split(data->cmd_tab[i], ' ');
-			exec_cmd(end, &data->pipe->cmd, envp);
+			exec_cmd(end, &data->pipe->cmd, &data->envp);
 			free(data->pipe->cmd);
 		}
 		else
-		{
 			wait(&status);
-			// if (path)
-			// 	free(path);
-		}
 		nb_cmd--;
 		pid++;
 		i++;

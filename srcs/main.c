@@ -11,7 +11,7 @@ int	main(int argc, char **argv, char *envp[])
 		{
 			if (parse_cmd(&data, argv) == FAILURE)
 				return (FAILURE);
-			if (handle_pipe(argc, argv, envp, &data) == FAILURE)
+			if (handle_pipe(argc, argv, &data) == FAILURE)
 			{
 				perror("handle pipe");
 				return (FAILURE);
