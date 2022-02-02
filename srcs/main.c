@@ -4,11 +4,11 @@ int	main(int argc, char **argv, char *envp[])
 {
 	t_data data;
 
-	data.envp = envp;
 	if (argc < 2)
 		printf("Wrong input\n");
 	else
 		{
+			init_struct(&data, envp);
 			if (parse_cmd(&data, argv) == FAILURE)
 				return (FAILURE);
 			if (handle_pipe(argc, argv, &data) == FAILURE)

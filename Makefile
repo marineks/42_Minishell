@@ -20,7 +20,7 @@ LIBFT_DIR = libft
 #########################################
 #			FLAGS COMPILATION			#
 #########################################
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 IFLAGS := -I incl/
 LFLAGS := -L$(LIBFT_DIR) -lft
 RFLAGS := -lreadline
@@ -36,7 +36,8 @@ SRCS = main.c 							\
 	exec/get_path.c 					\
 	exec/pipe.c							\
 	parsing/parse_cmd.c					\
-	utils/brazil.c
+	utils/brazil.c						\
+	utils/init_struct.c
 
 SRC	= $(addprefix $(SRCS_DIR),$(SRCS))
 

@@ -10,6 +10,7 @@ static int	exec_cmd(int *end, char **cmd, t_data *data)
 	dup2(end[0], STDIN_FILENO);
 	// dup2(end[1], STDOUT_FILENO);
 	// close(end[0]);
+	path = NULL;
 	path = grep_path(data->envp, cmd[0]); 
 	if (execve(path, cmd, data->envp) == -1)
 	{
@@ -27,25 +28,23 @@ int	handle_pipe(int argc, char **argv, t_data *data)
 {
 	pid_t	*pid;
 	int		status;
-	int		nb_cmd;
-	int		end[2]; // int **fd[i][2] => il faut 2 * nb_cnd fds et 2 * nb_cmd^2 closes de fd
+	int		end[2];
 	int		i;
 
 	(void) argv;
-	nb_cmd = argc - 1;
 	pid = (pid_t *)malloc(sizeof(pid_t) * argc - 1);
 	if (!pid)
 	{
 		perror("Malloc pid");
 		return (FAILURE);
 	}
-	if (pipe(end) == -1) // PB : je pense qu'il faut piper 'nb_cmd fois'
+	if (pipe(end) == -1)
 	{
         perror("Pipe");
         return (FAILURE);
     }
-	i = 1;
-	while (nb_cmd)
+	i = 1;	
+	while (data->nb_cmd)
 	{
 		*pid = fork();
 		if (*pid == - 1)
@@ -55,21 +54,13 @@ int	handle_pipe(int argc, char **argv, t_data *data)
 		}
 		else if (*pid == 0) // child process
 		{
-			// 02/02/2022 - LES 3 LIGNES SUIVANTES S'IMPRIMENT
-			// printf("je suis dedans\n");
-			// for (int i = 0; data->cmd_tab[i]; i++)
-			// 	printf("Nv cmd tab : %s\n", data->cmd_tab[i]);
-			data->pipe->cmd = ft_split(data->cmd_tab[i], ' '); //pb avec le split
-			// 02/02/2022 - QU'IMPORTE CE QUE J'ECRIS APRES, CA S'IMPRIME PAS
-			// printf("coucou\n");
-			// for (int i = 0; data->pipe->cmd[i]; i++)
-			// 	printf("Une ligne : %s\n", data->pipe->cmd[i]);
+			data->pipe->cmd = ft_split(data->cmd_tab[i], ' ');
 			exec_cmd(end, data->pipe->cmd, data);
 			free(data->pipe->cmd);
 		}
 		else
 			wait(&status);
-		nb_cmd--;
+		data->nb_cmd--;
 		pid++;
 		i++;
 	}

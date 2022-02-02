@@ -38,8 +38,9 @@ typedef struct	s_pipe
 
 typedef struct	s_data 
 {
-	char	**cmd_tab;
+	int		nb_cmd;
 	char 	**envp;
+	char	**cmd_tab;
 	t_pipe	*pipe;
 
 }				t_data;
@@ -55,5 +56,7 @@ int		parse_cmd(t_data *data, char **argv);
 
 // UTILS --- brazil.c
 void	escape_to_brazil(t_data *data);
+// UTILS --- init_struct.c
+int		init_struct(t_data *data, char *envp[]);
 
 #endif
