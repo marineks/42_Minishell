@@ -43,7 +43,7 @@ int	handle_pipe(int argc, char **argv, t_data *data)
         perror("Pipe");
         return (FAILURE);
     }
-	i = 1;	
+	i = 1;	// Pourquoi 1 et pas zero ??
 	while (data->nb_cmd)
 	{
 		*pid = fork();
@@ -66,3 +66,43 @@ int	handle_pipe(int argc, char **argv, t_data *data)
 	}
 	return (SUCCESS);
 }
+
+// Test Tiff
+
+// static int	exec_first_cmd(t_data *data, int **end, char **cmd)
+// {
+// 	char	*path;
+
+// 	dup2(end[1], STDOUT_FILENO);
+// 	close(end[0]);
+// 	path = grep_path(data->envp, cmd[0]);
+// 	if (execve(path, cmd, envp) == -1)
+// 	{
+// 		perror("Execve");
+// 		return (FAILURE);
+// 	}
+// 	close(end[1]);
+// 	if (path)
+// 		free(path);
+// 	return (SUCCESS);
+// }
+
+// static int	exec_cmd(t_data *data, int i, int **end)
+// {
+// 	if (i == 1) // ou 0 en fonction de ce qu'on decide avant
+// 	{
+// 		data->pipe->cmd = ft_split(data->cmd_tab[i], ' ');
+// 		// il faudra executer la fonction pour gerer la 1ere commande
+// 		exec_first_cmd(data, &end, data->pipe->cmd);
+// 		free(data->pipe->cmd);
+// 	}
+// 	else if (i == data->nb_cmd)
+// 	{
+// 		// executer la fonction pour gerer la derniere commande
+// 	}
+// 	else
+// 	{
+// 		// fonction pour gerer les commandes entre la 1ere et la derniere
+// 	}
+// 	return (SUCCESS);
+// }
