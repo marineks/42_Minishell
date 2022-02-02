@@ -11,6 +11,7 @@
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <stdbool.h>
 
 enum output {
 	SUCCESS = 0,
