@@ -34,6 +34,8 @@ enum output {
 typedef struct	s_pipe 
 {	
 	char	**cmd;
+	int		fd_in;
+	int		fd_out;
 }				t_pipe;
 
 typedef struct	s_data 
