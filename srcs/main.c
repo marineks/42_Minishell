@@ -9,9 +9,10 @@ int	main(int argc, char **argv, char *envp[])
 		printf("Command usage: ./minishell\n");
 	else
 		{
-			init_data(&data, envp); 
+			
 			while (1)
 			{
+				init_data(&data, envp); 
 				data.line = readline(PROMPT);
 				if (check_exit(data.line) == SUCCESS)
 					break;
