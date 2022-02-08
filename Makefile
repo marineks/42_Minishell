@@ -34,10 +34,11 @@ INC_PATH = ./incl/exec.h
 #########################################
 SRCS = main.c 							\
 	exec/get_path.c 					\
-	exec/pipe.c							\
-	parsing/parse_cmd.c					\
 	utils/brazil.c						\
-	utils/init_struct.c
+	utils/exit_whisperer.c				\
+	utils/init_struct.c					\
+	parsing/separate_cmd_lines.c		\
+	parsing/split_pipe.c
 
 SRC	= $(addprefix $(SRCS_DIR),$(SRCS))
 

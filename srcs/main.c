@@ -4,40 +4,54 @@ int	main(int argc, char **argv, char *envp[])
 {
 	t_data data;
 
-	if (argc < 2)
-		printf("Wrong input\n");
+	(void) argv;
+	if (argc != 1)
+		printf("Command usage: ./minishell\n");
 	else
 		{
-			init_struct(&data, envp);
-			if (parse_cmd(&data, argv) == FAILURE)
-				return (FAILURE);
-			if (handle_pipe(argc, argv, &data) == FAILURE)
+			while (1)
 			{
-				perror("handle pipe");
-				return (FAILURE);
+				data.line = readline( "🦊🐆\033[1;37m ~ Minishell : \033[0m");
+				if (check_exit(data.line) == SUCCESS)
+					break;
+				add_history(data.line);
+
+				init_data(&data, envp); // tokenizer + parse
+				// do your thing
+				separate_cmd_lines(&data);
+				free(data.line);
 			}
-		}
-		escape_to_brazil(&data);
+			escape_to_brazil(&data);
+		}	
 		return (0);
 }
 
+
+// 7/02/2022 :main avec ébauche d'un executable pour gerer les multipipes
 // int	main(int argc, char **argv, char *envp[])
 // {
-// 	char *path;
+// 	t_data data;
 
-// 	if (argc < 1)
-// 		return (FAILURE);
-// 	path = grep_path(envp, argv[1]); 
-// 	if (execve(path, &argv[1], envp) == -1)
-// 	{
-// 		perror("Execve");
-// 		return (FAILURE);
-// 	}
+// 	if (argc != 1)
+// 		printf("Command usage: ./minishell\n");
+// 	else
+// 		{
+// 			while (1)
+// 			{
+// 				readline( "🦊🐆 ~ Minishell :");
+// 			init_struct(&data, envp);
+// 				if (parse_cmd(&data, argv) == FAILURE)
+// 					return (FAILURE);
+// 				// if (handle_pipe(argc, argv, &data) == FAILURE)
+// 						// {
+// 						// 	perror("handle pipe");
+// 						// 	return (FAILURE);
+// 						// }
+
+// 			}
+			
+		
+// 		}
+// 		escape_to_brazil(&data);
+// 		return (0);
 // }
-
-// 2eme de EXCVE
-// char **cmd;
-// cmd = malloc(sizeof(char *) * 3);
-// 	cmd[0] = "ls";
-// 	cmd[1] = "-la";
-// 	cmd[2] = 0;
