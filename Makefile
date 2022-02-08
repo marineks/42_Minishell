@@ -27,7 +27,7 @@ RFLAGS := -lreadline
 #########################################
 #			FILES PATH					#
 #########################################
-INC_PATH = ./incl/exec.h
+INC_PATH = ./incl/minishell.h
 
 #########################################
 #			SOURCES	FILES				#
@@ -38,7 +38,8 @@ SRCS = main.c 							\
 	utils/exit_whisperer.c				\
 	utils/init_struct.c					\
 	parsing/separate_cmd_lines.c		\
-	parsing/split_pipe.c
+	parsing/split_pipe.c				\
+	lexer/check_type.c
 
 SRC	= $(addprefix $(SRCS_DIR),$(SRCS))
 

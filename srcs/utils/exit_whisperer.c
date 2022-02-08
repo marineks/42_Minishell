@@ -1,5 +1,4 @@
-#include "exec.h"
-
+#include "minishell.h"
 
 int	check_exit(char *line)
 {

@@ -1,4 +1,4 @@
-#include "exec.h"
+#include "minishell.h"
 
 void	free_t_pipe(t_data *data)
 {

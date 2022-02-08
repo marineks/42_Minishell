@@ -1,4 +1,4 @@
-#include "exec.h"
+#include "minishell.h"
 
 static char	*ft_strjoin_path(char const *s1, char const *s2)
 {

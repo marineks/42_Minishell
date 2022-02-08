@@ -1,6 +1,12 @@
-#include "exec.h"
+#include "minishell.h"
 
-
+/*
+**	This function :
+**	- finds the correct count of pipes in the user's line
+**	- stores the index of each "correct" pipe in a linked list
+**	- returns an error when several pipes follow one another without a 
+**	  WORD-typed token in-between.
+*/
 int	find_pipes(t_data *data, char *line)
 {
 	int i;
@@ -27,7 +33,6 @@ int	find_pipes(t_data *data, char *line)
 		{
 			data->pipe->nb_pipes++;
 			ft_lstadd_back(&data->pipe->lst, ft_lstnew(i));
-			// ajouter un noeud qui contient la position du pipe
 			printf("position du pipe: %d\n", i);
 		}
 		i++;

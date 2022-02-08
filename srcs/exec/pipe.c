@@ -1,4 +1,4 @@
-#include "exec.h"
+#include "minishell.h"
 
 // cmd = argv ici mais apres le parsing ce sera un tableau de cmds
 // static int	exec_cmd(int *end, char **cmd, t_data *data)

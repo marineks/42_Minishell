@@ -1,4 +1,4 @@
-#include "exec.h"
+#include "minishell.h"
 
 int	separate_cmd_lines(t_data *data)
 {
