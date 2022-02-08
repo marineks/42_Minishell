@@ -117,6 +117,7 @@ int	handle_pipe(int argc, char **argv, t_data *data)
 	int		i;
 
 	(void) argv;
+	(void) argc;
 	// if (!pid)
 	// {
 	// 	perror("Malloc pid");

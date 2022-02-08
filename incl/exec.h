@@ -31,19 +31,22 @@ enum output {
 # define CYAN "\033[0;36m"
 # define WHITE "\033[0;37m"
 
-typedef struct	s_pipe 
+typedef struct	s_cmd 
 {	
-	char	**cmd;
-	int		fd_in;
-	int		fd_out;
-}				t_pipe;
+	char			**cmd;
+	int				fd_in;
+	int				fd_out;
+	struct s_cmd	*prev;
+	struct s_cmd	*next;
+}				t_cmd;
 
 typedef struct	s_data 
 {
 	int		nb_cmd;
 	char 	**envp;
-	char	**cmd_tab;
-	t_pipe	*pipe;
+	char	*line;
+	char	**cmd_lines;
+	t_cmd	*cmd;
 
 }				t_data;
 
@@ -56,9 +59,17 @@ int		handle_pipe(int argc, char **argv, t_data *data);
 // PARSING --- parse_cmd.c
 int		parse_cmd(t_data *data, char **argv);
 
+// PARSING --- separate_cmd_lines.c
+int		separate_cmd_lines(t_data *data);
+// PARSING --- split_pipe.c
+int		find_pipes(t_data *data, char *line);
+
 // UTILS --- brazil.c
 void	escape_to_brazil(t_data *data);
 // UTILS --- init_struct.c
-int		init_struct(t_data *data, char *envp[]);
+int		init_data(t_data *data, char *envp[]);
+
+// UTILS --- exit_whisperer.c
+int		check_exit(char *line);
 
 #endif
