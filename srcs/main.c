@@ -9,14 +9,15 @@ int	main(int argc, char **argv, char *envp[])
 		printf("Command usage: ./minishell\n");
 	else
 		{
+			init_data(&data, envp); 
 			while (1)
 			{
-				data.line = readline( "🦊🐆\033[1;37m ~ Minishell : \033[0m");
+				data.line = readline(PROMPT);
 				if (check_exit(data.line) == SUCCESS)
 					break;
 				add_history(data.line);
 
-				init_data(&data, envp); // tokenizer + parse
+				// tokenizer + parse
 				// do your thing
 				separate_cmd_lines(&data);
 				free(data.line);

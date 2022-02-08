@@ -6,13 +6,13 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 15:21:23 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/06/28 09:29:13 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/02/08 20:15:14 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void*))
+void	ft_lstclear(t_list **lst, void (*del)(int))
 {
 	t_list	*current_node;
 	t_list	*next_node;

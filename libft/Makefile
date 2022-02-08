@@ -6,7 +6,7 @@
 #    By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/21 15:53:49 by msanjuan          #+#    #+#              #
-#    Updated: 2022/01/09 20:24:42 by msanjuan         ###   ########.fr        #
+#    Updated: 2022/02/08 20:19:05 by msanjuan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,16 +46,14 @@ SRCS = ft_strlen.c	\
 	   ft_split.c 		\
 	   ft_strncat.c 	\
 	   ft_strcmp.c 		\
-
-BONUS = ft_lstnew.c		\
-		ft_lstadd_front.c	\
-		ft_lstsize.c		\
-		ft_lstadd_back.c	\
-		ft_lstlast.c	\
-		ft_lstdelone.c	\
-		ft_lstclear.c	\
-		ft_lstiter.c	\
-		ft_lstmap.c		\
+	   ft_lstnew.c		\
+	   ft_lstadd_front.c\
+	   ft_lstsize.c		\
+	   ft_lstadd_back.c	\
+	   ft_lstlast.c		\
+	   ft_lstdelone.c	\
+	   ft_lstclear.c	\
+	   ft_lstiter.c		\
 
 OBJS = ${SRCS:.c=.o}
 

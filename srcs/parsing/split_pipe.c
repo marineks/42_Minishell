@@ -3,40 +3,45 @@
 
 int	find_pipes(t_data *data, char *line)
 {
-	int	nb_pipes;
-	int *pipes_pos;// stocke l'index du pipe trouvé
 	int i;
 	int	state;
 
-	(void) data;
-	nb_pipes = 0;
 	i = 0;
 	state = 0;
-	pipes_pos = NULL;
 	while (line[i])
 	{
 		if ((line[i] == '|' && line[i + 1] == '|') && state == 0)
 		{
-			printf("Error : syntax error near unexpected token `|'\n");
+			printf("Error : syntax error near unexpected token '|'\n");
 			return (FAILURE);
 		}
-		else if (line[i] == '\'' && state == 0)
-			state = 1;
-		else if (line[i] == '\"' && state == 0)
-			state = 2;
-		else if (line[i] == '\'' && state == 1)
-			state = 0;
-		else if (line[i] == '\"' && state ==2)
-			state = 0;
-		else if (line[i] == '|' && state == 0)
+		else if (line[i] == '\'' && state == DEFAULT)
+			state = SIMPLE;
+		else if (line[i] == '\"' && state == DEFAULT)
+			state = DOUBLE;
+		else if (line[i] == '\'' && state == SIMPLE)
+			state = DEFAULT;
+		else if (line[i] == '\"' && state == DOUBLE)
+			state = DEFAULT;
+		else if (line[i] == '|' && state == DEFAULT)
 		{
-			nb_pipes++;
-			// pipes_pos[i] = i;
+			data->pipe->nb_pipes++;
+			ft_lstadd_back(&data->pipe->lst, ft_lstnew(i));
+			// ajouter un noeud qui contient la position du pipe
+			printf("position du pipe: %d\n", i);
 		}
 		i++;
 	}
-	printf("%d\n", nb_pipes);	
-	return (nb_pipes);
+	printf("%d\n", data->pipe->nb_pipes);
+	if (data->pipe->nb_pipes > 0)
+	{
+		while (data->pipe->lst)
+		{
+			printf("position du pipe dans lst : %d\n", data->pipe->lst->content);
+			data->pipe->lst = data->pipe->lst->next;
+		}
+	}
+	return (SUCCESS);
 }
 
 

@@ -13,12 +13,19 @@
 # include <readline/history.h>
 # include <stdbool.h>
 
+# define PROMPT "🦊🐆\033[1;37m ~ Minishell : \033[0m"
 enum output {
 	SUCCESS = 0,
 	FAILURE = 1,
 	ERROR = 2,
 	TRUE = 3,
 	FALSE = 4
+};
+
+enum states {
+	DEFAULT,
+	SIMPLE,
+	DOUBLE
 };
 
 # define RESET "\033[0m"
@@ -30,6 +37,13 @@ enum output {
 # define PURPLE "\033[0;35m"
 # define CYAN "\033[0;36m"
 # define WHITE "\033[0;37m"
+
+typedef struct	s_pipe 
+{	
+	t_list	*lst;
+	int 	nb_pipes;
+
+}				t_pipe;
 
 typedef struct	s_cmd 
 {	
@@ -45,6 +59,7 @@ typedef struct	s_data
 	int		nb_cmd;
 	char 	**envp;
 	char	*line;
+	t_pipe	*pipe;
 	char	**cmd_lines;
 	t_cmd	*cmd;
 

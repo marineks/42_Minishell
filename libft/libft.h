@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 10:11:30 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/01/09 20:24:19 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/02/08 20:19:12 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 typedef struct s_list
 {
-	void			*content;
+	int			content;
 	struct s_list	*next;
 }				t_list;
 
@@ -59,14 +59,13 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 char	**ft_split(char const *s, char c);
-t_list	*ft_lstnew(void *content);
+t_list	*ft_lstnew(int content);
 void	ft_lstadd_front(t_list **alst, t_list *new);
 int		ft_lstsize(t_list *lst);
 void	ft_lstadd_back(t_list **alst, t_list *new);
 t_list	*ft_lstlast(t_list *lst);
-void	ft_lstdelone(t_list *lst, void (*del)(void*));
-void	ft_lstclear(t_list **lst, void (*del)(void*));
-void	ft_lstiter(t_list *lst, void (*f)(void *));
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+void	ft_lstdelone(t_list *lst, void (*del)(int));
+void	ft_lstclear(t_list **lst, void (*del)(int));
+void	ft_lstiter(t_list *lst, void (*f)(int));
 
 #endif

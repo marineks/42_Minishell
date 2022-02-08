@@ -6,13 +6,13 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 09:23:59 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/06/24 19:34:05 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/02/08 20:13:42 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void *data)
+t_list	*ft_lstnew(int data)
 {
 	t_list	*new_block;
 
