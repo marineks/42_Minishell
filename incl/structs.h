@@ -8,7 +8,6 @@ typedef struct	s_token
 	char			*str;			// e.g. "foo bar baz"
 	int				type;			// e.g. WORD
 	int				state;
-	int				index;
 	struct s_token	*prev;
 	struct s_token	*next;
 }				t_token;

@@ -37,9 +37,11 @@ SRCS = main.c 							\
 	lexer/tokenize.c					\
 	parsing/separate_cmd_lines.c		\
 	parsing/split_pipe.c				\
+	utils/amsterdam.c					\
 	utils/brazil.c						\
 	utils/exit_whisperer.c				\
 	utils/init_struct.c					\
+	utils/token_list_functions.c		\
 
 SRC	= $(addprefix $(SRCS_DIR),$(SRCS))
 
