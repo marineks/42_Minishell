@@ -3,7 +3,7 @@
 
 # define PROMPT "🦊🐆\033[1;37m ~ Minishell : \033[0m"
 
-enum output {
+enum e_output {
 	SUCCESS = 0,
 	FAILURE = 1,
 	ERROR = 2,
@@ -11,13 +11,14 @@ enum output {
 	FALSE = 4
 };
 
-enum states {
+enum e_states {
 	DEFAULT,
 	SIMPLE,
 	DOUBLE
 };
 
-enum tk_types {
+enum e_tk_types {
+	BLANK = 1,		// whites spaces
 	WORD,		// e.g. abc , "abc" , 'abc'
 	VAR,		// e.g. $abc
 	PIPE,		// e.g ' | '

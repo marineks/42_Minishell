@@ -9,16 +9,15 @@ int	main(int argc, char **argv, char *envp[])
 		printf("Command usage: ./minishell\n");
 	else
 		{
-			
+			init_data(&data, envp);
 			while (1)
 			{
-				init_data(&data, envp); 
 				data.line = readline(PROMPT);
 				if (check_exit(data.line) == SUCCESS)
 					break;
 				add_history(data.line);
-				// tokenizer + parse
-				separate_cmd_lines(&data);
+				tokenize(&data, data.line);
+				// separate_cmd_lines(&data);
 				// do your thing
 				free(data.line);
 			}

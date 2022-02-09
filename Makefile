@@ -34,12 +34,12 @@ INC_PATH = ./incl/minishell.h
 #########################################
 SRCS = main.c 							\
 	exec/get_path.c 					\
+	lexer/tokenize.c					\
+	parsing/separate_cmd_lines.c		\
+	parsing/split_pipe.c				\
 	utils/brazil.c						\
 	utils/exit_whisperer.c				\
 	utils/init_struct.c					\
-	parsing/separate_cmd_lines.c		\
-	parsing/split_pipe.c				\
-	lexer/check_type.c
 
 SRC	= $(addprefix $(SRCS_DIR),$(SRCS))
 

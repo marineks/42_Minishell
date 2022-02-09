@@ -26,6 +26,6 @@ void	escape_to_brazil(t_data *data)
 {
 	if (data->line)
 		free(data->line);
-	free_t_pipe(data);
+	// free_t_pipe(data);
 	rl_clear_history ();
 }

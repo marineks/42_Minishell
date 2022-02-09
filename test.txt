@@ -23,3 +23,5 @@ SUR LES BRANCHES:
 
 COUCOU
 Oulalala
+
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=ignorereadline ./minishell
