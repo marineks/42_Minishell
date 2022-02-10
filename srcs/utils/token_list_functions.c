@@ -55,15 +55,13 @@ void	ft_lstclear_token(t_token **lst, void (*del)(void *))
 	}
 }
 
-void	print_token(void)
+void	print_token(t_token *lst)
 {
 	t_token *tmp;
-	t_token *lst;
-
-	lst = NULL;
-	ft_lstadd_back_token(&lst, ft_lstnew_token("Premier", WORD, DEFAULT));
-	ft_lstadd_back_token(&lst, ft_lstnew_token("Second", WORD, DEFAULT));
-	ft_lstadd_back_token(&lst, ft_lstnew_token("Troisieme", WORD, DEFAULT));
+	
+	// ft_lstadd_back_token(&lst, ft_lstnew_token("Premier", WORD, DEFAULT));
+	// ft_lstadd_back_token(&lst, ft_lstnew_token("Second", WORD, DEFAULT));
+	// ft_lstadd_back_token(&lst, ft_lstnew_token("Troisieme", WORD, DEFAULT));
 	tmp = lst;
 	while (tmp)
 	{

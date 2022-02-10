@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	print_token(void);
+void	print_token(t_token *lst);
 
 int	main(int argc, char **argv, char *envp[])
 {
@@ -21,7 +21,6 @@ int	main(int argc, char **argv, char *envp[])
 				tokenize(&data, data.line);
 				// separate_cmd_lines(&data);
 				// do your thing
-				print_token();
 				escape_to_amsterdam(&data);
 			}
 			escape_to_brazil(&data);
