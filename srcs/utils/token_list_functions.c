@@ -58,19 +58,21 @@ void	ft_lstclear_token(t_token **lst, void (*del)(void *))
 void	print_token(t_token *lst)
 {
 	t_token *tmp;
+	int i = 0;
 	
+	printf("lst = %p\n", lst);
 	// ft_lstadd_back_token(&lst, ft_lstnew_token("Premier", WORD, DEFAULT));
 	// ft_lstadd_back_token(&lst, ft_lstnew_token("Second", WORD, DEFAULT));
 	// ft_lstadd_back_token(&lst, ft_lstnew_token("Troisieme", WORD, DEFAULT));
 	tmp = lst;
 	while (tmp)
 	{
-		printf("----------------------------------------------------------\n");
-		if (tmp->prev == NULL)
-			printf("Current str: %s\n", tmp->str);
-		else
-			printf("Current str: %s | Previous str: %s\n", tmp->str, tmp->prev->str);
+		// if (tmp->prev == NULL)
+			printf("NODE : %d - Str: |%s|\n", i, tmp->str);
+		// else
+			// printf("Current str: %s ~ Previous str: %s\n", tmp->str, tmp->prev->str);
 		printf("----------------------------------------------------------\n");
 		tmp = tmp->next;
+		i++;
 	}
 }

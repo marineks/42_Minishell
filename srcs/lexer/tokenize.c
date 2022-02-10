@@ -15,8 +15,23 @@ void	print_token(t_token *lst);
 **	for further inspection or processing.
 */
 
+int	which_state(int state, char *line, int i)
+{
+	if (line[i] == '\'' && state == DEFAULT)
+		state = SIMPLE;
+	else if (line[i] == '\"' && state == DEFAULT)
+		state = DOUBLE;
+	else if (line[i] == '\'' && state == SIMPLE)
+		state = DEFAULT;
+	else if (line[i] == '\"' && state == DOUBLE)
+		state = DEFAULT;
+	return (state);
+}
+
 int	is_separator(char *line, int i)
 {
+	// SI CEST PAS CONCERNE PAR LES QUOTES
+	//{
 	if (((line[i] > 8 && line[i] < 14) || line[i] == 32))
 		return (BLANK);
 	else if (line[i] == '|')
@@ -33,9 +48,10 @@ int	is_separator(char *line, int i)
 		return (END);
 	else
 		return (0);	
+	//}
 }
 
-int	stock_word(t_token *tk_list, char *line, int index, int start)
+int	stock_word(t_token **tk_list, char *line, int index, int start)
 {
 	int		i;
 	char	*word;
@@ -53,14 +69,13 @@ int	stock_word(t_token *tk_list, char *line, int index, int start)
 	}
 	word[i] = '\0';
 	printf("WORD : |%s|\n", word);
-	ft_lstadd_back_token(&tk_list, ft_lstnew_token(word, WORD, DEFAULT));
-	printf("node word : %s\n", tk_list->str);
+	ft_lstadd_back_token(tk_list, ft_lstnew_token(word, WORD, DEFAULT));
+	// printf("node word : %s\n", tk_list->str);
 	return (SUCCESS);
 }
 
-int	stock_separator(t_token *tk_list, char *line, int index, int type)
+int	stock_separator(t_token **tk_list, char *line, int index, int type)
 {
-	// ajouter dans le nod
 	int i;
 	char *sep;
 
@@ -73,7 +88,7 @@ int	stock_separator(t_token *tk_list, char *line, int index, int type)
 		while (i < 2)
 			sep[i++] = line[index++];
 		sep[i] = '\0';
-		ft_lstadd_back_token(&tk_list, ft_lstnew_token(sep, type, DEFAULT));
+		ft_lstadd_back_token(tk_list, ft_lstnew_token(sep, type, DEFAULT));
 		// printf("separator : %c%c -> type : %d\n", line[index], line[index + 1], type);
 	}
 	else
@@ -84,52 +99,57 @@ int	stock_separator(t_token *tk_list, char *line, int index, int type)
 		while (i < 1)
 			sep[i++] = line[index++];
 		sep[i] = '\0';
-		ft_lstadd_back_token(&tk_list, ft_lstnew_token(sep, type, DEFAULT));
+		ft_lstadd_back_token(tk_list, ft_lstnew_token(sep, type, DEFAULT));
 		// printf("separator : %c -> type : %d\n", line[index], type);
 	}
-	printf("node sep : %s\n", tk_list->str);
+	// printf("node sep : %s\n", tk_list->str);
 	return (SUCCESS);
 }
 
 int	tokenize(t_data *data, char *line)
 {
-	(void)data;
 	int	i;
 	int end;
 	int start;
 	int	type;
+	int	state;
 
 	i = 0;
 	start = 0;
 	end = ft_strlen(line);
+	state = DEFAULT;
 	while (i <= end)
 	{
-		type = is_separator(line, i);
-		if (type) 
+		state = which_state(state, line, i);
+		if (state == DEFAULT)
 		{
-			// printf("start : %d | i : %d\n", start, i);
-
-			// Fonction qui récupère le WORD avant le separateur
-			if (i != 0 && is_separator(line, i - 1) == 0)
-				stock_word(data->token, line, i, start);
-			if (type == DGREATER || type == DLESSER) // RENVOIE LE TYPE
+			type = is_separator(line, i);
+			if (type) 
 			{
-				// Fonction qui ajoute le node du séparateur et le type
-				stock_separator(data->token, line, i, type);
-				i++;
+				// Fonction qui récupère le WORD avant le separateur
+				if (i != 0 && is_separator(line, i - 1) == 0)
+					stock_word(&data->token, line, i, start);
+				if (type == DGREATER || type == DLESSER) // RENVOIE LE TYPE
+				{
+					// Fonction qui ajoute le node du séparateur et le type
+					stock_separator(&data->token, line, i, type);
+					i++;
+				}
+				else if (type == BLANK) // separe mais ne stock le separateur
+					printf("blank\n");
+				else // Fonction qui ajoute le node et le type du separateur
+					stock_separator(&data->token, line, i, type);
+				start = i + 1;
 			}
-			else if (type == BLANK) // separe mais ne stock le separateur
-				printf("blank\n");
-			else
-			{
-				// Fonction qui ajoute le node et le type du separateur
-				stock_separator(data->token, line, i, type);
-			}	
-			start = i + 1;
 		}
-		// printf("type : %d\n", type);
 		i++;
 	}
+	if (state != DEFAULT)
+	{
+		printf("Unclosed quotes error\n");
+		return (FAILURE);
+	}
+		
 	print_token(data->token);
 	return (SUCCESS);
 }

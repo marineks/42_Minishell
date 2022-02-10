@@ -18,7 +18,8 @@ int	main(int argc, char **argv, char *envp[])
 				if (check_exit(data.line) == SUCCESS)
 					break;
 				add_history(data.line);
-				tokenize(&data, data.line);
+				if (tokenize(&data, data.line) == FAILURE)
+					printf("tokenize pb\n");
 				// separate_cmd_lines(&data);
 				// do your thing
 				escape_to_amsterdam(&data);

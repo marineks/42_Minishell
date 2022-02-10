@@ -37,15 +37,15 @@ int	find_pipes(t_data *data, char *line)
 		}
 		i++;
 	}
-	printf("%d\n", data->pipe->nb_pipes);
-	if (data->pipe->nb_pipes > 0)
-	{
-		while (data->pipe->lst)
-		{
-			printf("position du pipe dans lst : %d\n", data->pipe->lst->content);
-			data->pipe->lst = data->pipe->lst->next;
-		}
-	}
+	// printf("%d\n", data->pipe->nb_pipes);
+	// if (data->pipe->nb_pipes > 0)
+	// {
+	// 	while (data->pipe->lst)
+	// 	{
+	// 		printf("position du pipe dans lst : %d\n", data->pipe->lst->content);
+	// 		data->pipe->lst = data->pipe->lst->next;
+	// 	}
+	// }
 	return (SUCCESS);
 }
 
