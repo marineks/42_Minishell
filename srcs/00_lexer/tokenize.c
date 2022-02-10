@@ -30,8 +30,6 @@ int	which_state(int state, char *line, int i)
 
 int	is_separator(char *line, int i)
 {
-	// SI CEST PAS CONCERNE PAR LES QUOTES
-	//{
 	if (((line[i] > 8 && line[i] < 14) || line[i] == 32))
 		return (BLANK);
 	else if (line[i] == '|')
@@ -48,7 +46,6 @@ int	is_separator(char *line, int i)
 		return (END);
 	else
 		return (0);	
-	//}
 }
 
 int	stock_word(t_token **tk_list, char *line, int index, int start)
@@ -60,7 +57,6 @@ int	stock_word(t_token **tk_list, char *line, int index, int start)
 	word = (char *)malloc(sizeof(char) * (index - start + 1));
 	if (!word)
 		return (FAILURE);
-	// faire function ou bout de code pour definir le state!!!
 	while (start < index)
 	{
 		word[i] = line[start];
@@ -68,9 +64,7 @@ int	stock_word(t_token **tk_list, char *line, int index, int start)
 		i++;
 	}
 	word[i] = '\0';
-	printf("WORD : |%s|\n", word);
 	ft_lstadd_back_token(tk_list, ft_lstnew_token(word, WORD, DEFAULT));
-	// printf("node word : %s\n", tk_list->str);
 	return (SUCCESS);
 }
 
@@ -89,7 +83,6 @@ int	stock_separator(t_token **tk_list, char *line, int index, int type)
 			sep[i++] = line[index++];
 		sep[i] = '\0';
 		ft_lstadd_back_token(tk_list, ft_lstnew_token(sep, type, DEFAULT));
-		// printf("separator : %c%c -> type : %d\n", line[index], line[index + 1], type);
 	}
 	else
 	{
@@ -100,12 +93,20 @@ int	stock_separator(t_token **tk_list, char *line, int index, int type)
 			sep[i++] = line[index++];
 		sep[i] = '\0';
 		ft_lstadd_back_token(tk_list, ft_lstnew_token(sep, type, DEFAULT));
-		// printf("separator : %c -> type : %d\n", line[index], type);
 	}
-	// printf("node sep : %s\n", tk_list->str);
 	return (SUCCESS);
 }
 
+/*
+**	Tokenize loops through the command line issued by the user.
+**	This is the first part of the lexer, where we divide the line into two
+**	big types of tokens : WORDS and SEPARATORS (for instance pipes, redir.,
+**	heredocs and blanks).
+**	This function :
+**	- checks each character of line to find whether there is a separator
+**	- in order to do so, we first make sure that the separator is not inhibited
+**	  by quotes (states : SIMPLE or DOUBLE)
+*/
 int	tokenize(t_data *data, char *line)
 {
 	int	i;
@@ -149,7 +150,6 @@ int	tokenize(t_data *data, char *line)
 		printf("Unclosed quotes error\n");
 		return (FAILURE);
 	}
-		
 	print_token(data->token);
 	return (SUCCESS);
 }
