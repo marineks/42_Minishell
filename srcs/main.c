@@ -20,6 +20,7 @@ int	main(int argc, char **argv, char *envp[])
 				add_history(data.line);
 				if (tokenize(&data, data.line) == FAILURE)
 					printf("tokenize pb\n");
+				specify(&data.token);
 				// separate_cmd_lines(&data);
 				// do your thing
 				escape_to_amsterdam(&data);

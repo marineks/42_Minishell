@@ -34,6 +34,7 @@ INC_PATH = ./incl/minishell.h
 #########################################
 SRCS = main.c 							\
 	00_lexer/tokenize.c					\
+	00_lexer/specify_token.c			\
 	04_exec/get_path.c 					\
 	05_utils/amsterdam.c				\
 	05_utils/brazil.c					\

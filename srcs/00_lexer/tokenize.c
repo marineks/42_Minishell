@@ -1,7 +1,6 @@
 
 #include "minishell.h"
 
-void	print_token(t_token *lst);
 /*
 **	THE POINT OF A LEXER_
 **	Roughly speaking, the shell reads its input and divides the input into 
@@ -98,7 +97,11 @@ int	stock_separator(t_token **tk_list, char *line, int index, int type)
 }
 
 /*
-**	Tokenize loops through the command line issued by the user.
+**	@brief Tokenize splits the command line issued by the user.
+**	@params data - our main structure that will host the chained list of the
+**				   the tokens in data->token.
+**	@params line - the string that will be split 
+**	
 **	This is the first part of the lexer, where we divide the line into two
 **	big types of tokens : WORDS and SEPARATORS (for instance pipes, redir.,
 **	heredocs and blanks).
@@ -127,19 +130,15 @@ int	tokenize(t_data *data, char *line)
 			type = is_separator(line, i);
 			if (type) 
 			{
-				// Fonction qui récupère le WORD avant le separateur
 				if (i != 0 && is_separator(line, i - 1) == 0)
 					stock_word(&data->token, line, i, start);
-				if (type == DGREATER || type == DLESSER) // RENVOIE LE TYPE
+				if (type == DGREATER || type == DLESSER || type == PIPE
+					|| type == LESSER || type == GREATER || type == END)
 				{
-					// Fonction qui ajoute le node du séparateur et le type
 					stock_separator(&data->token, line, i, type);
-					i++;
+					if (type == DGREATER || type == DLESSER)
+						i++;
 				}
-				else if (type == BLANK) // separe mais ne stock le separateur
-					printf("blank\n");
-				else // Fonction qui ajoute le node et le type du separateur
-					stock_separator(&data->token, line, i, type);
 				start = i + 1;
 			}
 		}
@@ -150,6 +149,5 @@ int	tokenize(t_data *data, char *line)
 		printf("Unclosed quotes error\n");
 		return (FAILURE);
 	}
-	print_token(data->token);
 	return (SUCCESS);
 }

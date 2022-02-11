@@ -61,14 +61,11 @@ void	print_token(t_token *lst)
 	int i = 0;
 	
 	printf("lst = %p\n", lst);
-	// ft_lstadd_back_token(&lst, ft_lstnew_token("Premier", WORD, DEFAULT));
-	// ft_lstadd_back_token(&lst, ft_lstnew_token("Second", WORD, DEFAULT));
-	// ft_lstadd_back_token(&lst, ft_lstnew_token("Troisieme", WORD, DEFAULT));
 	tmp = lst;
 	while (tmp)
 	{
 		// if (tmp->prev == NULL)
-			printf("NODE : %d - %d Str: |%s|\n", i, tmp->type, tmp->str);
+		printf("NODE : %d - TYPE : %d Str: |%s|\n", i, tmp->type, tmp->str);
 		// else
 			// printf("Current str: %s ~ Previous str: %s\n", tmp->str, tmp->prev->str);
 		printf("----------------------------------------------------------\n");
