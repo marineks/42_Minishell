@@ -38,7 +38,7 @@ int	apply_grammar(t_token **tk_list)
 		if (check_consecutive_ops(tmp) == TRUE)
 		{
 			printf("Syntax error near unexpected token `%s'\n", tmp->str);
-			return (FALSE);
+			return (ERROR);
 		}
 		tmp = tmp->next;
 	}

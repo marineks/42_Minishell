@@ -22,7 +22,9 @@ int	main(int argc, char **argv, char *envp[])
 					printf("tokenize pb\n");
 				specify(&data.token);
 				apply_grammar(&data.token);
-				// do your thing
+				// do your thing (parse)
+				expand_tokens(&data, &data.token);
+				// do your thing bis (redirections, then exec)
 				escape_to_amsterdam(&data);
 			}
 			escape_to_brazil(&data);
