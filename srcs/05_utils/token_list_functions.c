@@ -65,7 +65,7 @@ void	print_token(t_token *lst)
 	while (tmp)
 	{
 		// if (tmp->prev == NULL)
-		printf("NODE : %d - TYPE : %d Str: |%s|\n", i, tmp->type, tmp->str);
+		printf("NODE : %d - TYPE : %d - STATE : %d - Str: |%s|\n", i, tmp->type, tmp->state, tmp->str);
 		// else
 			// printf("Current str: %s ~ Previous str: %s\n", tmp->str, tmp->prev->str);
 		printf("----------------------------------------------------------\n");
