@@ -1,10 +1,10 @@
 #include "minishell.h"
 
-/*
-**	@brief  Checks whether there is a '$' in the WORD-typed token and
-**		    changes the type of said token to VAR accordingly.
-**	@params A pointer to a pointer on a node in chained list t_token
-**
+/**
+*	@brief  Checks whether there is a '$' in the WORD-typed token and
+*		    changes the type of said token to VAR accordingly.
+*	@param  tk_node : A pointer to a pointer on a node in chained list t_token
+*
 */
 void	check_var_type(t_token **tk_node)
 {
@@ -22,12 +22,12 @@ void	check_var_type(t_token **tk_node)
 	}
 }
 
-/*
-**	@brief  Checks whether the string is contained by simple or double quotes
-**			by checking if its first character is a '\'' or a '\"' and change
-**			the state of the token to SIMPLE or DOUBLE.
-**	@params A pointer to a pointer on a node in chained list t_token
-**
+/**
+*	@brief  Checks whether the string is contained by simple or double quotes
+*			by checking if its first character is a '\'' or a '\"' and change
+*			the state of the token to SIMPLE or DOUBLE.
+*	@param  tk_node: A pointer to a pointer on a node in chained list t_token
+*
 */
 void	check_state_value(t_token **tk_node)
 {
@@ -37,11 +37,11 @@ void	check_state_value(t_token **tk_node)
 		(*tk_node)->state = SIMPLE;
 }
 
-/*
-**	@brief  After tokenising the user's command line, this function aims at
-**			further specifying the tokens before eventually expanding them.
-**	@params A pointer to a pointer to the chained list t_token
-**
+/**
+*	@brief  After tokenising the user's command line, this function aims at
+*			further specifying the tokens before eventually expanding them.
+*	@param  tk_list : A pointer to a pointer to the chained list t_token
+*
 */
 int	specify(t_token **tk_list)
 {

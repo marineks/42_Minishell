@@ -96,19 +96,19 @@ int	stock_separator(t_token **tk_list, char *line, int index, int type)
 	return (SUCCESS);
 }
 
-/*
-**	@brief Tokenize splits the command line issued by the user.
-**	@params data - our main structure that will host the chained list of the
-**				   the tokens in data->token.
-**	@params line - the string that will be split 
-**	
-**	This is the first part of the lexer, where we divide the line into two
-**	big types of tokens : WORDS and SEPARATORS (for instance pipes, redir.,
-**	heredocs and blanks).
-**	This function :
-**	- checks each character of line to find whether there is a separator
-**	- in order to do so, we first make sure that the separator is not inhibited
-**	  by quotes (states : SIMPLE or DOUBLE)
+/**
+*	@brief Tokenize splits the command line issued by the user.
+*	@param data - our main structure that will host the chained list of the
+*				   the tokens in data->token.
+*	@param line - the string that will be split 
+*	
+*	This is the first part of the lexer, where we divide the line into two
+*	big types of tokens : WORDS and SEPARATORS (for instance pipes, redir.,
+*	heredocs and blanks).
+*	This function :
+*	- checks each character of line to find whether there is a separator
+*	- in order to do so, we first make sure that the separator is not inhibited
+*	  by quotes (states : SIMPLE or DOUBLE)
 */
 int	tokenize(t_data *data, char *line)
 {
