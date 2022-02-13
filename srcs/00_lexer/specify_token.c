@@ -6,7 +6,7 @@
 *	@param  tk_node : A pointer to a pointer on a node in chained list t_token
 *
 */
-void	check_var_type(t_token **tk_node)
+static void	check_var_type(t_token **tk_node)
 {
 	int	i;
 
@@ -29,7 +29,7 @@ void	check_var_type(t_token **tk_node)
 *	@param  tk_node: A pointer to a pointer on a node in chained list t_token
 *
 */
-void	check_state_value(t_token **tk_node)
+static void	check_state_value(t_token **tk_node)
 {
 	if ((*tk_node)->str[0] == '\"')
 		(*tk_node)->state = DOUBLE;
@@ -54,6 +54,5 @@ int	specify(t_token **tk_list)
 		check_state_value(&tmp);
 		tmp = tmp->next;
 	}
-	print_token(*tk_list);
 	return (SUCCESS);
 }

@@ -21,6 +21,7 @@ int	main(int argc, char **argv, char *envp[])
 				if (tokenize(&data, data.line) == FAILURE)
 					printf("tokenize pb\n");
 				specify(&data.token);
+				apply_grammar(&data.token);
 				// do your thing
 				escape_to_amsterdam(&data);
 			}
