@@ -3,10 +3,10 @@
 /**
 *	@brief  Checks whether there is a '$' in the WORD-typed token and
 *		    changes the type of said token to VAR accordingly.
-*	@param  tk_node : A pointer to a pointer on a node in chained list t_token
+*	@param  tk_node: A pointer to a pointer on a node in chained list t_token
 *
 */
-void	check_var_type(t_token **tk_node)
+static void	check_var_type(t_token **tk_node)
 {
 	int	i;
 
@@ -29,7 +29,7 @@ void	check_var_type(t_token **tk_node)
 *	@param  tk_node: A pointer to a pointer on a node in chained list t_token
 *
 */
-void	check_state_value(t_token **tk_node)
+static void	check_state_value(t_token **tk_node)
 {
 	if ((*tk_node)->str[0] == '\"')
 		(*tk_node)->state = DOUBLE;
@@ -40,7 +40,7 @@ void	check_state_value(t_token **tk_node)
 /**
 *	@brief  After tokenising the user's command line, this function aims at
 *			further specifying the tokens before eventually expanding them.
-*	@param  tk_list : A pointer to a pointer to the chained list t_token
+*	@param  tk_list: A pointer to a pointer to the chained list t_token
 *
 */
 int	specify(t_token **tk_list)
@@ -54,6 +54,5 @@ int	specify(t_token **tk_list)
 		check_state_value(&tmp);
 		tmp = tmp->next;
 	}
-	print_token(*tk_list);
 	return (SUCCESS);
 }
