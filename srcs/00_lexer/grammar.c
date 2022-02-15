@@ -42,6 +42,6 @@ int	check_ops_rule(t_token **tk_list)
 		}
 		tmp = tmp->next;
 	}
-	print_token(*tk_list);
+	
 	return (SUCCESS);
 }
