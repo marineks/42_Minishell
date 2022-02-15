@@ -1,5 +1,13 @@
 #include "minishell.h"
 
+static int	count_len_var(char *str)
+{
+	int count;
+
+	count = 0;
+	return (count);
+}
+
 /**
  * @brief Exemple : "asfdn$HOMEANs" => on doit comprendre que la variable c'est HOME
  * 			Vrai bash : si "test $HOME aSDF" => imprime "test /mnt/nfs/homes/msanjuan aSDF"
@@ -20,6 +28,29 @@ static char	*identify_variable(char *tk_str, t_data *data)
 		//	nb : ce serait bien de stocker la tableau de str avec tout découpé,
 		// comme ça on aurait plus qu'à échanger la str du $ et ensuite tout imprimer 
 		// à la suite
+	int		i;
+	int		j;
+	bool	can_copy;
+	char	*var;
+
+	i = 0;
+	j = 0;
+	can_copy = false;
+	var = (char *)malloc(sizeof(char) * count_len_var(tk_str));
+	if (!var)
+		return (NULL);
+	while (tk_str[i])
+	{
+		if (tk_str[i] == '$') // NB : ne pas oublier de ne pas copier le $ !!!!
+			can_copy = true;
+		if (can_copy == true)
+		{
+			var = copy_until_delim(tk_str, i); // PB : quand il y a deux variables dans la meme str
+			break;
+		}
+		i++;
+	}
+	return (var);
 }
 
 /*

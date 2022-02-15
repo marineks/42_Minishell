@@ -13,9 +13,9 @@ static int	check_consecutive_ops(t_token *tk_node)
 {
 	if (tk_node->next)
 	{
-		if (tk_node->type == PIPE && tk_node->next->type == GREATER)
+		if (tk_node->type == GREATER && tk_node->next->type == PIPE)
 			return (FALSE);
-		else if ((tk_node->type >= 4 && tk_node->next->type >= 4)
+		if ((tk_node->type >= 4 && tk_node->next->type == PIPE) // un sep avant |
 			&& tk_node->next->type != END)
 			return (TRUE);
 	}
@@ -26,9 +26,9 @@ static int	check_consecutive_ops(t_token *tk_node)
  * @brief 
  * 
  * @param tk_list 
- * 
+ *
  */
-int	apply_grammar(t_token **tk_list)
+int	check_ops_rule(t_token **tk_list)
 {
 	t_token	*tmp;
 

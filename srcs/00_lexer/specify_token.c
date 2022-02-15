@@ -52,6 +52,7 @@ int	specify(t_token **tk_list)
 	{
 		check_var_type(&tmp);
 		check_state_value(&tmp);
+		check_ops_rule(&tmp); // Les règles de grammaire doivent s'appliquer cmd par cmd
 		tmp = tmp->next;
 	}
 	return (SUCCESS);
