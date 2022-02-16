@@ -15,7 +15,7 @@ int		handle_quotes(t_data *data);
 // 01_EXPANDER --- identify_var.c
 char	*identify_variable(char *str);
 // 01_EXPANDER --- retrieve_value.c
-int		replace_value(t_token *tk_node, t_data *data);
+char	*replace_value(t_token *tk_node, t_data *data);
 
 // 04_EXEC --- get_path.c
 char	*grep_path(char *envp[], char *cmd);
