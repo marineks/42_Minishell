@@ -38,6 +38,7 @@ SRCS = main.c 							\
 	00_lexer/grammar.c 					\
 	01_expander/expand_token.c   		\
 	01_expander/handle_quotes.c 		\
+	01_expander/identify_var.c      	\
 	01_expander/retrieve_value.c      	\
 	04_exec/get_path.c 					\
 	05_utils/amsterdam.c				\

@@ -12,6 +12,8 @@ int		check_ops_rule(t_token **tk_list);
 int		expand_tokens(t_data *data, t_token **tk_list);
 // 01_EXPANDER --- handle_quotes.c
 int		handle_quotes(t_data *data);
+// 01_EXPANDER --- identify_var.c
+char	*identify_variable(char *str);
 // 01_EXPANDER --- retrieve_value.c
 int		replace_value(t_token *tk_node, t_data *data);
 
