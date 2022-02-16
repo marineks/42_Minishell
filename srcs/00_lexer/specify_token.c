@@ -23,21 +23,6 @@ static void	check_var_type(t_token **tk_node)
 }
 
 /**
-*	@brief  Checks whether the string is contained by simple or double quotes
-*			by checking if its first character is a '\'' or a '\"' and change
-*			the state of the token to SIMPLE or DOUBLE.
-*	@param  tk_node: A pointer to a pointer on a node in chained list t_token
-*
-*/
-static void	check_state_value(t_token **tk_node)
-{
-	if ((*tk_node)->str[0] == '\"')
-		(*tk_node)->state = DOUBLE;
-	else if ((*tk_node)->str[0] == '\'')
-		(*tk_node)->state = SIMPLE;
-}
-
-/**
 *	@brief  After tokenising the user's command line, this function aims at
 *			further specifying the tokens before eventually expanding them.
 *	@param  tk_list: A pointer to a pointer to the chained list t_token
@@ -51,7 +36,7 @@ int	specify(t_token **tk_list)
 	while (tmp)
 	{
 		check_var_type(&tmp);
-		check_state_value(&tmp);
+		// check_state_value(&tmp);
 		check_ops_rule(&tmp); // Les règles de grammaire doivent s'appliquer cmd par cmd
 		tmp = tmp->next;
 	}

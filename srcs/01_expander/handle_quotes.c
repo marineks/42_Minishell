@@ -1,36 +1,5 @@
 #include "minishell.h"
 
-// int	removes_quotes(t_token **tk_node)
-// {
-// 	char	*new_line;
-// 	int		length;
-// 	int		prev_index;
-// 	int		index;
-// 	int		i;
-
-// 	i = 0;
-// 	prev_index = 0;
-// 	index = 0;
-// 	// Parcourir la string jusqu'à rencontrer une quote et change le state
-// 	while ((*tk_node)->str[i])
-// 	{
-// 		if ((*tk_node)->str[i] == '\'' || (*tk_node)->str[i] == '\"')
-// 		{
-// 			if ((*tk_node)->str[i] == '\'')
-// 				(*tk_node)->state = SIMPLE;
-// 			if ((*tk_node)->str[i] == '\"')
-// 				(*tk_node)->state = DOUBLE;
-// 			prev_index = i;
-// 			break;
-// 		}
-// 		i++;
-// 	}
-	
-// 	// On copie de prev_index à i le 1er bout de str dans char *newline. ex: glou
-// 	// Puis on check le state du bout de str restant, jusqu'à ce qu'on croise le même state ex: 'piou |"'
-// 	// Quand c'est le cas on fait un strdup => Marine : plus un strjoin non?
-
-// }
 
 int	count_length(char *str, int count, int i)
 {
@@ -65,26 +34,40 @@ int	removes_quotes(t_token **tk_node)
 {
 	char	*new_line;
 	int		i;
+	int		j;
 
 	i = 0;
+	j = 0;
 	new_line = (char *)malloc(sizeof(char) * count_length((*tk_node)->str, i, i));
-	while ((*tk_node)->str[i]) // Parcourir la string jusqu'à rencontrer une quote et change le state
+	if (!new_line)
+		return (FAILURE);
+	while ((*tk_node)->str[i])
 	{
-		if ((*tk_node)->str[i] == '\'' || (*tk_node)->str[i] == '\"')
+		if (((*tk_node)->str[i] == '\'' || (*tk_node)->str[i] == '\"') && (*tk_node)->state == DEFAULT)
 		{
 			if ((*tk_node)->str[i] == '\'')
 				(*tk_node)->state = SIMPLE;
 			if ((*tk_node)->str[i] == '\"')
 				(*tk_node)->state = DOUBLE;
-			// prev_index = i;
-			break;
+			i++;
+			continue ;
 		}
+		else if (((*tk_node)->str[i] == '\'' && (*tk_node)->state == SIMPLE) 
+			|| ((*tk_node)->str[i] == '\"' && (*tk_node)->state == DOUBLE))
+		{
+			(*tk_node)->state = DEFAULT;
+			i++;
+			continue ;
+		}
+		new_line[j] = (*tk_node)->str[i];
+		j++;
 		i++;
 	}
-	// On copie de prev_index à i le 1er bout de str dans char *newline. ex: glou
-	// Puis on check le state du bout de str restant, jusqu'à ce qu'on croise le même state ex: 'piou |"'
-	// Quand c'est le cas on fait un strdup => Marine : plus un strjoin non?
-
+	new_line[j] = '\0';
+	printf("newline : %s\n", new_line);
+	free((*tk_node)->str);
+	(*tk_node)->str = new_line;
+	return (SUCCESS);
 }
 
 bool	if_quotes(char *str)
@@ -111,7 +94,12 @@ int	handle_quotes(t_data *data)
 	while (tmp)
 	{
 		if (if_quotes(tmp->str) == true) // si quotes dans la string
-			printf("Résultat de count len: %d\n", count_length(tmp->str, i, i));
+		{
+			removes_quotes(&tmp);
+			printf("tmp str: %s\n", tmp->str);
+		}
+			
+			// printf("Résultat de count len: %d\n", count_length(tmp->str, i, i));
 			// removes_quotes(&tmp);
 		tmp = tmp->next;
 	}
