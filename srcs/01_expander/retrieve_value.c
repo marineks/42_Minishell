@@ -34,7 +34,7 @@ static char	*grep_env_var(t_data *data, char *var)
 	return (str);
 }
 
-char	*replace_value(t_token *tk_node, t_data *data)
+char	*retrieve_value(t_token *tk_node, t_data *data)
 {
 	char	*value;
 	char	*var;
@@ -51,6 +51,6 @@ char	*replace_value(t_token *tk_node, t_data *data)
 		value = NULL;
 		printf("PROUVE QUE TU EXIIIIIIISTES\n");
 	}
-	// quand on aura remplacé, il faudra free var!!!
+	free(var);
 	return (value);
 }

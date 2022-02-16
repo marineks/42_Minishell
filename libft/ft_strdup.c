@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 17:04:29 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/06/25 17:10:48 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/02/16 18:14:12 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,17 @@
 char	*ft_strdup(const char *s1)
 {
 	char	*copy;
+	int		i;
 
-	copy = (char *)malloc(ft_strlen(s1) + 1 * sizeof(char));
+	i = 0;
+	copy = (char *)malloc((ft_strlen(s1) + 1) * sizeof(char));
 	if (!copy)
 		return (NULL);
-	ft_strlcpy(copy, s1, ft_strlen(s1) + 1);
+	while (s1[i] != '\0')
+	{
+		copy[i] = s1[i];
+		i++;
+	}
+	copy[i] = '\0';
 	return (copy);
 }

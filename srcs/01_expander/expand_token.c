@@ -38,7 +38,6 @@ int	expand_tokens(t_data *data, t_token **tk_list)
 {
 	t_token	*tmp;
 
-	(void) data;
 	tmp = *tk_list;
 	while (tmp)
 	{
@@ -53,7 +52,7 @@ int	expand_tokens(t_data *data, t_token **tk_list)
 				if (check_var_state(tmp->str) == TRUE)
 				{
 					printf("J'EXPAND LA VAR tmp->str : %s\n", tmp->str);
-					replace_value(tmp, data);
+					replace_var(&tmp, retrieve_value(tmp, data));
 				}
 			// }
 		}
