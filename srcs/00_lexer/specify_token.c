@@ -36,8 +36,8 @@ int	specify(t_token **tk_list)
 	while (tmp)
 	{
 		check_var_type(&tmp);
-		// check_state_value(&tmp);
-		check_ops_rule(&tmp); // Les règles de grammaire doivent s'appliquer cmd par cmd
+		if (check_ops_rule(&tmp) == FAILURE) // Les règles de grammaire doivent s'appliquer cmd par cmd
+			return (FAILURE);
 		tmp = tmp->next;
 	}
 	print_token(*tk_list);

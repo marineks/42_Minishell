@@ -15,7 +15,7 @@ static int	check_consecutive_ops(t_token *tk_node)
 	{
 		if (tk_node->type == GREATER && tk_node->next->type == PIPE)
 			return (FALSE);
-		if ((tk_node->type >= 4 && tk_node->next->type == PIPE) // un sep avant |
+		if ((tk_node->type >= 4 && tk_node->next->type == PIPE)
 			&& tk_node->next->type != END)
 			return (TRUE);
 	}
@@ -38,7 +38,7 @@ int	check_ops_rule(t_token **tk_list)
 		if (check_consecutive_ops(tmp) == TRUE)
 		{
 			printf("Syntax error near unexpected token `%s'\n", tmp->str);
-			return (ERROR);
+			return (FAILURE);
 		}
 		tmp = tmp->next;
 	}
