@@ -6,7 +6,10 @@
 // 00_LEXER --- tokenize.c
 int		tokenize(t_data *data, char *line);
 int		specify(t_token **tk_list);
-int		apply_grammar(t_token **tk_list);
+int		check_ops_rule(t_token **tk_list);
+
+// 01_EXPANDER --- handle_quotes.c
+int	handle_quotes(t_data *data);
 
 // 04_EXEC --- get_path.c
 char	*grep_path(char *envp[], char *cmd);
