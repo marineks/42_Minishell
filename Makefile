@@ -36,7 +36,9 @@ SRCS = main.c 							\
 	00_lexer/tokenize.c					\
 	00_lexer/specify_token.c			\
 	00_lexer/grammar.c 					\
+	01_expander/expand_token.c   		\
 	01_expander/handle_quotes.c 		\
+	01_expander/retrieve_value.c      	\
 	04_exec/get_path.c 					\
 	05_utils/amsterdam.c				\
 	05_utils/brazil.c					\

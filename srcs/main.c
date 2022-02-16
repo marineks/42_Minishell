@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char *envp[])
 					escape_to_amsterdam(&data);
 					continue;
 				}
-				// expand_tokens(&data, &data.token);
+				expand_tokens(&data, &data.token);
 				handle_quotes(&data);
 				// remove quotes 
 				// do your thing (parse)
