@@ -17,7 +17,11 @@ int	erase_var(t_token **tk_node, char *str)
 	while (str[i])
 	{
 		if (str[i] == '$')
+		{
 			i = i + count_len_var(str) + 1; // pour skip le $
+			if (str[i] == '\0')
+				break ;
+		}
 		new_str[j] = str[i];
 		i++;
 		j++;
