@@ -17,13 +17,11 @@ int	erase_var(t_token **tk_node, char *str)
 	{
 		if (str[i] == '$')
 		{
-			i = i + count_len_var(str) + 1; // pour skip le $
+			i = i + count_len_var(str) + 1;
 			if (str[i] == '\0')
 				break ;
 		}
-		new_str[j] = str[i];
-		i++;
-		j++;
+		new_str[j++] = str[i++];
 	}
 	new_str[j] = '\0';
 	free((*tk_node)->str);
@@ -32,40 +30,41 @@ int	erase_var(t_token **tk_node, char *str)
 	return (SUCCESS);
 }
 
+void	copy_var_value(char *new_str, char *var_value, int *j)
+{
+	int	k;
+
+	k = 0;
+	while (var_value[k])
+	{
+		new_str[*j] = var_value[k];
+		k++;
+		(*j)++;
+	}
+}
+
 int	erase_and_replace(t_token **tk_node, char *str, char *var_value)
 {
 	int i;
 	int j;
-	int	k;
-	int len;
 	char *new_str;
 
 	i = 0;
 	j = 0;
-	k = 0;
-	len = ft_strlen(str) - count_len_var(str) + ft_strlen(var_value);
-	printf("len : %d\n", len);
-	new_str = (char *)malloc(sizeof(char) * len);
+	new_str = (char *)malloc(sizeof(char) * (ft_strlen(str) - count_len_var(str)
+		+ ft_strlen(var_value)));
 	if (!new_str)
 		return (FAILURE);
 	while (str[i])
 	{
 		if (str[i] == '$')
 		{
-			while (var_value[k])
-			{
-				new_str[j] = var_value[k];
-				k++;
-				j++;
-			}
-			i = i + count_len_var(str) + 1; // pour skip le $
+			copy_var_value(new_str, var_value, &j);
+			i = i + count_len_var(str) + 1;
 			if (str[i] == '\0')
-				break ;
-			
+				break ;	
 		}
-		new_str[j] = str[i];
-		i++;
-		j++;
+		new_str[j++] = str[i++];
 	}
 	new_str[j] = '\0';
 	free((*tk_node)->str);
@@ -83,7 +82,6 @@ int	replace_var(t_token **tk_node, char *var_value)
 			free(var_value);
 			return (FAILURE);
 		}
-			
 	}
 	else
 	{
