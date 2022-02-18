@@ -34,13 +34,13 @@ static char	*grep_env_var(t_data *data, char *var)
 	return (str);
 }
 
-char	*retrieve_value(t_token *tk_node, t_data *data)
+char	*retrieve_value(char *str, t_data *data)
 {
 	char	*value;
 	char	*var;
 
-	var = identify_variable(tk_node->str);
-	if (var_exists(data, var) == SUCCESS)
+	var = identify_variable(str);
+	if (var && var_exists(data, var) == SUCCESS)
 	{
 		printf("J'EXISTE\n");
 		value =	grep_env_var(data, var);

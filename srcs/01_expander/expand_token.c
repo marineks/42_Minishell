@@ -10,51 +10,44 @@
 *	original word are removed unless they have been quoted themselves.
 */
 
-static int	check_var_state(char *str)
+void	update_state(t_token **tk_node, char c)
 {
-	int	i;
-	int state;
-
-	i = 0;
-	state = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'' && state == DEFAULT)
-			state = SIMPLE;
-		else if (str[i] == '\"' && state == DEFAULT)
-			state = DOUBLE;
-		else if (str[i] == '\'' && state == SIMPLE)
-			state = DEFAULT;
-		else if (str[i] == '\"' && state == DOUBLE)
-			state = DEFAULT;
-		else if (str[i] == '$' && state == SIMPLE)
-			return (FALSE);
-		i++;
-	}
-	return (TRUE);
+	if (c == '\'' && (*tk_node)->state == DEFAULT)
+		(*tk_node)->state = SIMPLE;
+	else if (c == '\"' && (*tk_node)->state == DEFAULT)
+		(*tk_node)->state = DOUBLE;
+	else if (c == '\'' && (*tk_node)->state == SIMPLE)
+		(*tk_node)->state = DEFAULT;
+	else if (c == '\"' && (*tk_node)->state == DOUBLE)
+		(*tk_node)->state = DEFAULT;
 }
 
 int	expand_tokens(t_data *data, t_token **tk_list)
 {
 	t_token	*tmp;
+	int	i;
 
 	tmp = *tk_list;
 	while (tmp)
 	{
 		if (tmp->type == VAR)
 		{
-			// if (how_many_vars() > 1)
-			// {
-			// 	//dingueriiiiiie
-			// }
-			// else 
-			// {
-				if (check_var_state(tmp->str) == TRUE)
+				i = 0;
+				while (tmp->str[i])
 				{
-					printf("J'EXPAND LA VAR tmp->str : %s\n", tmp->str);
-					replace_var(&tmp, retrieve_value(tmp, data));
+					update_state(&tmp, tmp->str[i]);
+					if ((tmp->str[i] == '$' 
+						&& is_var_compliant(tmp->str[i + 1]) == true)
+						&& (tmp->state == DEFAULT || tmp->state == DOUBLE))
+					{
+						// printf("Valeur de i : %c et son index : %d\n", tmp->str[i], i);
+						// printf("%sje suis appelé /str de i qui va dans retrieve: %s\n%s", RED, tmp->str + i, RESET);
+						replace_var(&tmp, retrieve_value(tmp->str + i, data), i);
+						// printf("%s Apres le replace -> tmp str : %s\n%s", PURPLE, tmp->str, RESET);
+					}
+					else
+						i++;
 				}
-			// }
 		}
 		tmp = tmp->next;
 	}

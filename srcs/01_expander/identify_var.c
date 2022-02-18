@@ -1,12 +1,9 @@
 #include "minishell.h"
 
 
-static bool	is_var_compliant(char c)
+bool	is_var_compliant(char c)
 {
-	// if ((c >= 'A' && c <= 'Z') 
-	// 	|| (c >= '0' && c <= '9')
-	// 	|| c == '_')
-	if (c == ' ' || c == '$' || (c >= '\t' && c <= '\r') || c == '\'' || c == '\"')
+	if (c == ' ' || c == '$' || (c >= '\t' && c <= '\r') || c == '\'' || c == '\"' || c == '\0')
 		return (false);
 	else
 		return (true);
@@ -19,9 +16,12 @@ int	count_len_var(char *str)
 
 	count = 0;
 	i = 0;
+	printf("%sStr dans count_len_var: %s\n%s", GREEN, str, RESET);
 	while (str[i] != '$')
 		i++;
 	i++;
+	if (str[i] >= '0' && str[i] <= '9')
+		return (count + 1);
 	while (str[i])
 	{
 		if(is_var_compliant(str[i]) == false)

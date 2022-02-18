@@ -13,12 +13,13 @@ int		expand_tokens(t_data *data, t_token **tk_list);
 // 01_EXPANDER --- handle_quotes.c
 int		handle_quotes(t_data *data);
 // 01_EXPANDER --- identify_var.c
+bool	is_var_compliant(char c);
 int		count_len_var(char *str);
 char	*identify_variable(char *str);
 // 01_EXPANDER --- replace_var.c
-int		replace_var(t_token **tk_node, char *var_value);
+int		replace_var(t_token **tk_node, char *var_value, int index);
 // 01_EXPANDER --- retrieve_value.c
-char	*retrieve_value(t_token *tk_node, t_data *data);
+char	*retrieve_value(char *str, t_data *data);
 
 // 04_EXEC --- get_path.c
 char	*grep_path(char *envp[], char *cmd);
