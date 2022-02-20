@@ -22,6 +22,19 @@ void	update_state(t_token **tk_node, char c)
 		(*tk_node)->state = DEFAULT;
 }
 
+bool	var_surrounded_by_quotes(char *str, int i)
+{
+	printf("str[i] : %c\n", str[i]);
+	if (i > 0)
+	{
+		if (str[i - 1] == '\"' && str[i + 1] == '\"')
+			return (true);
+		else
+			return (false); 
+	}
+	return (false);
+}
+
 int	expand_tokens(t_data *data, t_token **tk_list)
 {
 	t_token	*tmp;
@@ -36,21 +49,16 @@ int	expand_tokens(t_data *data, t_token **tk_list)
 				while (tmp->str[i])
 				{
 					update_state(&tmp, tmp->str[i]);
-					if ((tmp->str[i] == '$' 
-						&& is_var_compliant(tmp->str[i + 1]) == true)
+					if (tmp->str[i] == '$'
+						&& (tmp->str[i + 1] != '$' || tmp->str[i + 1] != ' ')
+						&& var_surrounded_by_quotes(tmp->str, i) == false
 						&& (tmp->state == DEFAULT || tmp->state == DOUBLE))
-					{
-						// printf("Valeur de i : %c et son index : %d\n", tmp->str[i], i);
-						// printf("%sje suis appelé /str de i qui va dans retrieve: %s\n%s", RED, tmp->str + i, RESET);
-						replace_var(&tmp, retrieve_value(tmp->str + i, data), i);
-						// printf("%s Apres le replace -> tmp str : %s\n%s", PURPLE, tmp->str, RESET);
-					}
+						replace_var(&tmp, retrieve_val(tmp->str + i, data), i);
 					else
 						i++;
 				}
 		}
 		tmp = tmp->next;
 	}
-	//remove_quotes();
 	return (SUCCESS);
 }

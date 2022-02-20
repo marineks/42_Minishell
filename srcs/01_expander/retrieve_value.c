@@ -34,7 +34,7 @@ static char	*grep_env_var(t_data *data, char *var)
 	return (str);
 }
 
-char	*retrieve_value(char *str, t_data *data)
+char	*retrieve_val(char *str, t_data *data)
 {
 	char	*value;
 	char	*var;
@@ -42,14 +42,13 @@ char	*retrieve_value(char *str, t_data *data)
 	var = identify_variable(str);
 	if (var && var_exists(data, var) == SUCCESS)
 	{
-		printf("J'EXISTE\n");
+		// printf("J'EXISTE\n");
 		value =	grep_env_var(data, var);
-		printf("ceci est value : %s\n", value);
 	}
 	else
 	{
 		value = NULL;
-		printf("PROUVE QUE TU EXIIIIIIISTES\n");
+		// printf("PROUVE QUE TU EXIIIIIIISTES\n");
 	}
 	free(var);
 	return (value);

@@ -3,7 +3,7 @@
 
 bool	is_var_compliant(char c)
 {
-	if (c == ' ' || c == '$' || (c >= '\t' && c <= '\r') || c == '\'' || c == '\"' || c == '\0')
+	if (c == ' ' || c == '$' || c == '\0' || c == '\'' || c == '\"' || (c >= '\t' && c <= '\r'))
 		return (false);
 	else
 		return (true);
@@ -16,7 +16,6 @@ int	count_len_var(char *str)
 
 	count = 0;
 	i = 0;
-	printf("%sStr dans count_len_var: %s\n%s", GREEN, str, RESET);
 	while (str[i] != '$')
 		i++;
 	i++;
@@ -51,11 +50,9 @@ char	*identify_variable(char *str)
 		i++;
 	}
 	len = count_len_var(str);
-	printf("len pour compter char de la VAR : %d\n", len);
 	var = ft_substr(str, start, len);
 	if (!var)
 		return (NULL);
 	var = ft_strjoin(var, "=");
-	printf("variable identifiée: %s\n", var);
 	return (var);
 }

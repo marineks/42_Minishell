@@ -10,7 +10,6 @@ int	erase_var(t_token **tk_node, char *str, int index)
 	i = 0;
 	j = 0;
 	len = ft_strlen(str) - count_len_var(str + index);
-	// printf("%sErase_var - strlen de str : %zu et count len var de $: %d | Len: %d | index %d\n%s", BLUE, ft_strlen(str), count_len_var(str), len, index, RESET);
 	new_str = (char *)malloc(sizeof(char) * len + 1);
 	if (!new_str)
 		return (FAILURE);
@@ -27,7 +26,7 @@ int	erase_var(t_token **tk_node, char *str, int index)
 	new_str[j] = '\0';
 	free((*tk_node)->str);
 	(*tk_node)->str = new_str;
-	printf("str dans le nod : %s\n", (*tk_node)->str);
+	// printf("str dans le nod : %s\n", (*tk_node)->str);
 	return (SUCCESS);
 }
 
@@ -52,8 +51,8 @@ int	erase_and_replace(t_token **tk_node, char *str, char *var_value, int index)
 
 	i = 0;
 	j = 0;
-	new_str = (char *)malloc(sizeof(char) * (ft_strlen(str) - count_len_var(str + index)
-		+ ft_strlen(var_value)));
+	new_str = (char *)malloc(sizeof(char) *
+		(ft_strlen(str) - count_len_var(str + index) + ft_strlen(var_value)));
 	if (!new_str)
 		return (FAILURE);
 	while (str[i])
@@ -70,7 +69,7 @@ int	erase_and_replace(t_token **tk_node, char *str, char *var_value, int index)
 	new_str[j] = '\0';
 	free((*tk_node)->str);
 	(*tk_node)->str = new_str;
-	printf("str dans le nod : %s\n", (*tk_node)->str);
+	// printf("str dans le nod : %s\n", (*tk_node)->str);
 	return (SUCCESS);
 }
 
