@@ -1,11 +1,10 @@
 #include "minishell.h"
 
-void	print_token(t_token *lst);
-
 int	main(int argc, char **argv, char *envp[])
 {
 	t_data data;
 
+	ft_memset(&data, 0, sizeof(t_data));
 	(void) argv;
 	if (argc != 1)
 		printf("Command usage: ./minishell\n");
@@ -27,7 +26,8 @@ int	main(int argc, char **argv, char *envp[])
 				}
 				expand_tokens(&data, &data.token);
 				handle_quotes(&data);
-				print_token(data.token);
+				tokenize_var(&data);
+				//print_token(data.token);
 				// do your thing (parse)
 				// do your thing bis (redirections, then exec)
 				escape_to_amsterdam(&data);

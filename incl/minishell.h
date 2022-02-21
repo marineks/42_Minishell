@@ -23,6 +23,8 @@ int		remove_quotes(t_token **tk_node);
 int		replace_var(t_token **tk_node, char *var_value, int index);
 // 01_EXPANDER --- retrieve_value.c
 char	*retrieve_val(char *str, t_data *data);
+// 01_EXPANDER --- tokenize_var.c
+int		tokenize_var(t_data *data);
 
 // 04_EXEC --- get_path.c
 char	*grep_path(char *envp[], char *cmd);
@@ -40,6 +42,7 @@ t_token	*ft_lstnew_token(char *str, int type, int state);
 void	ft_lstadd_back_token(t_token **alst, t_token *new_node);
 void	ft_lstdelone_token(t_token *lst, void (*del)(void *));
 void	ft_lstclear_token(t_token **lst, void (*del)(void *));
+t_token	*insert_lst_between(t_token **head, t_token *to_del, t_token *insert);
 void	print_token(t_token *lst);
 
 #endif

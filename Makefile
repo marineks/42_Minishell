@@ -21,6 +21,7 @@ LIBFT_DIR = libft
 #			FLAGS COMPILATION			#
 #########################################
 CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS += -fsanitize=address
 IFLAGS := -I incl/
 LFLAGS := -L$(LIBFT_DIR) -lft
 RFLAGS := -lreadline
@@ -42,6 +43,7 @@ SRCS = main.c 							\
 	01_expander/remove_quotes.c 		\
 	01_expander/replace_var.c			\
 	01_expander/retrieve_value.c      	\
+	01_expander/tokenize_var.c 			\
 	04_exec/get_path.c 					\
 	05_utils/amsterdam.c				\
 	05_utils/brazil.c					\
