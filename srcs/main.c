@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char *envp[])
 				expand_tokens(&data, &data.token);
 				handle_quotes(&data);
 				tokenize_var(&data);
-				//print_token(data.token);
+				print_token(data.token);
 				// do your thing (parse)
 				// do your thing bis (redirections, then exec)
 				escape_to_amsterdam(&data);

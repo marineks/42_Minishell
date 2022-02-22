@@ -89,20 +89,20 @@ void	ft_lstclear_token(t_token **lst, void (*del)(void *))
 
 t_token	*insert_lst_between(t_token **head, t_token *to_del, t_token *insert)
 {
-	t_token	*_head;
-	_head = *head;
-	if (_head == NULL || _head == to_del)
+	t_token	*tmp;
+	tmp = *head;
+	if (tmp == NULL || tmp == to_del)
 		*head = insert;
 	else
 	{
-		while (_head != to_del)
-			_head = _head->next;
-		insert->prev = _head->prev;
-		_head->prev->next = insert;
+		while (tmp != to_del)
+			tmp = tmp->next;
+		insert->prev = tmp->prev;
+		tmp->prev->next = insert;
 		while (insert->next)
 			insert = insert->next;
-		_head->next->prev = insert;
-		insert->next = _head->next;
+		tmp->next->prev = insert;
+		insert->next = tmp->next;
 	}
 	free(to_del->str);
 	free(to_del);
