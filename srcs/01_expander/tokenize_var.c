@@ -19,15 +19,15 @@ static char	*copy_word(char *str, int end, int start)
 	return (new_word);
 }
 
-static t_token	*split_var(char *str)
+static t_token	*split_var(char *str, t_token *tk_lst)
 {
 	int		i;
 	int		start;
 	char	*new_word;
-	t_token	*tk_lst;
-
+	
 	i = 0;
-	tk_lst = NULL;
+	if (!str[i])
+		ft_lstadd_back_token(&tk_lst, ft_lstnew_token(NULL, VAR, DEFAULT));
 	while (str[i])
 	{
 		if (str[i] == ' ')
@@ -52,14 +52,17 @@ int	tokenize_var(t_data *data)
 {
 	t_token	*tmp;
 	t_token	*new_lst;
+	t_token	*tk_lst;
 
 	tmp = data->token;
 	new_lst = NULL;
+	tk_lst = NULL;
 	while (tmp)
 	{
 		if (tmp->type == VAR)
 		{
-			new_lst = split_var(tmp->str);
+			new_lst = split_var(tmp->str, tk_lst);
+			print_token(data->token);
 			tmp = insert_lst_between(&data->token, tmp, new_lst);
 		}
 		tmp = tmp->next;
