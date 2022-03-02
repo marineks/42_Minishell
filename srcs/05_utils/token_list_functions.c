@@ -60,15 +60,17 @@ t_token	*insert_lst_between(t_token **head, t_token *to_del, t_token *insert)
 	t_token	*tmp;
 	tmp = *head;
 
-	// printf("HEAD : |%s|\n", (*head)->str);
-	// printf("TO_DEL : |%s|\n", to_del->str);
-	// printf("INSERT : |%s|\n", insert->str);
+	printf("HEAD : |%s|\n", (*head)->str);
+	printf("TO_DEL : |%s|\n", to_del->str);
+	printf("INSERT : |%s|\n", insert->str);
 	if (tmp == NULL)
 		*head = insert;
 	else if (tmp == to_del)
 	{
 		*head = insert;
 		insert->next = tmp->next;
+		if (tmp->next != NULL)
+			tmp->next->prev = insert;
 	}
 	else
 	{
