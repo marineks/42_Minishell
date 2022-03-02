@@ -10,7 +10,7 @@
 *	original word are removed unless they have been quoted themselves.
 */
 
-void	update_state(t_token **tk_node, char c)
+static void	update_state(t_token **tk_node, char c)
 {
 	if (c == '\'' && (*tk_node)->state == DEFAULT)
 		(*tk_node)->state = SIMPLE;

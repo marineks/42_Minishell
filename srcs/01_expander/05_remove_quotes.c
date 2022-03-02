@@ -55,7 +55,7 @@ int	remove_quotes(t_token **tk_node)
 		new_line[j++] = (*tk_node)->str[i++];
 	}
 	new_line[j] = '\0';
-	printf("newline : %s\n", new_line);
+	// printf("newline : %s\n", new_line);
 	free((*tk_node)->str);
 	(*tk_node)->str = new_line;
 	return (SUCCESS);

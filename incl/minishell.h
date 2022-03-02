@@ -8,22 +8,22 @@ int		tokenize(t_data *data, char *line);
 int		specify(t_token **tk_list);
 int		check_ops_rule(t_token **tk_list);
 
-// 01_EXPANDER --- expand_token.c
+// 01_EXPANDER --- 00_expand_token.c
 int		expand_tokens(t_data *data, t_token **tk_list);
-// 01_EXPANDER --- handle_quotes.c
-int		count_length(char *str, int count, int i);
-int		handle_quotes(t_data *data);
-// 01_EXPANDER --- identify_var.c
+// 01_EXPANDER --- 01_retrieve_value.c
+char	*retrieve_val(char *str, t_data *data);
+// 01_EXPANDER --- 02_identify_var.c
 bool	is_var_compliant(char c);
 int		count_len_var(char *str);
 char	*identify_variable(char *str);
-// 01_EXPANDER --- remove_quotes.c
-int		remove_quotes(t_token **tk_node);
-// 01_EXPANDER --- replace_var.c
+// 01_EXPANDER --- 03_replace_var.c
 int		replace_var(t_token **tk_node, char *var_value, int index);
-// 01_EXPANDER --- retrieve_value.c
-char	*retrieve_val(char *str, t_data *data);
-// 01_EXPANDER --- tokenize_var.c
+// 01_EXPANDER --- 04_handle_quotes.c
+int		count_length(char *str, int count, int i);
+int		handle_quotes(t_data *data);
+// 01_EXPANDER --- 05_remove_quotes.c
+int		remove_quotes(t_token **tk_node);
+// 01_EXPANDER --- 06_tokenize_var.c
 int		tokenize_var(t_data *data);
 
 // 04_EXEC --- get_path.c

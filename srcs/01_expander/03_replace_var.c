@@ -75,7 +75,6 @@ int	erase_and_replace(t_token **tk_node, char *str, char *var_value, int index)
 
 int	replace_var(t_token **tk_node, char *var_value, int index)
 {
-	printf("je suis dans replace var\n");
 	if (var_value == NULL)
 	{
 		if (erase_var(tk_node, (*tk_node)->str, index) == FAILURE)
