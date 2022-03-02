@@ -22,9 +22,16 @@ void	update_state(t_token **tk_node, char c)
 		(*tk_node)->state = DEFAULT;
 }
 
-bool	var_surrounded_by_quotes(char *str, int i)
+static bool	is_next_char_a_sep(char c)
 {
-	printf("str[i] : %c\n", str[i]);
+	if (c == '$' || c == ' ' || c == '=' || c == '\0')
+		return (true);
+	else
+		return (false);
+}
+
+static bool	var_surrounded_by_quotes(char *str, int i)
+{
 	if (i > 0)
 	{
 		if (str[i - 1] == '\"' && str[i + 1] == '\"')
@@ -50,9 +57,10 @@ int	expand_tokens(t_data *data, t_token **tk_list)
 				{
 					update_state(&tmp, tmp->str[i]);
 					if (tmp->str[i] == '$'
-						&& (tmp->str[i + 1] != '$' || tmp->str[i + 1] != ' ')
+						&& is_next_char_a_sep(tmp->str[i + 1]) == false
 						&& var_surrounded_by_quotes(tmp->str, i) == false
-						&& (tmp->state == DEFAULT || tmp->state == DOUBLE))
+						&& (tmp->state == DEFAULT || tmp->state == DOUBLE)
+						)
 						replace_var(&tmp, retrieve_val(tmp->str + i, data), i);
 					else
 						i++;

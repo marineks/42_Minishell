@@ -3,7 +3,9 @@
 
 bool	is_var_compliant(char c)
 {
-	if (c == ' ' || c == '$' || c == '\0' || c == '\'' || c == '\"' || (c >= '\t' && c <= '\r'))
+	if (c == ' ' || c == '$' || c == '\0' || c == '\'' || c == '\"' 
+		|| (c >= '\t' && c <= '\r')
+		|| c == '=' || c == '[' || c == ']' || c == '{' || c == '}')
 		return (false);
 	else
 		return (true);
