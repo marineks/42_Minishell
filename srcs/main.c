@@ -4,8 +4,8 @@ int	main(int argc, char **argv, char *envp[])
 {
 	t_data data;
 
-	ft_memset(&data, 0, sizeof(t_data));
 	(void) argv;
+	ft_memset(&data, 0, sizeof(t_data));
 	if (argc != 1)
 		printf("Command usage: ./minishell\n");
 	else

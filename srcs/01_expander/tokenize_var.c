@@ -19,6 +19,19 @@ static char	*copy_word(char *str, int end, int start)
 	return (new_word);
 }
 
+
+static int	create_empty_str_in_new_node(t_token **tk_lst)
+{
+	char *str;
+
+	str = (char *)malloc(sizeof(char) * 1);
+	if (!str)
+		return (FAILURE);
+	str[0] = '\0';
+	ft_lstadd_back_token(tk_lst, ft_lstnew_token(str, VAR, DEFAULT));
+	return (SUCCESS);
+}
+
 static t_token	*split_var(char *str, t_token *tk_lst)
 {
 	int		i;
@@ -27,7 +40,7 @@ static t_token	*split_var(char *str, t_token *tk_lst)
 	
 	i = 0;
 	if (!str[i])
-		ft_lstadd_back_token(&tk_lst, ft_lstnew_token(NULL, VAR, DEFAULT));
+		create_empty_str_in_new_node(&tk_lst);
 	while (str[i])
 	{
 		if (str[i] == ' ')
@@ -62,7 +75,7 @@ int	tokenize_var(t_data *data)
 		if (tmp->type == VAR)
 		{
 			new_lst = split_var(tmp->str, tk_lst);
-			print_token(data->token);
+			// print_token(data->token);
 			tmp = insert_lst_between(&data->token, tmp, new_lst);
 		}
 		tmp = tmp->next;
