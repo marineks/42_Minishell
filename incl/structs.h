@@ -22,9 +22,15 @@ typedef struct	s_pipe
 
 typedef struct	s_cmd 
 {	
-	char			**cmd;
+	char			*cmd;
+	char			**flags;
+	char			**arg_env;
+	bool			builtin;
+	bool			redir_in;
+	bool			redir_out;
 	int				fd_in;
 	int				fd_out;
+	int				error;
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }				t_cmd;

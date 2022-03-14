@@ -47,6 +47,7 @@ SRCS = main.c 							\
 	04_exec/get_path.c 					\
 	05_utils/amsterdam.c				\
 	05_utils/brazil.c					\
+	05_utils/cmd_list_functions.c		\
 	05_utils/exit_whisperer.c			\
 	05_utils/init_struct.c				\
 	05_utils/token_list_functions.c		\
