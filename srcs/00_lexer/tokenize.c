@@ -34,7 +34,7 @@ int	is_separator(char *line, int i)
 	else if (line[i] == '|')
 		return (PIPE);
 	else if (line[i] == '<' && line[i + 1] == '<')
-		return (DLESSER);
+		return (HEREDOC);
 	else if (line[i] == '>' && line[i + 1] == '>')
 		return (DGREATER);
 	else if (line[i] == '<')
@@ -73,7 +73,7 @@ int	stock_separator(t_token **tk_list, char *line, int index, int type)
 	char *sep;
 
 	i = 0;
-	if (type == DGREATER || type == DLESSER)
+	if (type == DGREATER || type == HEREDOC)
 	{
 		sep = (char *)malloc(sizeof(char) * 3);
 		if (!sep)
@@ -132,11 +132,11 @@ int	tokenize(t_data *data, char *line)
 			{
 				if (i != 0 && is_separator(line, i - 1) == 0)
 					stock_word(&data->token, line, i, start);
-				if (type == DGREATER || type == DLESSER || type == PIPE
+				if (type == DGREATER || type == HEREDOC || type == PIPE
 					|| type == LESSER || type == GREATER || type == END)
 				{
 					stock_separator(&data->token, line, i, type);
-					if (type == DGREATER || type == DLESSER)
+					if (type == DGREATER || type == HEREDOC)
 						i++;
 				}
 				start = i + 1;

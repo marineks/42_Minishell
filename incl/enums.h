@@ -24,7 +24,7 @@ enum e_tk_types {
 	PIPE,		// e.g ' | '
 	LESSER, 	// e.g '<'
 	GREATER, 	// e.g '>'
-	DLESSER, 	// e.g '<<' (D stands for double)
+	HEREDOC, 	// e.g '<<' (D stands for double)
 	DGREATER, 	// e.g '>>'
 	END
 };

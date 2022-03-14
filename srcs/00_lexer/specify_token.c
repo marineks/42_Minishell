@@ -13,7 +13,7 @@ static void	check_var_type(t_token **tk_node)
 	i = 0;
 	while ((*tk_node)->str[i])
 	{
-		if ((*tk_node)->str[i] == '$')
+		if ((*tk_node)->str[i] == '$' && (*tk_node)->prev->type != HEREDOC)
 		{
 			(*tk_node)->type = VAR;
 			return ;
