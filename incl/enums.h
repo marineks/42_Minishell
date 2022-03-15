@@ -22,8 +22,8 @@ enum e_tk_types {
 	WORD,		// e.g. abc , "abc" , 'abc'
 	VAR,		// e.g. $abc
 	PIPE,		// e.g ' | '
-	LESSER, 	// e.g '<'
-	GREATER, 	// e.g '>'
+	REDIR_IN, 	// e.g '<'
+	REDIR_OUT, 	// e.g '>'
 	HEREDOC, 	// e.g '<<' (D stands for double)
 	DGREATER, 	// e.g '>>'
 	END

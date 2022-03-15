@@ -38,9 +38,9 @@ int	is_separator(char *line, int i)
 	else if (line[i] == '>' && line[i + 1] == '>')
 		return (DGREATER);
 	else if (line[i] == '<')
-		return (LESSER);
+		return (REDIR_IN);
 	else if (line[i] == '>')
-		return (GREATER);
+		return (REDIR_OUT);
 	else if (line[i] == '\0')
 		return (END);
 	else
@@ -133,7 +133,7 @@ int	tokenize(t_data *data, char *line)
 				if (i != 0 && is_separator(line, i - 1) == 0)
 					stock_word(&data->token, line, i, start);
 				if (type == DGREATER || type == HEREDOC || type == PIPE
-					|| type == LESSER || type == GREATER || type == END)
+					|| type == REDIR_IN || type == REDIR_OUT || type == END)
 				{
 					stock_separator(&data->token, line, i, type);
 					if (type == DGREATER || type == HEREDOC)

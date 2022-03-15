@@ -3,7 +3,7 @@
 /**
  * @brief Checks whether there are two consecutive operators or more in the 
  * 		  chained list of tokens.
- * 		  Small exception : the case where the operators are PIPE and GREATER
+ * 		  Small exception : the case where the operators are PIPE and REDIR_OUT
  *		  i.e "echo coucou |>test1.txt"
 		  Nb: Why >= 4 ? Because the operators' enums begin from PIPE (4).
  * @param tk_node: A pointer to a node of the linked list of tokens.
@@ -13,7 +13,7 @@ static int	check_consecutive_ops(t_token *tk_node)
 {
 	if (tk_node->next)
 	{
-		if (tk_node->type == GREATER && tk_node->next->type == PIPE)
+		if (tk_node->type == REDIR_OUT && tk_node->next->type == PIPE)
 			return (FALSE);
 		if ((tk_node->type >= 4 && tk_node->next->type == PIPE)
 			&& tk_node->next->type != END)

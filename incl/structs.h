@@ -34,10 +34,10 @@ typedef struct	s_infos
 
 typedef struct	s_cmd
 {
-	bool	is_pipe;
-	t_infos	infos;
-	t_cmd	*left;
-	t_cmd	*right;
+	bool			is_pipe;
+	t_infos			infos;
+	struct	s_cmd	*left;
+	struct	s_cmd	*right;
 }				t_cmd;
 
 typedef struct	s_data 
@@ -45,9 +45,9 @@ typedef struct	s_data
 	int		nb_cmd;
 	char 	**envp;
 	char	*line;
-	// t_pipe	*pipe;
-	// char	**cmd_lines;
-	// char	**cmd_tab;
+	t_pipe	*pipe;
+	char	**cmd_lines;
+	char	**cmd_tab;
 	t_token	*token;
 	t_cmd	*cmd;
 }				t_data;

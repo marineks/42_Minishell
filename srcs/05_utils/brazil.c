@@ -28,6 +28,8 @@ void	escape_to_brazil(t_data *data)
 		free(data->line);
 	if (data->token)
 		ft_lstclear_token(&data->token, &free);
+	if (data->cmd)
+		ft_lstclear_cmd(&data->cmd, &free);
 	// free_t_pipe(data);
 	// rl_clear_history ();
 	clear_history ();

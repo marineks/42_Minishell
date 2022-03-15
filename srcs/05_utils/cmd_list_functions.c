@@ -36,6 +36,7 @@ void	ft_lstadd_back_cmd(t_cmd **alst, t_cmd *new_node)
 
 void	ft_lstdelone_cmd(t_cmd *lst, void (*del)(void *))
 {
+	(void)(*del);
 	// if (del && lst)
 	// 	(*del)(lst->infos);
 	// boucle special pour free les doubles tableaux
@@ -69,7 +70,7 @@ void	print_cmd(t_cmd *lst)
 	while (tmp)
 	{
 		// if (tmp->left == NULL)
-		printf("is pipe : %d - LEFT : %p - RIGHT: %p\n", i, tmp->is_pipe, tmp->left, tmp->right);
+		printf("is pipe : %d - LEFT : %p - RIGHT: %p\n", tmp->is_pipe, tmp->left, tmp->right);
 		printf("INFOS:\nCmd : |%s|\nBuiltin : %d\nRedir_in : %dRedir_out : %d\nFd_in : %d\nFd_out : %d\n", tmp->infos.cmd, tmp->infos.builtin, tmp->infos.redir_in, tmp->infos.redir_out, tmp->infos.fd_in, tmp->infos.fd_out);
 		printf("----------------------------------------------------------\n");
 		tmp = tmp->right;
