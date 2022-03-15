@@ -7,17 +7,10 @@ t_cmd	*ft_lstnew_cmd()
 	new_block = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!(new_block))
 		return (NULL);
-	new_block->cmd = NULL;
-	new_block->flags = NULL;
-	new_block->arg_env = NULL;
-	new_block->builtin = false;
-	new_block->redir_in = false;
-	new_block->redir_out = false;
-	new_block->fd_in = 0;
-	new_block->fd_out = 0;
-	new_block->error = 0;
-	new_block->prev = NULL;
-	new_block->next = NULL;
+	new_block->is_pipe = false;
+	// new_block->infos = NULL;
+	new_block->left = NULL;
+	new_block->right = NULL;
 	return (new_block);
 }
 
@@ -34,17 +27,17 @@ void	ft_lstadd_back_cmd(t_cmd **alst, t_cmd *new_node)
 	}
 	if (alst && *alst && new_node)
 	{
-		while (start->next != NULL)
-			start = start->next;
-		start->next = new_node;
-		new_node->prev = start;
+		while (start->right != NULL)
+			start = start->right;
+		start->right = new_node;
+		new_node->left = start;
 	}
 }
 
 void	ft_lstdelone_cmd(t_cmd *lst, void (*del)(void *))
 {
-	if (del && lst)
-		(*del)(lst->cmd);
+	// if (del && lst)
+	// 	(*del)(lst->infos);
 	// boucle special pour free les doubles tableaux
 		// (*del)(lst->flags);
 		// (*del)(lst->arg_env);
@@ -59,7 +52,7 @@ void	ft_lstclear_cmd(t_cmd **lst, void (*del)(void *))
 	tmp = NULL;
 	while (*lst != NULL)
 	{
-		tmp = (*lst)->next;
+		tmp = (*lst)->right;
 		ft_lstdelone_cmd(*lst, del);
 		*lst = tmp;
 	}
@@ -68,18 +61,18 @@ void	ft_lstclear_cmd(t_cmd **lst, void (*del)(void *))
 void	print_cmd(t_cmd *lst)
 {
 	t_cmd *tmp;
-	int i = 0;
+	int i;
 	
-	printf("lst = %p\n", lst);
 	tmp = lst;
+	i = 0;
+	printf("DETAILS LIST CMDS\n");
 	while (tmp)
 	{
-		// if (tmp->prev == NULL)
-		printf("NODE : %d - TYPE : %d - STATE : %d - Str: |%s|\n", i, tmp->type, tmp->state, tmp->str);
-		// else
-			// printf("Current str: %s ~ Previous str: %s\n", tmp->str, tmp->prev->str);
+		// if (tmp->left == NULL)
+		printf("is pipe : %d - LEFT : %p - RIGHT: %p\n", i, tmp->is_pipe, tmp->left, tmp->right);
+		printf("INFOS:\nCmd : |%s|\nBuiltin : %d\nRedir_in : %dRedir_out : %d\nFd_in : %d\nFd_out : %d\n", tmp->infos.cmd, tmp->infos.builtin, tmp->infos.redir_in, tmp->infos.redir_out, tmp->infos.fd_in, tmp->infos.fd_out);
 		printf("----------------------------------------------------------\n");
-		tmp = tmp->next;
+		tmp = tmp->right;
 		i++;
 	}
 }

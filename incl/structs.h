@@ -17,10 +17,9 @@ typedef struct	s_pipe
 	t_list	*lst;
 	char 	**cmd;
 	int 	nb_pipes;
-
 }				t_pipe;
 
-typedef struct	s_cmd 
+typedef struct	s_infos 
 {	
 	char			*cmd;
 	char			**flags;
@@ -31,8 +30,14 @@ typedef struct	s_cmd
 	int				fd_in;
 	int				fd_out;
 	int				error;
-	struct s_cmd	*prev;
-	struct s_cmd	*next;
+}				t_infos;
+
+typedef struct	s_cmd
+{
+	bool	is_pipe;
+	t_infos	infos;
+	t_cmd	*left;
+	t_cmd	*right;
 }				t_cmd;
 
 typedef struct	s_data 
@@ -40,12 +45,11 @@ typedef struct	s_data
 	int		nb_cmd;
 	char 	**envp;
 	char	*line;
-	t_pipe	*pipe;
-	char	**cmd_lines;
+	// t_pipe	*pipe;
+	// char	**cmd_lines;
+	// char	**cmd_tab;
 	t_token	*token;
-	char	**cmd_tab;
 	t_cmd	*cmd;
-
 }				t_data;
 
 #endif
