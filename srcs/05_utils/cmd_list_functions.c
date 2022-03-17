@@ -1,13 +1,13 @@
 #include "minishell.h"
 
-t_cmd	*ft_lstnew_cmd()
+t_cmd	*ft_lstnew_cmd(bool value)
 {
 	t_cmd	*new_block;
 
 	new_block = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!(new_block))
 		return (NULL);
-	new_block->is_pipe = false;
+	new_block->is_pipe = value;
 	// new_block->infos = NULL;
 	new_block->left = NULL;
 	new_block->right = NULL;

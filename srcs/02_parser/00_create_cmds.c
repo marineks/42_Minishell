@@ -10,11 +10,17 @@ void	parse_word(t_data *data, t_token **tk_lst)
 
 	tmp = *tk_lst;
 	(void)data;
+	// lstaddback de struct cmd
+	ft_lstadd_back_cmd(&data->cmd, ft_lstnew_cmd(false));
 	while (tmp->type != PIPE && tmp->type != END)
 	{
 		printf("je suis dans la boucle de parse_word\n");
+		printf("tmp : %d, tmp de next : %d\n", tmp->type, tmp->next->type);
+
+
+		// remplir infos de t infos
 		tmp = tmp->next;
-		// &tmp = (*tmp)->next;
+		// &tmp = (*tmp)->next;p
 	}
 	*tk_lst = tmp;
 	// *tk_lst = (*tk_lst)->next;
@@ -26,7 +32,7 @@ void	create_cmds(t_data *data, t_token *token)
 
 	tmp = token;
 	printf("je rentre dans create cmd\n");
-	while (tmp)
+	while (tmp->next != NULL)
 	{
 		printf("tmp actuel : TYPE : %d - STR : |%s|\n", tmp->type, tmp->str);
 		if (tmp->type == WORD)
