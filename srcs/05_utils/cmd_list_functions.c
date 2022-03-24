@@ -59,6 +59,13 @@ void	ft_lstclear_cmd(t_cmd **lst, void (*del)(void *))
 	}
 }
 
+t_cmd	*ft_lstlast_cmd(t_cmd *cmd)
+{
+	while (cmd->right != NULL)
+		cmd = cmd->right;
+	return (cmd);
+}
+
 void	print_cmd(t_cmd *lst)
 {
 	t_cmd *tmp;
