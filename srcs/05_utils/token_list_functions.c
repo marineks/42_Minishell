@@ -10,11 +10,11 @@ t_token	*ft_lstnew_token(char *str, int type, int state)
 	new_block->str = str;
 	new_block->type = type;
 	new_block->state = state;
+	new_block->join = false;
 	new_block->prev = NULL;
 	new_block->next = NULL;
 	return (new_block);
 }
-
 
 void	ft_lstadd_back_token(t_token **alst, t_token *new_node)
 {
@@ -37,7 +37,7 @@ void	ft_lstadd_back_token(t_token **alst, t_token *new_node)
 
 void	ft_lstdelone_token(t_token *lst, void (*del)(void *))
 {
-	if (del && lst)
+	if (del && lst && lst->str)
 		(*del)(lst->str);
 	free(lst);
 }

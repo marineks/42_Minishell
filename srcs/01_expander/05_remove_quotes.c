@@ -58,5 +58,6 @@ int	remove_quotes(t_token **tk_node)
 	// printf("newline : %s\n", new_line);
 	free((*tk_node)->str);
 	(*tk_node)->str = new_line;
+	(*tk_node)->join = true;
 	return (SUCCESS);
 }

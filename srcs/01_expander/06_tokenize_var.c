@@ -19,7 +19,6 @@ static char	*copy_word(char *str, int end, int start)
 	return (new_word);
 }
 
-
 static int	create_empty_str_in_new_node(t_token **tk_lst)
 {
 	char *str;
@@ -61,6 +60,18 @@ static t_token	*split_var(char *str, t_token *tk_lst)
 	return (tk_lst);
 }
 
+void	set_new_lst_to_true(t_token **new_lst)
+{
+	t_token *tmp;
+
+	tmp = *new_lst;
+	while (tmp)
+	{
+		tmp->join = true;
+		tmp = tmp->next;
+	}
+}
+
 int	tokenize_var(t_data *data)
 {
 	t_token	*tmp;
@@ -76,6 +87,8 @@ int	tokenize_var(t_data *data)
 		{
 			new_lst = split_var(tmp->str, tk_lst);
 			print_token(data->token);
+			if (tmp->join == true)
+				set_new_lst_to_true(&new_lst);
 			tmp = insert_lst_between(&data->token, tmp, new_lst);
 		}
 		tmp = tmp->next;
