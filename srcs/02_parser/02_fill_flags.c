@@ -11,7 +11,7 @@ char	*join_vars(t_token **tk_node)
 	
 	tmp = *tk_node;
 	str = tmp->str;
-	while (tmp->type == VAR && tmp->next->type == VAR)
+	while (tmp->type == VAR && (tmp->next->type == VAR && tmp->next->join == true))
 	{
 		str = ft_strjoin(tmp->str, tmp->next->str);
 		tmp = tmp->next;
@@ -20,10 +20,56 @@ char	*join_vars(t_token **tk_node)
 	return (str);
 }
 
+int	count_flags(t_token *tmp)
+{
+	int i;
+
+	i = 0;
+	while (tmp->type == WORD || tmp->type == VAR)
+	{
+		if (tmp->type == VAR && tmp->join == true)
+		{
+			while (tmp->type == VAR && tmp->join == true)
+				tmp = tmp->next;
+			i++;
+		}
+		else
+		{
+			i++;
+			tmp = tmp->next;
+		}
+	}
+	return (i);
+}
+
 int	echo_mode(t_token **tk_node, t_cmd *last_cmd)
 {
-	(void)tk_node;
-	(void)last_cmd;
+	int nb_flags;
+	t_token	*tmp;
+	int i;
+
+	tmp = *tk_node;
+	nb_flags = count_flags(tmp);
+	printf("nb_flags dans echo mode : %d\n", nb_flags);
+	last_cmd->infos.flags = (char **)malloc(sizeof(char *) * (nb_flags + 1));
+	if (!last_cmd->infos.flags)
+		return (FAILURE);
+	i = 0;
+	while (tmp->type == WORD || tmp->type == VAR)
+	{
+		if (tmp->join == true)
+		{
+			last_cmd->infos.flags[i] = tmp->str;
+			printf("je suis passé dans le join == true\n");
+		}
+		else
+			last_cmd->infos.flags[i] = tmp->str;
+		printf("flags :\ni : %d - str : |%s|\n", i, last_cmd->infos.flags[i]);
+		i++;
+		tmp = tmp->next;
+	}
+	last_cmd->infos.flags[i] = NULL;
+	*tk_node = tmp;
 	return (SUCCESS);
 }
 
@@ -51,6 +97,7 @@ int	default_mode(t_token **tk_node, t_cmd *last_cmd)
 		i++;
 		tmp = tmp->next;
 	}
+	last_cmd->infos.flags[i] = NULL;
 	*tk_node = tmp;
 	return (SUCCESS);
 }
