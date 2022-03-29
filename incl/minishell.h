@@ -28,6 +28,11 @@ int		tokenize_var(t_data *data);
 
 // 02_PARSER --- 00_create_cmds.c
 void	create_cmds(t_data *data, t_token *token);
+// 02_PARSER --- 01_parse_word.c
+void	parse_word(t_data *data, t_token **tk_lst);
+// 02_PARSER --- 02_fill_flags.c
+int		fill_flags(t_token	**tk_node, t_cmd *last_cmd);
+
 
 // 04_EXEC --- get_path.c
 char	*grep_path(char *envp[], char *cmd);

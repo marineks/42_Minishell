@@ -45,6 +45,8 @@ SRCS = main.c 							\
 	01_expander/05_remove_quotes.c 		\
 	01_expander/06_tokenize_var.c 		\
 	02_parser/00_create_cmds.c			\
+	02_parser/01_parse_word.c			\
+	02_parser/02_fill_flags.c			\
 	04_exec/get_path.c 					\
 	05_utils/amsterdam.c				\
 	05_utils/brazil.c					\
