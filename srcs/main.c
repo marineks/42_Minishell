@@ -17,13 +17,16 @@ int	main(int argc, char **argv, char *envp[])
 				if (check_exit(data.line) == SUCCESS)
 					break;
 				add_history(data.line);
+				printf("youhouuuu\n");
 				if (tokenize(&data, data.line) == FAILURE)
 					printf("tokenize pb\n");
+				printf("HEYYYY\n");
 				if (specify(&data.token) == FAILURE)
 				{
 					escape_to_amsterdam(&data);
 					continue;
 				}
+				printf("test\n");
 				expand_tokens(&data, &data.token);
 				handle_quotes(&data);
 				tokenize_var(&data);
