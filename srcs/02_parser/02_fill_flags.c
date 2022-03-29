@@ -20,14 +20,20 @@ char	*join_vars(t_token **tk_node)
 	return (str);
 }
 
-int	fill_flags(t_token	**tk_node, t_cmd *last_cmd)
+int	echo_mode(t_token **tk_node, t_cmd *last_cmd)
+{
+	(void)tk_node;
+	(void)last_cmd;
+	return (SUCCESS);
+}
+
+int	default_mode(t_token **tk_node, t_cmd *last_cmd)
 {
 	int i;
 	t_token	*tmp;
 
 	i = 0;
 	tmp = *tk_node;
-	// ici on compte le nombre de lignes de flag a mallocer
 	while (tmp->type == WORD || tmp->type == VAR)
 	{
 		i++;
@@ -40,14 +46,26 @@ int	fill_flags(t_token	**tk_node, t_cmd *last_cmd)
 	i = 0;
 	while (tmp->type == WORD || tmp->type == VAR)
 	{
-		if (!(ft_strcmp(last_cmd->infos.cmd, "echo")) && tmp->type == VAR)
-			last_cmd->infos.flags[i] = join_vars(&tmp);
-		else
-			last_cmd->infos.flags[i] = tmp->str;
+		last_cmd->infos.flags[i] = tmp->str;
 		printf("flags :\ni : %d - str : |%s|\n", i, last_cmd->infos.flags[i]);
 		i++;
 		tmp = tmp->next;
 	}
 	*tk_node = tmp;
+	return (SUCCESS);
+}
+
+int	fill_flags(t_token	**tk_node, t_cmd *last_cmd)
+{
+	if (!(ft_strcmp(last_cmd->infos.cmd, "echo")))
+	{
+		if (echo_mode(tk_node, last_cmd) == FAILURE)
+			return (FAILURE);
+	}
+	else
+	{
+		if (default_mode(tk_node, last_cmd) == FAILURE)
+			return (FAILURE);
+	}
 	return (SUCCESS);
 }
