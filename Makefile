@@ -47,7 +47,10 @@ SRCS = main.c 							\
 	02_parser/00_create_cmds.c			\
 	02_parser/01_parse_word.c			\
 	02_parser/02_fill_flags.c			\
+	02_parser/03_parse_heredoc.c		\
 	04_exec/get_path.c 					\
+	05_utils/gnl/get_next_line.c		\
+	05_utils/gnl/get_next_line_utils.c	\
 	05_utils/amsterdam.c				\
 	05_utils/brazil.c					\
 	05_utils/cmd_list_functions.c		\

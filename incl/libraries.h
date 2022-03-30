@@ -15,5 +15,6 @@
 # include "colors.h"
 # include "enums.h"
 # include "structs.h"
+# include "gnl.h"
 
 #endif
