@@ -19,7 +19,7 @@ char	*join_vars(t_token **tk_node)
 	char	*str;
 
 	tmp = *tk_node;
-	str = tmp->str;
+	str = ft_strdup(tmp->str);
 	while (tmp->type == VAR 
 		&& (tmp->next->type == VAR && tmp->next->join == true))
 	{
