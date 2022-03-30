@@ -12,7 +12,9 @@ void	create_cmds(t_data *data, t_token *token)
 	{
 		printf("tmp actuel : TYPE : %d - STR : |%s|\n", tmp->type, tmp->str);
 		if (tmp->type == WORD || tmp->type == VAR)
+		{
 			parse_word(data, &tmp);
+		}
 		else if (tmp->type == PIPE || tmp->type == END)
 			break;
 		// 	parse_pipe(data, &tmp);

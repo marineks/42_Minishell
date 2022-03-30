@@ -36,11 +36,11 @@ void	parse_word(t_data *data, t_token **tk_lst)
 		{
 			fill_cmd(last_cmd, tmp->str);
 			printf("La cmd filled : %s\n", last_cmd->infos.cmd);
+			tmp = tmp->next;
 		}
 		else
 			fill_flags(&tmp, last_cmd);
 		// &tmp = (*tmp)->next;
-		tmp = tmp->next;
 	}
 	*tk_lst = tmp;
 	// *tk_lst = (*tk_lst)->next;
