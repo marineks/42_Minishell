@@ -42,23 +42,10 @@ char	*grep_path(char *envp[], char *cmd);
 void	escape_to_amsterdam(t_data *data);
 // 05_UTILS --- brazil.c
 void	escape_to_brazil(t_data *data);
-// 05_UTILS --- cmd_list_functions.c
-t_cmd	*ft_lstnew_cmd(bool value);
-void	ft_lstadd_back_cmd(t_cmd **alst, t_cmd *new_node);
-void	ft_lstdelone_cmd(t_cmd *lst, void (*del)(void *));
-void	ft_lstclear_cmd(t_cmd **lst, void (*del)(void *));
-t_cmd	*ft_lstlast_cmd(t_cmd *cmd);
-void	print_cmd(t_cmd *lst);
 // 05_UTILS --- exit_whisperer.c
 int		check_exit(char *line);
 // 05_UTILS --- init_struct.c
 int		init_data(t_data *data, char *envp[]);
-// 05_UTILS --- token_list_functions.c
-t_token	*ft_lstnew_token(char *str, int type, int state);
-void	ft_lstadd_back_token(t_token **alst, t_token *new_node);
-void	ft_lstdelone_token(t_token *lst, void (*del)(void *));
-void	ft_lstclear_token(t_token **lst, void (*del)(void *));
-t_token	*insert_lst_between(t_token **head, t_token *to_del, t_token *insert);
-void	print_token(t_token *lst);
+
 
 #endif

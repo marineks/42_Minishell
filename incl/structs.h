@@ -41,10 +41,20 @@ typedef struct	s_cmd
 	struct	s_cmd	*right;
 }				t_cmd;
 
+typedef	struct	s_env
+{
+	char			*line;
+	char			*var_name;
+	char			*var_value;
+	struct s_env	*prev;
+	struct s_env	*next;
+}				t_env;
+
 typedef struct	s_data 
 {
 	int		nb_cmd;
 	char 	**envp;
+	t_env	*env_copy;
 	char	*line;
 	t_pipe	*pipe;
 	char	**cmd_lines;

@@ -16,5 +16,6 @@
 # include "enums.h"
 # include "structs.h"
 # include "gnl.h"
+# include "lists_functions.h"
 
 #endif
