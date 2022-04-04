@@ -24,7 +24,6 @@ int	main(int argc, char **argv, char *envp[])
 					escape_to_amsterdam(&data);
 					continue;
 				}
-				printf("test\n");
 				expand_tokens(&data, &data.token);
 				handle_quotes(&data);
 				tokenize_var(&data);
