@@ -25,3 +25,4 @@ COUCOU
 Oulalala
 
 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=ignorereadline ./minishell
+valgrind --leak-check=full --track-origins=yes ./minishell

@@ -17,5 +17,6 @@
 # include "structs.h"
 # include "gnl.h"
 # include "lists_functions.h"
+# include <errno.h>
 
 #endif

@@ -1,7 +1,5 @@
 #include "minishell.h"
 
-// CREATION DE LA COPY DE ENVP - init arg_env
-
 void	create_cmds(t_data *data, t_token *token)
 {
 	t_token *tmp;
@@ -15,17 +13,23 @@ void	create_cmds(t_data *data, t_token *token)
 		{
 			parse_word(data, &tmp);
 		}
-		else if (tmp->type == PIPE || tmp->type == END)
-			break;
-		// 	parse_pipe(data, &tmp);
 		// else if (tmp->type == REDIR_IN)
 		// 	parse_redir_in(data, &tmp);
-		// else if (tmp->type == REDIR_OUT)
-		// 	parse_redir_out(data, &tmp);
+		else if (tmp->type == REDIR_OUT)
+			parse_redir_out(data, &data->cmd, &tmp);
 		else if (tmp->type == HEREDOC)
 			parse_heredoc(data, &tmp);
 		// else if (tmp->type == DGREATER)
 		// 	parse_dgreater(data, &tmp);
+		else if (tmp->type == PIPE || tmp->type == END)
+			break;
+		// 	parse_pipe(data, &tmp);
+	}
+	int i = 0;
+	while (data->cmd->infos.flags[i])
+	{
+		printf("BEFORE EXIT - Print flags :\ni : %d - str : |%s|\n", i, data->cmd->infos.flags[i]);
+		i++;
 	}
 }
 

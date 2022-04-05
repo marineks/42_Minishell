@@ -75,7 +75,7 @@ int	count_flags(t_token *tmp)
  * @param last_cmd a pointer to the last command issued
  * @return int : returns 0 for SUCCESS and 1 for FAILURE
  */
-int	echo_mode(t_token **tk_node, t_cmd *last_cmd)
+int	create_flags_in_echo_mode(t_token **tk_node, t_cmd *last_cmd)
 {
 	int nb_flags;
 	t_token	*tmp;
@@ -106,6 +106,9 @@ int	echo_mode(t_token **tk_node, t_cmd *last_cmd)
 	return (SUCCESS);
 }
 
+
+
+
 /**
  * @brief  The function fills the flags' matrix of last_cmd by default.
  * 			- It allocates the matrix of flags w/ the count_flags function;
@@ -116,7 +119,7 @@ int	echo_mode(t_token **tk_node, t_cmd *last_cmd)
  * @param last_cmd a pointer to the last command issued
  * @return int : returns 0 for SUCCESS and 1 for FAILURE
  */
-int	default_mode(t_token **tk_node, t_cmd *last_cmd)
+int	create_flags_in_default_mode(t_token **tk_node, t_cmd *last_cmd)
 {
 	int i;
 	t_token	*tmp;
@@ -145,6 +148,52 @@ int	default_mode(t_token **tk_node, t_cmd *last_cmd)
 	return (SUCCESS);
 }
 
+int	add_flags_in_default_mode(t_token **tk_node, t_cmd *last_cmd)
+{
+	int i;
+	int	len;
+	char **new_tab;
+	t_token	*tmp;
+
+	printf("je suis dans add flags\n");
+	i = 0;
+	tmp = *tk_node;
+	while (tmp->type == WORD || tmp->type == VAR)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	len = 0;
+	while (last_cmd->infos.flags[len])
+		len++;
+	new_tab = (char **)malloc(sizeof(char *) * (i + len + 1));
+	if (!new_tab)
+		return (FAILURE);
+	
+	i = 0;
+	printf("LEN : %d\n", len);
+	while (i < len)
+	{
+		new_tab[i] = last_cmd->infos.flags[i];
+		printf("NEW TAB:\nStr : |%s|\n", new_tab[i]);
+		i++;
+	}
+	tmp = *tk_node;
+	while (tmp->type == WORD || tmp->type == VAR)
+	{
+		new_tab[i] = tmp->str;
+		printf("flags :\ni : %d - str : |%s|\n", i, new_tab[i]);
+		i++;
+		tmp = tmp->next;
+	}
+	new_tab[i] = NULL;
+	// free_matrix(last_cmd->infos.flags);
+	free(last_cmd->infos.flags);
+	last_cmd->infos.flags = new_tab;
+	*tk_node = tmp;
+	return (SUCCESS);
+}
+
 /**
  * @brief This function's goal is to fill the flags in the cmd->infos.flags
  * 		  structure. To do so, there are two modes :
@@ -157,15 +206,20 @@ int	default_mode(t_token **tk_node, t_cmd *last_cmd)
  */
 int	fill_flags(t_token	**tk_node, t_cmd *last_cmd)
 {
+	printf("last_cmd->infos.cmd : %s\n", last_cmd->infos.cmd);
 	if (!(ft_strcmp(last_cmd->infos.cmd, "echo")))
 	{
-		if (echo_mode(tk_node, last_cmd) == FAILURE)
-			return (FAILURE);
+		if (!(last_cmd->infos.flags))
+				return (create_flags_in_echo_mode(tk_node, last_cmd));
+		// else
+		// 		return (add_flags_in_echo_mode(tk_node, last_cmd));
 	}
 	else
 	{
-		if (default_mode(tk_node, last_cmd) == FAILURE)
-			return (FAILURE);
+		if (last_cmd && !(last_cmd->infos.flags))
+				return (create_flags_in_default_mode(tk_node, last_cmd));
+		else
+				return (add_flags_in_default_mode(tk_node, last_cmd));
 	}
 	return (SUCCESS);
 }

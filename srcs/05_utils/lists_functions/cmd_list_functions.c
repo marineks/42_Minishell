@@ -1,5 +1,19 @@
 #include "minishell.h"
 
+void	init_infos(t_cmd **cmd)
+{
+	(*cmd)->infos.cmd = NULL;
+	(*cmd)->infos.flags = NULL;
+	(*cmd)->infos.arg_env = NULL;
+	(*cmd)->infos.builtin = false;
+	(*cmd)->infos.redir_in = false;
+	(*cmd)->infos.redir_out = false;
+	(*cmd)->infos.fd_in = 0;
+	(*cmd)->infos.fd_out = 0;
+	(*cmd)->infos.error = 0;
+	(*cmd)->infos.err_msg  = NULL;
+}
+
 t_cmd	*ft_lstnew_cmd(bool value)
 {
 	t_cmd	*new_block;
@@ -7,10 +21,9 @@ t_cmd	*ft_lstnew_cmd(bool value)
 	new_block = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!(new_block))
 		return (NULL);
+	ft_memset(new_block, 0, sizeof(t_cmd));
 	new_block->is_pipe = value;
-	// new_block->infos = NULL;
-	new_block->left = NULL;
-	new_block->right = NULL;
+	init_infos(&new_block);
 	return (new_block);
 }
 
@@ -34,14 +47,33 @@ void	ft_lstadd_back_cmd(t_cmd **alst, t_cmd *new_node)
 	}
 }
 
+void	free_matrix(char **tab)
+{
+	int i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		tab[i] = NULL;
+		i++;
+	}
+	free(tab);
+	tab = NULL;
+}
+
 void	ft_lstdelone_cmd(t_cmd *lst, void (*del)(void *))
 {
 	(void)(*del);
 	// if (del && lst)
 	// 	(*del)(lst->infos);
-	// boucle special pour free les doubles tableaux
-		// (*del)(lst->flags);
-		// (*del)(lst->arg_env);
+	// boucle speciale pour free les doubles tableaux
+	if (lst->infos.flags)
+		free(lst->infos.flags);
+	if (lst->infos.err_msg)
+		free(lst->infos.err_msg);
+	// 	free_matrix(lst->infos.flags);
+	// 	// (*del)(lst->arg_env);
 	// ATTENTION : peut etre close les fd ici
 	free(lst);
 }

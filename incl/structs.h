@@ -31,6 +31,7 @@ typedef struct	s_infos
 	int				fd_in;
 	int				fd_out;
 	int				error;
+	char			*err_msg;
 }				t_infos;
 
 typedef struct	s_cmd

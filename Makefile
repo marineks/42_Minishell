@@ -20,8 +20,8 @@ LIBFT_DIR = libft
 #########################################
 #			FLAGS COMPILATION			#
 #########################################
-CFLAGS = -Wall -Werror -Wextra -g3
-CFLAGS += -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g
+# CFLAGS += -fsanitize=address
 IFLAGS := -I incl/
 LFLAGS := -L$(LIBFT_DIR) -lft
 RFLAGS := -lreadline
@@ -48,6 +48,8 @@ SRCS = main.c 											\
 	02_parser/01_parse_word.c							\
 	02_parser/02_fill_flags.c							\
 	02_parser/03_parse_heredoc.c						\
+	02_parser/04_parse_redir_in.c 						\
+	02_parser/05_parse_redir_out.c 						\
 	04_exec/get_path.c 									\
 	05_utils/gnl/get_next_line.c						\
 	05_utils/gnl/get_next_line_utils.c					\
