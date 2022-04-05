@@ -18,5 +18,7 @@
 # include "gnl.h"
 # include "lists_functions.h"
 # include <errno.h>
+// pour Mac
+# include <string.h>
 
 #endif

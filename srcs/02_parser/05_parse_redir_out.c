@@ -71,7 +71,7 @@ void	parse_redir_out(t_data *data, t_cmd **last_cmd, t_token **tk_lst)
 		// char *test = get_absolute_path(data->envp, tmp->next->str);
 		// printf("test : %s\n", test);
 		file = get_relative_path(tmp->next->str);
-		fd = open(file, O_CREAT | O_RDWR);
+		fd = open(file, O_CREAT | O_RDWR, S_IRWXU);
 		if (fd == -1)
 		{
 			cmd->infos.error = errno;
