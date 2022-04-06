@@ -15,6 +15,9 @@ static int	check_consecutive_ops(t_token *tk_node)
 	{
 		if (tk_node->type == REDIR_OUT && tk_node->next->type == PIPE)
 			return (FALSE);
+		if (tk_node->type >= 4 && tk_node->next
+			&& (tk_node->next->type != WORD && tk_node->next->type != VAR))
+			return (TRUE);
 		if ((tk_node->type >= 4 && tk_node->next->type == PIPE)
 			&& tk_node->next->type != END)
 			return (TRUE);

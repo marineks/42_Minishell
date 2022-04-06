@@ -66,26 +66,21 @@ void	parse_redir_out(t_data *data, t_cmd **last_cmd, t_token **tk_lst)
 	cmd = *last_cmd;
 	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~\nPARSE - Parse_redir_out function\n");
 	cmd->infos.redir_out = true;
-	if (tmp->next->type == WORD || tmp->next->type == VAR)
+	// char *test = get_absolute_path(data->envp, tmp->next->str);
+	// printf("test : %s\n", test);
+	file = get_relative_path(tmp->next->str);
+	fd = open(file, O_CREAT | O_RDWR, S_IRWXU);
+	if (fd == -1)
 	{
-		// char *test = get_absolute_path(data->envp, tmp->next->str);
-		// printf("test : %s\n", test);
-		file = get_relative_path(tmp->next->str);
-		fd = open(file, O_CREAT | O_RDWR, S_IRWXU);
-		if (fd == -1)
-		{
-			cmd->infos.error = errno;
-			cmd->infos.err_msg = ft_strdup(strerror(errno));
-			cmd->infos.fd_out = 2;
-			printf("N° d'erreur : %d - Erreur : %s - Fd : %d\n", cmd->infos.error,\
-		cmd->infos.err_msg, cmd->infos.fd_out);
-		}
-		else
-			cmd->infos.fd_out = fd;
-		free(file);
+		cmd->infos.error = errno;
+		cmd->infos.err_msg = ft_strdup(strerror(errno));
+		cmd->infos.fd_out = 2;
+		printf("N° d'erreur : %d - Erreur : %s - Fd : %d\n", cmd->infos.error,\
+	cmd->infos.err_msg, cmd->infos.fd_out);
 	}
-	// else // SYNTAX ERROR ex: echo coucou > , ou echo coucou > |
-	// à mettre dans la grammaire de notre lexer plutot non ?
+	else
+		cmd->infos.fd_out = fd;
+	free(file);
 	printf("Fd out : %d\n", cmd->infos.fd_out);
 	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 	*tk_lst = tmp->next->next;

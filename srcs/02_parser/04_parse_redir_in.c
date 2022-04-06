@@ -35,22 +35,19 @@ void	parse_redir_in(t_cmd **last_cmd, t_token **tk_lst)
 		return ;
 	}
 	cmd->infos.redir_in = true;
-	if (tmp->next->type == WORD || tmp->next->type == VAR)
+	file = get_relative_path(tmp->next->str);
+	fd = open(file, O_CREAT | O_RDWR, S_IRWXU);
+	if (fd == -1)
 	{
-		file = get_relative_path(tmp->next->str);
-		fd = open(file, O_CREAT | O_RDWR, S_IRWXU);
-		if (fd == -1)
-		{
-			cmd->infos.error = errno;
-			cmd->infos.err_msg = ft_strdup(strerror(errno));
-			cmd->infos.fd_out = 2;
-			printf("N° d'erreur : %d - Erreur : %s - Fd in : %d - Fd out : %d\n",
-			cmd->infos.error, cmd->infos.err_msg,  cmd->infos.fd_in, cmd->infos.fd_out);
-		}
-		else
-			cmd->infos.fd_in = fd;
-		free(file);
+		cmd->infos.error = errno;
+		cmd->infos.err_msg = ft_strdup(strerror(errno));
+		cmd->infos.fd_out = 2;
+		printf("N° d'erreur : %d - Erreur : %s - Fd in : %d - Fd out : %d\n",
+		cmd->infos.error, cmd->infos.err_msg,  cmd->infos.fd_in, cmd->infos.fd_out);
 	}
+	else
+		cmd->infos.fd_in = fd;
+	free(file);
 	printf("Fd in : %d\n", cmd->infos.fd_in);
 	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 	*tk_lst = tmp->next->next;
