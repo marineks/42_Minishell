@@ -86,7 +86,7 @@ void	parse_redir_out(t_data *data, t_cmd **last_cmd, t_token **tk_lst)
 	}
 	// else // SYNTAX ERROR ex: echo coucou > , ou echo coucou > |
 	// à mettre dans la grammaire de notre lexer plutot non ?
-	printf("Fd : %d\n", cmd->infos.fd_out);
+	printf("Fd out : %d\n", cmd->infos.fd_out);
 	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 	*tk_lst = tmp->next->next;
 }

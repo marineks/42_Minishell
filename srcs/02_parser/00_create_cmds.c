@@ -13,8 +13,8 @@ void create_cmds(t_data *data, t_token *token)
 		{
 			parse_word(data, &tmp);
 		}
-		// else if (tmp->type == REDIR_IN)
-		// 	parse_redir_in(data, &tmp);
+		else if (tmp->type == REDIR_IN)
+			parse_redir_in(&data->cmd, &tmp);
 		else if (tmp->type == REDIR_OUT)
 			parse_redir_out(data, &data->cmd, &tmp);
 		else if (tmp->type == HEREDOC)
