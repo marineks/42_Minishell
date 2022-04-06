@@ -37,8 +37,10 @@ void	parse_heredoc(t_data *data, t_token **tk_lst);
 // 02_PARSER --- 04_parse_redir_in.c
 void	parse_redir_in(t_cmd **last_cmd, t_token **tk_lst);
 // 02_PARSER --- 05_parse_redir_out.c
+char	*get_relative_path(char *file_to_open);
 void	parse_redir_out(t_data *data, t_cmd **last_cmd, t_token **tk_lst);
-
+// 02_PARSER --- 06_parse_append.c
+void	parse_append(t_cmd **last_cmd, t_token **tk_lst);
 // 04_EXEC --- get_path.c
 char	*grep_path(char *envp[], char *cmd);
 

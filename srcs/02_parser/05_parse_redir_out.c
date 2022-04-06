@@ -30,7 +30,7 @@
 // 	return (path);
 // }
 
-static char	*get_relative_path(char *file_to_open)
+char	*get_relative_path(char *file_to_open)
 {
 	char *path;
 	char *res;

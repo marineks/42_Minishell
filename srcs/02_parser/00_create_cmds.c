@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	create_cmds(t_data *data, t_token *token)
+void create_cmds(t_data *data, t_token *token)
 {
 	t_token *tmp;
 
@@ -19,8 +19,8 @@ void	create_cmds(t_data *data, t_token *token)
 			parse_redir_out(data, &data->cmd, &tmp);
 		else if (tmp->type == HEREDOC)
 			parse_heredoc(data, &tmp);
-		// else if (tmp->type == DGREATER)
-		// 	parse_dgreater(data, &tmp);
+		else if (tmp->type == APPEND)
+			parse_append(&data->cmd, &tmp);
 		else if (tmp->type == PIPE || tmp->type == END)
 			break;
 		// 	parse_pipe(data, &tmp);
@@ -32,4 +32,3 @@ void	create_cmds(t_data *data, t_token *token)
 		i++;
 	}
 }
-
