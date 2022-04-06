@@ -6,11 +6,16 @@ void create_cmds(t_data *data, t_token *token)
 
 	tmp = token;
 	printf("je rentre dans create cmd\n");
-	while (tmp->next != NULL)
+	while (tmp->next != NULL || tmp->type == END)
 	{
 		printf("tmp actuel : TYPE : %d - STR : |%s|\n", tmp->type, tmp->str);
+		// si c'est le début de la chaine de token, créer automatiquement un t cmd
+		if (tmp == token) 
+		{
+			ft_lstadd_back_cmd(&data->cmd, ft_lstnew_cmd(false));
+		}	
 		if (tmp->type == WORD || tmp->type == VAR)
-			parse_word(data, &tmp);
+			parse_word(&data->cmd, &tmp);
 		else if (tmp->type == REDIR_IN)
 			parse_redir_in(&data->cmd, &tmp);
 		else if (tmp->type == REDIR_OUT)
@@ -20,8 +25,8 @@ void create_cmds(t_data *data, t_token *token)
 		else if (tmp->type == APPEND)
 			parse_append(&data->cmd, &tmp);
 		else if (tmp->type == PIPE || tmp->type == END)
-			break;
-		// 	parse_pipe(data, &tmp);
+			break ;
+			// parse_pipe(data, &tmp);
 	}
 	int i = 0;
 	while (data->cmd->infos.flags[i])

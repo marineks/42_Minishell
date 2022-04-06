@@ -51,6 +51,7 @@ SRCS = main.c 											\
 	02_parser/04_parse_redir_in.c 						\
 	02_parser/05_parse_redir_out.c 						\
 	02_parser/06_parse_append.c 						\
+	02_parser/07_parse_pipe.c 							\
 	04_exec/get_path.c 									\
 	05_utils/gnl/get_next_line.c						\
 	05_utils/gnl/get_next_line_utils.c					\
