@@ -83,7 +83,11 @@ void	parse_redir_out(t_data *data, t_cmd **last_cmd, t_token **tk_lst)
 	free(file);
 	printf("Fd out : %d\n", cmd->infos.fd_out);
 	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-	*tk_lst = tmp->next->next;
+	if (tmp->next->next && tmp->next->next->type != PIPE)
+		tmp = tmp->next->next;
+	else
+		tmp = tmp->next;
+	*tk_lst = tmp;
 }
 
 /*
