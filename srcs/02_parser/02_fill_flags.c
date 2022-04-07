@@ -106,9 +106,6 @@ int	create_flags_in_echo_mode(t_token **tk_node, t_cmd *last_cmd)
 	return (SUCCESS);
 }
 
-
-
-
 /**
  * @brief  The function fills the flags' matrix of last_cmd by default.
  * 			- It allocates the matrix of flags w/ the count_flags function;
@@ -146,6 +143,11 @@ int	create_flags_in_default_mode(t_token **tk_node, t_cmd *last_cmd)
 	last_cmd->infos.flags[i] = NULL;
 	*tk_node = tmp;
 	return (SUCCESS);
+}
+
+int	add_flags_in_echo_mode(t_token **tk_node, t_cmd *last_cmd)
+{
+
 }
 
 int	add_flags_in_default_mode(t_token **tk_node, t_cmd *last_cmd)
@@ -187,7 +189,6 @@ int	add_flags_in_default_mode(t_token **tk_node, t_cmd *last_cmd)
 		tmp = tmp->next;
 	}
 	new_tab[i] = NULL;
-	// free_matrix(last_cmd->infos.flags);
 	free(last_cmd->infos.flags);
 	last_cmd->infos.flags = new_tab;
 	*tk_node = tmp;
@@ -211,8 +212,8 @@ int	fill_flags(t_token	**tk_node, t_cmd *last_cmd)
 	{
 		if (!(last_cmd->infos.flags))
 				return (create_flags_in_echo_mode(tk_node, last_cmd));
-		// else
-		// 		return (add_flags_in_echo_mode(tk_node, last_cmd));
+		else
+				return (add_flags_in_echo_mode(tk_node, last_cmd));
 	}
 	else
 	{
