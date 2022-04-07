@@ -19,6 +19,12 @@ enum e_states
 	DOUBLE
 };
 
+enum e_pipesfd
+{
+	READ,
+	WRITE,
+};
+
 enum e_tk_types
 {
 	BLANK = 1, // whites spaces

@@ -9,7 +9,6 @@ void create_cmds(t_data *data, t_token *token)
 	while (tmp->next != NULL || tmp->type == END)
 	{
 		printf("tmp actuel : TYPE : %d - STR : |%s|\n", tmp->type, tmp->str);
-		// si c'est le début de la chaine de token, créer automatiquement un t cmd
 		if (tmp == token) 
 		{
 			ft_lstadd_back_cmd(&data->cmd, ft_lstnew_cmd(false));
@@ -28,10 +27,13 @@ void create_cmds(t_data *data, t_token *token)
 			break ;
 			// parse_pipe(data, &tmp);
 	}
-	int i = 0;
-	while (data->cmd->infos.flags[i])
+	if (data->cmd->infos.flags)
 	{
-		printf("BEFORE EXIT - Print flags :\ni : %d - str : |%s|\n", i, data->cmd->infos.flags[i]);
-		i++;
+		int i = 0;
+		while (data->cmd->infos.flags[i])
+		{
+			printf("BEFORE EXIT - Print flags :\ni : %d - str : |%s|\n", i, data->cmd->infos.flags[i]);
+			i++;
+		}
 	}
 }

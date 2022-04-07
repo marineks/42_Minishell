@@ -4,7 +4,7 @@
  * @brief This functions fills the cmd structure with tk_str and if this cmd
  * 		  is a builtin, set the bool builtin to true.
  * 
- * @param tk_str 
+ * @param tk_str
  */
 void	fill_cmd(t_cmd *last_cmd, char *tk_str)
 {

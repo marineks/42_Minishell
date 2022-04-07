@@ -33,7 +33,7 @@ void	parse_word(t_cmd **cmd, t_token **tk_lst);
 // 02_PARSER --- 02_fill_flags.c
 int		fill_flags(t_token	**tk_node, t_cmd *last_cmd);
 // 02_PARSER --- 03_parse_heredoc.c
-void	parse_heredoc(t_data *data, t_token **tk_lst);
+int	parse_heredoc(t_data *data, t_token **tk_lst);
 // 02_PARSER --- 04_parse_redir_in.c
 void	parse_redir_in(t_cmd **last_cmd, t_token **tk_lst);
 // 02_PARSER --- 05_parse_redir_out.c
