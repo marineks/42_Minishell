@@ -20,7 +20,7 @@ LIBFT_DIR = libft
 #########################################
 #			FLAGS COMPILATION			#
 #########################################
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra -g -Wno-unused
 # CFLAGS += -fsanitize=address
 IFLAGS := -I incl/
 LFLAGS := -L$(LIBFT_DIR) -lft
