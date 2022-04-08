@@ -50,7 +50,7 @@ void	parse_redir_in(t_cmd **last_cmd, t_token **tk_lst)
 	free(file);
 	printf("Fd in : %d\n", cmd->infos.fd_in);
 	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-	if (tmp->next->next && tmp->next->next->type != PIPE)
+	if (tmp->next->next)
 		tmp = tmp->next->next;
 	else
 		tmp = tmp->next;

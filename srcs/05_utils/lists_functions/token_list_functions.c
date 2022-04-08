@@ -38,7 +38,10 @@ void	ft_lstadd_back_token(t_token **alst, t_token *new_node)
 void	ft_lstdelone_token(t_token *lst, void (*del)(void *))
 {
 	if (del && lst && lst->str)
+	{
 		(*del)(lst->str);
+		lst->str = NULL;
+	}
 	free(lst);
 }
 

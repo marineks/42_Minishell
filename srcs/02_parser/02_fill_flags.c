@@ -96,7 +96,7 @@ int	create_flags_in_echo_mode(t_token **tk_node, t_cmd *last_cmd)
 			printf("je suis passé dans le join == true\n");
 		}
 		else
-			last_cmd->infos.flags[i] = tmp->str;
+			last_cmd->infos.flags[i] = ft_strdup(tmp->str);
 		printf("flags :\ni : %d - str : |%s|\n", i, last_cmd->infos.flags[i]);
 		i++;
 		tmp = tmp->next;
@@ -140,7 +140,7 @@ int	add_flags_in_echo_mode(t_token **tk_node, t_cmd *last_cmd)
 			printf("je suis passé dans le join == true\n");
 		}
 		else
-			new_tab[i] = tmp->str;
+			new_tab[i] = ft_strdup(tmp->str);
 		printf("flags :\ni : %d - str : |%s|\n", i, new_tab[i]);
 		i++;
 		tmp = tmp->next;
@@ -182,7 +182,7 @@ int	create_flags_in_default_mode(t_token **tk_node, t_cmd *last_cmd)
 	i = 0;
 	while (tmp->type == WORD || tmp->type == VAR)
 	{
-		last_cmd->infos.flags[i] = tmp->str;
+		last_cmd->infos.flags[i] = ft_strdup(tmp->str);
 		printf("flags :\ni : %d - str : |%s|\n", i, last_cmd->infos.flags[i]);
 		i++;
 		tmp = tmp->next;
@@ -225,7 +225,7 @@ int	add_flags_in_default_mode(t_token **tk_node, t_cmd *last_cmd)
 	tmp = *tk_node;
 	while (tmp->type == WORD || tmp->type == VAR)
 	{
-		new_tab[i] = tmp->str;
+		new_tab[i] = ft_strdup(tmp->str);
 		printf("flags :\ni : %d - str : |%s|\n", i, new_tab[i]);
 		i++;
 		tmp = tmp->next;
