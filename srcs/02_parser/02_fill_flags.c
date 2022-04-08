@@ -106,8 +106,52 @@ int	create_flags_in_echo_mode(t_token **tk_node, t_cmd *last_cmd)
 	return (SUCCESS);
 }
 
+int	add_flags_in_echo_mode(t_token **tk_node, t_cmd *last_cmd)
+{
+	int i;
+	int	len;
+	int nb_flags;
+	char **new_tab;
+	t_token	*tmp;
 
-
+	printf("je suis dans add flags\n");
+	i = 0;
+	tmp = *tk_node;
+	nb_flags = count_flags(tmp);
+	len = 0;
+	while (last_cmd->infos.flags[len])
+		len++;
+	new_tab = (char **)malloc(sizeof(char *) * (nb_flags + len + 1));
+	if (!new_tab)
+		return (FAILURE);
+	i = 0;
+	printf("LEN : %d\n", len);
+	while (i < len)
+	{
+		new_tab[i] = last_cmd->infos.flags[i];
+		printf("NEW TAB:\nStr : |%s|\n", new_tab[i]);
+		i++;
+	}
+	while (tmp->type == WORD || tmp->type == VAR)
+	{
+		if (tmp->join == true)
+		{
+			new_tab[i] = join_vars(&tmp);
+			printf("je suis passé dans le join == true\n");
+		}
+		else
+			new_tab[i] = tmp->str;
+		printf("flags :\ni : %d - str : |%s|\n", i, new_tab[i]);
+		i++;
+		tmp = tmp->next;
+	}
+	new_tab[i] = NULL;
+	// free_matrix(last_cmd->infos.flags);
+	free(last_cmd->infos.flags);
+	last_cmd->infos.flags = new_tab;
+	*tk_node = tmp;
+	return (SUCCESS);
+}
 
 /**
  * @brief  The function fills the flags' matrix of last_cmd by default.
@@ -211,8 +255,8 @@ int	fill_flags(t_token	**tk_node, t_cmd *last_cmd)
 	{
 		if (!(last_cmd->infos.flags))
 				return (create_flags_in_echo_mode(tk_node, last_cmd));
-		// else
-		// 		return (add_flags_in_echo_mode(tk_node, last_cmd));
+		else
+				return (add_flags_in_echo_mode(tk_node, last_cmd));
 	}
 	else
 	{
