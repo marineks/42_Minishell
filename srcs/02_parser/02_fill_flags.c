@@ -192,11 +192,6 @@ int	create_flags_in_default_mode(t_token **tk_node, t_cmd *last_cmd)
 	return (SUCCESS);
 }
 
-int	add_flags_in_echo_mode(t_token **tk_node, t_cmd *last_cmd)
-{
-
-}
-
 int	add_flags_in_default_mode(t_token **tk_node, t_cmd *last_cmd)
 {
 	int i;

@@ -52,14 +52,20 @@ void	free_matrix(char **tab)
 	int i;
 
 	i = 0;
-	while (tab[i])
+	if (tab)
 	{
-		free(tab[i]);
-		tab[i] = NULL;
-		i++;
+		while (tab[i])
+		{
+			if (tab[i])
+			{
+				free(tab[i]);
+				tab[i] = NULL;
+			}
+			i++;
+		}
+		free(tab);
+		tab = NULL;
 	}
-	free(tab);
-	tab = NULL;
 }
 
 void	ft_lstdelone_cmd(t_cmd *lst, void (*del)(void *))
@@ -68,12 +74,11 @@ void	ft_lstdelone_cmd(t_cmd *lst, void (*del)(void *))
 	// if (del && lst)
 	// 	(*del)(lst->infos);
 	// boucle speciale pour free les doubles tableaux
-	if (lst->infos.flags)
-		free(lst->infos.flags);
 	if (lst->infos.err_msg)
 		free(lst->infos.err_msg);
-	// 	free_matrix(lst->infos.flags);
-	// 	// (*del)(lst->arg_env);
+	if (lst->infos.flags)
+		free_matrix(lst->infos.flags);
+		// (*del)(lst->arg_env);
 	// ATTENTION : peut etre close les fd ici
 	free(lst);
 }
