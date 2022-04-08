@@ -30,7 +30,7 @@ void	parse_word(t_cmd **cmd, t_token **tk_lst)
 		printf("je suis dans la boucle de parse_word\n");
 		printf("tmp : %d, tmp de next : %d\n", tmp->type, tmp->next->type);
 		last_cmd = ft_lstlast_cmd(*cmd);
-		if (tmp->prev == NULL || (tmp->prev && tmp->prev->type == PIPE))
+		if (tmp->prev == NULL || (tmp->prev && tmp->prev->type == PIPE) || last_cmd->infos.cmd == NULL)
 		// if (tmp == *tk_lst)
 		{
 			// ft_lstadd_back_cmd(&data->cmd, ft_lstnew_cmd(false));
