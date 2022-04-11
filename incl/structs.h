@@ -5,7 +5,7 @@
 
 typedef struct	s_token 
 {	
-	char			*str;			// e.g. "foo bar baz" => ALWAYS MALLOC??
+	char			*str;			// e.g. "foo bar baz"
 	int				type;			// e.g. WORD
 	int				state;
 	bool			join;

@@ -69,7 +69,7 @@ int parse_heredoc(t_data *data, t_token **tk_lst)
 		close(pipe_fds[READ]);
 	}
 	printf("Heredoc | fd_in récupéré : %d\n", data->cmd->infos.fd_in);
-	if (tmp->next->next && tmp->next->next->type != PIPE)
+	if (tmp->next->next)
 		tmp = tmp->next->next;
 	else
 		tmp = tmp->next;
