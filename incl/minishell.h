@@ -44,6 +44,9 @@ void	parse_append(t_cmd **last_cmd, t_token **tk_lst);
 // 02_PARSER --- 07_parse_pipe.c
 void	parse_pipe(t_cmd **cmd, t_token **tk_lst);
 
+// 03_BUILTINS --- get_pwd.c
+void	get_pwd(t_env *env);
+
 // 04_EXEC --- get_path.c
 char	*grep_path(char *envp[], char *cmd);
 
