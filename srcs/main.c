@@ -29,6 +29,9 @@ int	main(int argc, char **argv, char *envp[])
 				tokenize_var(&data);
 				print_token(data.token);
 				create_cmds(&data, data.token);
+				// get_pwd(data.env_copy);
+				// get_env(data.env_copy);
+				get_echo(data.cmd);
 				// do your thing bis (redirections, then exec)
 				escape_to_amsterdam(&data);
 			}

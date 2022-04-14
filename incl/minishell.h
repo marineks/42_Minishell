@@ -44,6 +44,8 @@ void	parse_append(t_cmd **last_cmd, t_token **tk_lst);
 // 02_PARSER --- 07_parse_pipe.c
 void	parse_pipe(t_cmd **cmd, t_token **tk_lst);
 
+// 03_BUILTINS --- 00_get_echo.c
+void	get_echo(t_cmd *cmd);
 // 03_BUILTINS --- 02_get_pwd.c
 void	get_pwd(t_env *env);
 // 03_BUILTINS --- 05_get_env.c
