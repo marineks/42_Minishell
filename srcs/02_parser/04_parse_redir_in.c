@@ -25,7 +25,7 @@ void	parse_redir_in(t_cmd **last_cmd, t_token **tk_lst)
 	int		fd;
 
 	tmp = *tk_lst;
-	cmd = *last_cmd;
+	cmd = ft_lstlast_cmd(*last_cmd);
 	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~\nPARSE - Parse_redir_in function\n");
 	if (cmd->infos.cmd && ft_strcmp(cmd->infos.cmd, "echo") == SUCCESS)
 	{

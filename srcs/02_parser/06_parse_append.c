@@ -41,7 +41,7 @@ void	parse_append(t_cmd **last_cmd, t_token **tk_lst)
 	int		fd;
 
 	tmp = *tk_lst;
-	cmd = *last_cmd;
+	cmd = ft_lstlast_cmd(*last_cmd);
 	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~\nPARSE - Parse_append function\n");
 	cmd->infos.redir_out = true;
 	// char *test = get_absolute_path(data->envp, tmp->next->str);

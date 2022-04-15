@@ -63,7 +63,7 @@ void	parse_redir_out(t_data *data, t_cmd **last_cmd, t_token **tk_lst)
 
 	(void) data;
 	tmp = *tk_lst;
-	cmd = *last_cmd;
+	cmd = ft_lstlast_cmd(*last_cmd);
 	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~\nPARSE - Parse_redir_out function\n");
 	cmd->infos.redir_out = true;
 	// char *test = get_absolute_path(data->envp, tmp->next->str);
