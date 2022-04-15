@@ -10,7 +10,7 @@ void create_cmds(t_data *data, t_token *token)
 
 	tmp = token;
 	printf("je rentre dans create cmd\n");
-	while (tmp->next != NULL || tmp->next->type == END)
+	while (tmp->next != NULL) // || tmp->next->type == END
 	{
 		printf("tmp actuel : TYPE : %d - STR : |%s|\n", tmp->type, tmp->str);
 		if (tmp == token) 
@@ -31,6 +31,7 @@ void create_cmds(t_data *data, t_token *token)
 	if (data->cmd->infos.flags)
 	{
 		int i = 0;
+		while
 		while (data->cmd->infos.flags[i])
 		{
 			printf("BEFORE EXIT - Print flags :\ni : %d - str : |%s|\n", i, data->cmd->infos.flags[i]);

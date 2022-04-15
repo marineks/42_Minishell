@@ -10,6 +10,7 @@ void	parse_pipe(t_cmd **cmd, t_token **tk_lst)
 {
 	t_cmd *tmp;
 	t_cmd *last_cmd;
+
 	
 	tmp = ft_lstlast_cmd(*cmd);
 	// Create the pipe cmd
@@ -26,6 +27,7 @@ void	parse_pipe(t_cmd **cmd, t_token **tk_lst)
 	// Puis créer une autre commande pour la prochaine commande 
 	// (vu nos regles de syntaxe, il y aura forcement qqch apres)
 	ft_lstadd_back_cmd(&last_cmd, ft_lstnew_cmd(false));
-	
-	// et faire un last cmd
+	// pour passer apres le token du pipe
+	*tk_lst = (*tk_lst)->next;
+	// et faire un last cmd ?
 }
