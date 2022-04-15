@@ -28,14 +28,19 @@ void create_cmds(t_data *data, t_token *token)
 		else if (tmp->type == PIPE)
 			parse_pipe(&data->cmd, &tmp);
 	}
-	if (data->cmd->infos.flags)
+	t_cmd *cmd_tmp = data->cmd;
+	while (cmd_tmp)
 	{
-		int i = 0;
-		while
-		while (data->cmd->infos.flags[i])
+		printf("BEFORE EXIT - Print cmd : %s\n", cmd_tmp->infos.cmd);
+		if (cmd_tmp->infos.flags)
 		{
-			printf("BEFORE EXIT - Print flags :\ni : %d - str : |%s|\n", i, data->cmd->infos.flags[i]);
-			i++;
+			int i = 0;
+			while (cmd_tmp->infos.flags[i])
+			{
+				printf("BEFORE EXIT - Print flags :\ni : %d - str : |%s|\n", i, cmd_tmp->infos.flags[i]);
+				i++;
+			}
 		}
+		cmd_tmp = cmd_tmp->right;
 	}
 }
