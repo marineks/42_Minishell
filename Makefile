@@ -52,6 +52,13 @@ SRCS = main.c 											\
 	02_parser/05_parse_redir_out.c 						\
 	02_parser/06_parse_append.c 						\
 	02_parser/07_parse_pipe.c 							\
+	03_builtins/00_echo.c 								\
+	03_builtins/01_cd.c 								\
+	03_builtins/02_pwd.c 								\
+	03_builtins/03_export.c 							\
+	03_builtins/04_unset.c 								\
+	03_builtins/05_env.c 								\
+	03_builtins/06_exit.c 								\
 	04_exec/get_path.c 									\
 	05_utils/gnl/get_next_line.c						\
 	05_utils/gnl/get_next_line_utils.c					\

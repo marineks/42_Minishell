@@ -10,7 +10,7 @@ void create_cmds(t_data *data, t_token *token)
 
 	tmp = token;
 	printf("je rentre dans create cmd\n");
-	while (tmp->next != NULL) // || tmp->next->type == END
+	while (tmp->next != NULL)
 	{
 		printf("tmp actuel : TYPE : %d - STR : |%s|\n", tmp->type, tmp->str);
 		if (tmp == token) 
@@ -27,6 +27,8 @@ void create_cmds(t_data *data, t_token *token)
 			parse_append(&data->cmd, &tmp);
 		else if (tmp->type == PIPE)
 			parse_pipe(&data->cmd, &tmp);
+		else if (tmp->type == END)
+			break;
 	}
 	t_cmd *cmd_tmp = data->cmd;
 	while (cmd_tmp)
