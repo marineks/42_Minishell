@@ -29,12 +29,14 @@ int	main(int argc, char **argv, char *envp[])
 				tokenize_var(&data);
 				print_token(data.token);
 				create_cmds(&data, data.token);
-				// get_pwd(data.env_copy);
-				// get_env(data.env_copy);
-				get_echo(data.cmd);
-				// do your thing bis (redirections, then exec)
+				// get_pwd(data.cmd, data.env_copy);
+				// get_env(data.cmd, data.env_copy);
+				// get_echo(data.cmd);
+				export_new_var(data.cmd, &data.env_copy);
+				printf("je retourne dans le main et après ça coupe sans faire get env\n");
+				get_env(data.cmd, data.env_copy);
 				escape_to_amsterdam(&data);
-			}
+			} 
 			escape_to_brazil(&data);
 		}	
 		return (0);
