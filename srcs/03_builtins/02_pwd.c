@@ -3,6 +3,7 @@
 /**
  * @brief Display the pwd (Print Working Directory) on the terminal
  * 
+ * @param cmd the current command structure (with the info on the fd out)
  * @param env which is our linked list env_copy
  * @return int 0 for SUCCESS and 1 for FAILURE
  */
