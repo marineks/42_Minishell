@@ -6,7 +6,7 @@
  * @param env which is our linked list env_copy
  * @return int 0 for SUCCESS and 1 for FAILURE
  */
-void	get_pwd(t_env *env)
+void	get_pwd(t_cmd *cmd, t_env *env)
 {
 	t_env	*tmp;
 
@@ -17,7 +17,8 @@ void	get_pwd(t_env *env)
 			break;
 		tmp = tmp->next;
 	}
-	printf("%s\n", tmp->var_value);
+	write(cmd->infos.fd_out, tmp->var_value, ft_strlen(tmp->var_value));
+	write(cmd->infos.fd_out, "\n", 1);
 }
 
 // enjeu : la subtilité de la cmd prendra tout son sens quand on aura codé cd,
