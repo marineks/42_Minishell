@@ -52,7 +52,9 @@ void	get_pwd(t_cmd *cmd, t_env *env);
 // 03_BUILTINS --- 03_export_new_var.c
 int		export_new_var(t_cmd *cmd, t_env **env);
 // 03_BUILTINS --- 05_get_env.c
-void	get_env(t_cmd *cmd, t_env *env); 
+void	get_env(t_cmd *cmd, t_env **env);
+// 03_BUILTINS --- 04_exit_minishell.c
+int		exit_minishell(t_cmd *cmd);
 
 // 04_EXEC --- get_path.c
 char	*grep_path(char *envp[], char *cmd);
