@@ -68,12 +68,12 @@ int	export_new_var(t_cmd *cmd, t_env **env)
 			add_var_to_env(env, cmd->infos.flags[i], var, var_value);
 		// free(var);
 		// free(var_value);
-		// les 3 lignes ci-dessous pour print l'env changée
-		while ((*env)->next != NULL)
-			(*env) = (*env)->next;
-		printf("Après export le dernier node: var : %s | val : %s\n", (*env)->var_name, (*env)->var_value);
 		i++;
 	}
+	t_env *tmp = *env;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	printf("Après export le dernier node: var : %s | val : %s\n", tmp->var_name, tmp->var_value);
 	g_exit_status = SUCCESS;
 	return (SUCCESS);
 }

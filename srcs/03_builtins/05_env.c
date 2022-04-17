@@ -5,11 +5,11 @@
  * 
  * @param env our chained list of env variables
  */
-void	get_env(t_cmd *cmd, t_env *env)
+void	get_env(t_cmd *cmd, t_env **env)
 {
 	t_env	*tmp;
 
-	tmp = env;
+	tmp = *env;
 	while (tmp->next)
 	{
 		write(cmd->infos.fd_out, tmp->line, ft_strlen(tmp->line));

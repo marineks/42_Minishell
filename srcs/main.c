@@ -36,7 +36,6 @@ int	main(int argc, char **argv, char *envp[])
 				// get_env(data.cmd, data.env_copy);
 				// get_echo(data.cmd);
 				// export_new_var(data.cmd, &data.env_copy);
-				// printf("je retourne dans le main et après ça coupe sans faire get env\n");
 				// get_env(data.cmd, &data.env_copy);
 				if (ft_strcmp(data.cmd->infos.cmd, "exit") == SUCCESS)
 					exit_minishell(&data, data.cmd);
