@@ -39,7 +39,7 @@ int	main(int argc, char **argv, char *envp[])
 				// printf("je retourne dans le main et après ça coupe sans faire get env\n");
 				// get_env(data.cmd, &data.env_copy);
 				if (ft_strcmp(data.cmd->infos.cmd, "exit") == SUCCESS)
-					exit_minishell(data.cmd);
+					exit_minishell(&data, data.cmd);
 				escape_to_amsterdam(&data);
 			} 
 			escape_to_brazil(&data);

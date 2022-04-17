@@ -39,7 +39,7 @@ static int	numeric_arg_err(char *flag)
  * @param cmd The command line containing the exit
  * @return int The exit status
  */
-int	exit_minishell(t_cmd *cmd)
+int	exit_minishell(t_data *data, t_cmd *cmd)
 {
 	if (cmd->infos.flags)
 	{
@@ -51,6 +51,7 @@ int	exit_minishell(t_cmd *cmd)
 			g_exit_status = ft_atoi(cmd->infos.flags[0]) % 256;
 	}
 	ft_putstr_fd("exit\n", 1);
+	escape_to_brazil(data);
 	exit(g_exit_status);
 	return (g_exit_status);
 }
