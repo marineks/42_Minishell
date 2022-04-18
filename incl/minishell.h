@@ -48,8 +48,9 @@ void	parse_pipe(t_cmd **cmd, t_token **tk_lst);
 // 03_BUILTINS --- 00_get_echo.c
 void	get_echo(t_cmd *cmd);
 // 03_BUILTINS --- 01_change_directory.c
-int		change_directory(t_cmd *cmd, t_env *env);
+int		change_directory(t_cmd *cmd, t_env **env);
 // 03_BUILTINS --- 02_get_pwd.c
+char	*grep_value(t_env *env, char *var_name);
 void	get_pwd(t_cmd *cmd, t_env *env);
 // 03_BUILTINS --- 03_export_new_var.c
 int		export_new_var(t_cmd *cmd, t_env **env);
