@@ -18,16 +18,16 @@ static bool	is_a_valid_exit(char *flag)
 
 static int	too_many_arg_err(void)
 {
-	ft_putstr_fd("bash: exit: too many arguments\n", 2);
+	ft_putstr_fd("bash: exit: too many arguments\n",  STDERR_FILENO);
 	g_exit_status = 1;
 	return (g_exit_status);
 }
 
 static int	numeric_arg_err(char *flag)
 {
-	ft_putstr_fd("bash: exit: ", 2);
-	ft_putstr_fd(flag, 2);
-	ft_putstr_fd(" : numeric argument required\n", 2);
+	ft_putstr_fd("bash: exit: ",  STDERR_FILENO);
+	ft_putstr_fd(flag,  STDERR_FILENO);
+	ft_putstr_fd(" : numeric argument required\n",  STDERR_FILENO);
 	g_exit_status = 2;
 	return (g_exit_status);
 }
