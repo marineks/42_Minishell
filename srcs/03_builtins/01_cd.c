@@ -88,7 +88,10 @@ int	change_directory(t_cmd *cmd, t_env **env)
 	{
 		if (cmd->infos.flags[1])
 			return (too_many_arg_err());
-		path = ft_strdup(cmd->infos.flags[0]);
+		if (ft_strcmp(cmd->infos.flags[0], "~") == SUCCESS)
+			path = find_home_path(*env);
+		else
+			path = ft_strdup(cmd->infos.flags[0]);
 	}
 	else
 		path = find_home_path(*env);
