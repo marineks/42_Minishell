@@ -14,8 +14,11 @@ int	main(int argc, char **argv, char *envp[])
 			while (1)
 			{
 				data.line = readline(PROMPT);
-				if (check_exit(data.line) == SUCCESS)
-					break;
+				// if (check_exit(data.line) == SUCCESS)
+				// {
+				// 	printf("l'exit status : %d\n", g_exit_status);
+				// 	break;
+				// }
 				add_history(data.line);
 				if (tokenize(&data, data.line) == FAILURE)
 					printf("tokenize pb\n");
@@ -29,12 +32,23 @@ int	main(int argc, char **argv, char *envp[])
 				tokenize_var(&data);
 				print_token(data.token);
 				create_cmds(&data, data.token);
-				// get_pwd(data.env_copy);
-				// get_env(data.env_copy);
-				get_echo(data.cmd);
-				// do your thing bis (redirections, then exec)
+
+
+				if (ft_strcmp(data.cmd->infos.cmd, "pwd") == SUCCESS)
+					get_pwd(data.cmd, data.env_copy);
+				if (ft_strcmp(data.cmd->infos.cmd, "env") == SUCCESS)
+					get_env(data.cmd, &data.env_copy);
+				if (ft_strcmp(data.cmd->infos.cmd, "echo") == SUCCESS)
+					get_echo(data.cmd);
+				if (ft_strcmp(data.cmd->infos.cmd, "export") == SUCCESS)
+					export_new_var(data.cmd, &data.env_copy);
+				if (ft_strcmp(data.cmd->infos.cmd, "cd") == SUCCESS)
+					change_directory(data.cmd, &data.env_copy);
+				if (ft_strcmp(data.cmd->infos.cmd, "exit") == SUCCESS)
+					exit_minishell(&data, data.cmd);
+
 				escape_to_amsterdam(&data);
-			}
+			} 
 			escape_to_brazil(&data);
 		}	
 		return (0);

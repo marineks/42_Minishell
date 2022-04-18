@@ -2,6 +2,7 @@
 # define MINISHELL_H
 
 #include "libraries.h"
+int	g_exit_status;
 
 // 00_LEXER --- tokenize.c
 int		tokenize(t_data *data, char *line);
@@ -46,10 +47,17 @@ void	parse_pipe(t_cmd **cmd, t_token **tk_lst);
 
 // 03_BUILTINS --- 00_get_echo.c
 void	get_echo(t_cmd *cmd);
+// 03_BUILTINS --- 01_change_directory.c
+int		change_directory(t_cmd *cmd, t_env **env);
 // 03_BUILTINS --- 02_get_pwd.c
+char	*grep_value(t_env *env, char *var_name);
 void	get_pwd(t_cmd *cmd, t_env *env);
+// 03_BUILTINS --- 03_export_new_var.c
+int		export_new_var(t_cmd *cmd, t_env **env);
 // 03_BUILTINS --- 05_get_env.c
-void	get_env(t_cmd *cmd, t_env *env); 
+int		get_env(t_cmd *cmd, t_env **env);
+// 03_BUILTINS --- 06_exit_minishell.c
+int		exit_minishell(t_data *data, t_cmd *cmd);
 
 // 04_EXEC --- get_path.c
 char	*grep_path(char *envp[], char *cmd);
@@ -61,6 +69,8 @@ void	escape_to_brazil(t_data *data);
 // 05_UTILS --- exit_whisperer.c
 int		check_exit(char *line);
 // 05_UTILS --- init_struct.c
+char	*call_me_by_your_name(char *line);
+char	*call_me_by_your_value(char *line);
 int		init_data(t_data *data, char *envp[]);
 
 
