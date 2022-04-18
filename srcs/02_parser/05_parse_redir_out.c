@@ -69,7 +69,7 @@ void	parse_redir_out(t_data *data, t_cmd **last_cmd, t_token **tk_lst)
 	// char *test = get_absolute_path(data->envp, tmp->next->str);
 	// printf("test : %s\n", test);
 	file = get_relative_path(tmp->next->str);
-	fd = open(file, O_CREAT | O_RDWR, S_IRWXU);
+	fd = open(file, O_CREAT | O_RDWR, S_IRWXU); // rajouter O_TRUNC
 	if (fd == -1)
 	{
 		cmd->infos.error = errno;
@@ -79,6 +79,8 @@ void	parse_redir_out(t_data *data, t_cmd **last_cmd, t_token **tk_lst)
 	cmd->infos.err_msg, cmd->infos.fd_out);
 	}
 	else
+	// if cmd->infos.fd_out != 0 
+		// close(cmd->infos.fd_out)
 		cmd->infos.fd_out = fd;
 	free(file);
 	printf("Fd out : %d\n", cmd->infos.fd_out);
