@@ -19,9 +19,11 @@ int	get_env(t_cmd *cmd, t_env **env)
 		g_exit_status = 127;
 		return (g_exit_status);
 	}
-	while (tmp->next)
+	while (tmp)
 	{
-		write(cmd->infos.fd_out, tmp->line, ft_strlen(tmp->line));
+		write(cmd->infos.fd_out, tmp->var_name, ft_strlen(tmp->var_name));
+		write(cmd->infos.fd_out, "=", 1);
+		write(cmd->infos.fd_out, tmp->var_value, ft_strlen(tmp->var_value));
 		write(cmd->infos.fd_out, "\n", 1);
 		tmp = tmp->next;
 	}
