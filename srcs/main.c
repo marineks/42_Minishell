@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char *envp[])
 				expand_tokens(&data, &data.token);
 				handle_quotes(&data);
 				tokenize_var(&data);
-				print_token(data.token);
+				// print_token(data.token);
 				create_cmds(&data, data.token);
 
 

@@ -26,7 +26,6 @@ int	erase_var(t_token **tk_node, char *str, int index)
 	new_str[j] = '\0';
 	free((*tk_node)->str);
 	(*tk_node)->str = new_str;
-	// printf("str dans le nod : %s\n", (*tk_node)->str);
 	return (SUCCESS);
 }
 
@@ -69,7 +68,6 @@ int	erase_and_replace(t_token **tk_node, char *str, char *var_value, int index)
 	new_str[j] = '\0';
 	free((*tk_node)->str);
 	(*tk_node)->str = new_str;
-	// printf("str dans le nod : %s\n", (*tk_node)->str);
 	return (SUCCESS);
 }
 

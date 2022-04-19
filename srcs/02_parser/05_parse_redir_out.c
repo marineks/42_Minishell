@@ -11,25 +11,6 @@
 	Source : https://www.gnu.org/software/bash/manual/bash.html#Redirections
 */
 
-// static char	*get_absolute_path(char **env, char *file_to_open)
-// {
-// 	char	*path;
-// 	int		i;
-
-// 	path = ft_strdup("PWD");
-// 	i = 0;
-// 	while (env[i])
-// 	{
-// 		if (ft_strcmp(path, env[i]) == SUCCESS)
-// 			break;
-// 		i++;
-// 	}
-// 	path = ft_strjoin(*env + (i + 4), "/");
-// 	path = ft_strjoin(path, file_to_open);
-// 	printf("PARSING - Get_absolute_path function return : %s\n", path);
-// 	return (path);
-// }
-
 char	*get_relative_path(char *file_to_open)
 {
 	char *path;
@@ -37,7 +18,6 @@ char	*get_relative_path(char *file_to_open)
 
 	path = ft_strdup("./");
 	res = ft_strjoin(path, file_to_open);
-	printf("PARSING - Get_rel_path function return : %s\n", res);
 	return (res);
 }
 
@@ -54,20 +34,16 @@ char	*get_relative_path(char *file_to_open)
  * @param tk_lst A pointer to the address of the current token node.
  * 	- 
  */
-void	parse_redir_out(t_data *data, t_cmd **last_cmd, t_token **tk_lst)
+void	parse_redir_out(t_cmd **last_cmd, t_token **tk_lst)
 {
 	t_token	*tmp;
 	t_cmd	*cmd;
 	char	*file;
 	int		fd;
 
-	(void) data;
 	tmp = *tk_lst;
 	cmd = ft_lstlast_cmd(*last_cmd);
-	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~\nPARSE - Parse_redir_out function\n");
 	cmd->infos.redir_out = true;
-	// char *test = get_absolute_path(data->envp, tmp->next->str);
-	// printf("test : %s\n", test);
 	file = get_relative_path(tmp->next->str);
 	fd = open(file, O_CREAT | O_RDWR, S_IRWXU);
 	if (fd == -1)
@@ -75,15 +51,11 @@ void	parse_redir_out(t_data *data, t_cmd **last_cmd, t_token **tk_lst)
 		cmd->infos.error = errno;
 		cmd->infos.err_msg = ft_strdup(strerror(errno));
 		cmd->infos.fd_out = 2;
-		printf("N° d'erreur : %d - Erreur : %s - Fd : %d\n", cmd->infos.error,\
-	cmd->infos.err_msg, cmd->infos.fd_out);
 	}
 	else
 		cmd->infos.fd_out = fd;
 	free(file);
-	printf("Fd out : %d\n", cmd->infos.fd_out);
-	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-	if (tmp->next->next && tmp->next->next->type != PIPE)
+	if (tmp->next->next)
 		tmp = tmp->next->next;
 	else
 		tmp = tmp->next;

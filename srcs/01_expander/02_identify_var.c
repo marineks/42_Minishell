@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 bool	is_var_compliant(char c)
 {
 	if (c == ' ' || c == '$' || c == '\0' || c == '\'' || c == '\"' 

@@ -9,10 +9,10 @@ void create_cmds(t_data *data, t_token *token)
 	t_token *tmp;
 
 	tmp = token;
-	printf("je rentre dans create cmd\n");
+	// printf("je rentre dans create cmd\n");
 	while (tmp->next != NULL)
 	{
-		printf("tmp actuel : TYPE : %d - STR : |%s|\n", tmp->type, tmp->str);
+		// printf("tmp actuel : TYPE : %d - STR : |%s|\n", tmp->type, tmp->str);
 		if (tmp == token) 
 			ft_lstadd_back_cmd(&data->cmd, ft_lstnew_cmd(false));
 		if (tmp->type == WORD || tmp->type == VAR)
@@ -30,19 +30,19 @@ void create_cmds(t_data *data, t_token *token)
 		else if (tmp->type == END)
 			break;
 	}
-	t_cmd *cmd_tmp = data->cmd;
-	while (cmd_tmp)
-	{
-		printf("BEFORE EXIT - Print cmd : %s\n", cmd_tmp->infos.cmd);
-		if (cmd_tmp->infos.flags)
-		{
-			int i = 0;
-			while (cmd_tmp->infos.flags[i])
-			{
-				printf("BEFORE EXIT - Print flags :\ni : %d - str : |%s|\n", i, cmd_tmp->infos.flags[i]);
-				i++;
-			}
-		}
-		cmd_tmp = cmd_tmp->right;
-	}
+	// t_cmd *cmd_tmp = data->cmd;
+	// while (cmd_tmp)
+	// {
+	// 	// printf("BEFORE EXIT - Print cmd : %s\n", cmd_tmp->infos.cmd);
+	// 	if (cmd_tmp->infos.flags)
+	// 	{
+	// 		int i = 0;
+	// 		while (cmd_tmp->infos.flags[i])
+	// 		{
+	// 			// printf("BEFORE EXIT - Print flags :\ni : %d - str : |%s|\n", i, cmd_tmp->infos.flags[i]);
+	// 			i++;
+	// 		}
+	// 	}
+	// 	cmd_tmp = cmd_tmp->right;
+	// }
 }
