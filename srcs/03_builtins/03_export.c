@@ -1,25 +1,5 @@
 #include "minishell.h"
 
-bool	export_err_msg(char *line)
-{
-
-	printf("Minishell : export: « %s » : not a valid identifier\n", line);
-	g_exit_status = FAILURE;
-	// free(variable);
-	// free(value);
-	return (true);
-}
-
-// à noter : hola= est bien exporté, mais =hola donne une erreur d'identifier
-bool	is_a_valid_identifier(char *line)
-{
-	if (line[0] >= '0' && line[0] <= '9') // si var commence par un chiffre
-		return (false);
-	else if (line[0] == '=') // si on a un flag qui est " =WORD"
-		return (false);
-	return (true);
-}
-
 static void	add_var_to_env(t_env **env_lst, char *line, char *var, char *val)
 {
 	t_env	*tmp;
@@ -38,63 +18,89 @@ static void	add_var_to_env(t_env **env_lst, char *line, char *var, char *val)
 		free(tmp->var_value);
 		tmp->var_value = val;
 		free(var);
-		printf("Après export le dernier node: var : %s | val : %s\n", tmp->var_name, tmp->var_value);
 	}
-	printf("OUHHHHHHHHHHHHHHHHHHHHHHHH je viens d'addback hehehehe\n");
 }
-// ATTENTION ça marche : export test=1 test2=2
-/*
-"export test6=1 test9=2 hola" => pas de message d'erreur !!!!
-"export test6=1 test9=2 =" => message d'erreur que quand la syntaxe du = est la!
 
- Pour cet exemple (2e IF): export test6=1 test9=2 hola test88=ok 
-	/!\ Pas de msg d'err, et test88 est bien exporté
-	donc ça veut dire qu'il faut passer les flags sans =
-	A contrario, il n'y a qu'un msg d'err que quand il y a un = et que syntaxe
-	nulle
-
-
-
-	ATTENTION
-	si la var existe deja il faut ecraser!!!!
-*/
 /**
- * @brief 
+ * @brief Set export attribute for shell variables, which shall cause them to
+ * 		  be in the environment of subsequently executed commands.
  * 
- * @param cmd 
- * @param env 
- * @return int 
+ * 		  Examples:
+ * 			- "Export" => does nothing
+ * 			- "Export 1test", "Export 1test=foo", "Export =foo", "Export ="
+ * 				=> returns an error
+ * 			- "Export test=ok" => exports the variable to env
+ * 			- "Export test=ok test1=bar test2=baz" => exports all the var to env
+ * 			- "Export test=ok word test1=bar" => will export test and test1 and
+ * 				will skip "word" without returning an error
+ * 			- "Export test=ok = anothertest=ok" => will export all the correct
+ * 				vars (even anothertest) and still prints the syntax error of '='
+ * 
+ * 		  Some "tricky" cases:
+ * 			- If we export a variable that already exists, the value will be 
+ * 			  replaced (export test=foo / export test=baz / => result will be
+ * 			  test=baz);
+ * 			- In the case "export test=hello test1=$test" in the same line, 
+ * 			  the result for test1 will be "test1= "because at this time $test
+ * 			  has not been exported yet. On the other side, "export test=hello"
+ * 			  then "export test1=$test" on two separate commands will produce a
+ * 			  "test1=hello".
+ * 
+ * @param cmd The structure containing all the infos pertaining to the flags
+ * @param env The environment where the variables should be added
+ * @return int - 0 for SUCCESS and 1 for FAILURE
  */
 int	export_new_var(t_cmd *cmd, t_env **env)
 {
-	char	*var;
-	char	*var_value;
 	int		i;
 	bool	error_occured;
 
 	i = 0;
 	error_occured = false;
-	if (!cmd->infos.flags)
-		return (SUCCESS);
-	while (cmd->infos.flags[i])
+	while (cmd->infos.flags && cmd->infos.flags[i])
 	{
-		var = call_me_by_your_name(cmd->infos.flags[i]);
-		var_value = call_me_by_your_value(cmd->infos.flags[i]);
-		printf("VAR : %s , VALUE : %s\n", var, var_value);
 		if (ft_strchr(cmd->infos.flags[i], '=') == NULL)
 		{
 			i++;
 			continue;
 		}
 		else if (is_a_valid_identifier(cmd->infos.flags[i]) == true)
-			add_var_to_env(env, cmd->infos.flags[i], var, var_value);
+			add_var_to_env(env, cmd->infos.flags[i],\
+			call_me_by_your_name(cmd->infos.flags[i]),\
+			call_me_by_your_value(cmd->infos.flags[i]));
 		else
 			error_occured = export_err_msg(cmd->infos.flags[i]);
-		// free(var);
-		// free(var_value);
 		i++;
 	}
 	if (error_occured == true)
 		return (FAILURE);
 	return (SUCCESS);
+}
+
+/**
+ * @brief Checks if the variable given is a valid variable according to 
+ * 		  POSIX standards.
+ * 
+ * 			Examples where the line is not a valid identifier:
+ * 			- The variable begins by a digit (export 1test=foo);
+ * 			- The variable begins by the char '=' (export =foo).
+ * 
+ * @param line The variable to check
+ */
+bool	is_a_valid_identifier(char *line)
+{
+	if (line[0] >= '0' && line[0] <= '9')
+		return (false);
+	else if (line[0] == '=')
+		return (false);
+	return (true);
+}
+
+bool	export_err_msg(char *line)
+{
+	ft_putstr_fd("Minishell : export: « ", STDERR_FILENO);
+	ft_putstr_fd(line, STDERR_FILENO);
+	ft_putstr_fd(" » : not a valid identifier\n", STDERR_FILENO);
+	g_exit_status = 1;
+	return (true);
 }
