@@ -45,7 +45,7 @@ void	parse_redir_out(t_cmd **last_cmd, t_token **tk_lst)
 	cmd = ft_lstlast_cmd(*last_cmd);
 	cmd->infos.redir_out = true;
 	file = get_relative_path(tmp->next->str);
-	fd = open(file, O_CREAT | O_RDWR, S_IRWXU);
+	fd = open(file, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
 	if (fd == -1)
 	{
 		cmd->infos.error = errno;
