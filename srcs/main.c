@@ -1,10 +1,12 @@
 #include "minishell.h"
 
+
 int	main(int argc, char **argv, char *envp[])
 {
 	t_data data;
 
 	(void) argv;
+	g_exit_status = 0;
 	ft_memset(&data, 0, sizeof(t_data));
 	if (argc != 1)
 		printf("Command usage: ./minishell\n");
@@ -44,6 +46,8 @@ int	main(int argc, char **argv, char *envp[])
 					export_new_var(data.cmd, &data.env_copy);
 				if (ft_strcmp(data.cmd->infos.cmd, "cd") == SUCCESS)
 					change_directory(data.cmd, &data.env_copy);
+				if (ft_strcmp(data.cmd->infos.cmd, "unset") == SUCCESS)
+					unset_variable(data.cmd, &data.env_copy);
 				if (ft_strcmp(data.cmd->infos.cmd, "exit") == SUCCESS)
 					exit_minishell(&data, data.cmd);
 
