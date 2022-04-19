@@ -41,7 +41,6 @@ void	update_all_pwds(t_env **env)
 	char	*tmp_pwd;
 	t_env	*tmp;
 
-	// update pwd : changer la valeur de pwd par le résultat de getcwd
 	tmp = *env;
 	while (tmp->next)
 	{
@@ -52,9 +51,6 @@ void	update_all_pwds(t_env **env)
 	tmp_pwd = ft_strdup(tmp->var_value);
 	free(tmp->var_value);
 	tmp->var_value = getcwd(NULL, 0);
-	printf("Nouveau pwd : %s\n", tmp->var_value);
-
-	// update old pwd : changer la valeur de old pwd par pwd
 	tmp = *env;
 	while (tmp->next)
 	{
@@ -65,7 +61,6 @@ void	update_all_pwds(t_env **env)
 	free(tmp->var_value);
 	tmp->var_value = ft_strdup(tmp_pwd);
 	free(tmp_pwd);
-	printf("Nouveau OLDpwd : %s\n", tmp->var_value);
 }
 
 /**
@@ -102,6 +97,5 @@ int	change_directory(t_cmd *cmd, t_env **env)
 	}
 	free(path);
 	update_all_pwds(env);
-	g_exit_status = 0;
 	return (g_exit_status);
 }
