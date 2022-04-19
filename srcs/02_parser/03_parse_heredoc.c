@@ -54,11 +54,12 @@ int parse_heredoc(t_data *data, t_token **tk_lst)
 	{
 		close(pipe_fds[READ]);
 		buffer = stock_buffer(tk_lst);
-		printf("Heredoc | Buffer récupéré : %s\n", buffer);
+		// printf("Heredoc | Buffer récupéré : %s\n", buffer);
 		write(pipe_fds[WRITE], buffer, ft_strlen(buffer) + 1);
 		close(pipe_fds[WRITE]);
 		free(buffer);
-		exit(1);
+		escape_to_brazil(data);
+		exit(0);
 	}
 	else
 	{
@@ -68,7 +69,7 @@ int parse_heredoc(t_data *data, t_token **tk_lst)
 		data->cmd->infos.fd_in = pipe_fds[READ];
 		close(pipe_fds[READ]);
 	}
-	printf("Heredoc | fd_in récupéré : %d\n", data->cmd->infos.fd_in);
+	// printf("Heredoc | fd_in récupéré : %d\n", data->cmd->infos.fd_in);
 	if (tmp->next->next)
 		tmp = tmp->next->next;
 	else
