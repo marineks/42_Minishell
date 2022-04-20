@@ -110,12 +110,16 @@ void	print_cmd(t_cmd *lst)
 	
 	tmp = lst;
 	i = 0;
-	printf("DETAILS LIST CMDS\n");
+	printf("DETAIL DES COMMANDES RENTREES\n");
+	printf("----------------------------------------------------------\n");
 	while (tmp)
 	{
-		// if (tmp->left == NULL)
 		printf("is pipe : %d - LEFT : %p - RIGHT: %p\n", tmp->is_pipe, tmp->left, tmp->right);
-		printf("INFOS:\nCmd : |%s|\nBuiltin : %d\nRedir_in : %dRedir_out : %d\nFd_in : %d\nFd_out : %d\n", tmp->infos.cmd, tmp->infos.builtin, tmp->infos.redir_in, tmp->infos.redir_out, tmp->infos.fd_in, tmp->infos.fd_out);
+		printf("INFOS:\n%sCmd :%s |%s|\nBuiltin : %d\nRedir_in : %d\nRedir_out : %d\nFd_in : %d\nFd_out : %d\n",\
+		YELLOW, RESET, tmp->infos.cmd, tmp->infos.builtin, tmp->infos.redir_in, tmp->infos.redir_out, tmp->infos.fd_in, tmp->infos.fd_out);
+		printf("Voici les flags de la commande :\n");
+		for (int i = 0; tmp->infos.flags && tmp->infos.flags[i]; i++)
+			printf("i : %d - str : |%s|\n", i, tmp->infos.flags[i]);
 		printf("----------------------------------------------------------\n");
 		tmp = tmp->right;
 		i++;

@@ -10,7 +10,6 @@ int	get_env(t_cmd *cmd, t_env **env)
 	t_env	*tmp;
 
 	tmp = *env;
-	g_exit_status = 0;
 	if (cmd->infos.flags)
 	{
 		ft_putstr_fd("env: '", STDERR_FILENO);

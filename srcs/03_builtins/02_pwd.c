@@ -7,7 +7,7 @@ char	*grep_value(t_env *env, char *var_name)
 
 	value = NULL;
 	tmp = env;
-	while (tmp->next)
+	while (tmp)
 	{
 		if (ft_strcmp(var_name, tmp->var_name) == SUCCESS)
 		{

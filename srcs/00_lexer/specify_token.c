@@ -42,6 +42,6 @@ int	specify(t_token **tk_list)
 			return (FAILURE);
 		tmp = tmp->next;
 	}
-	print_token(*tk_list);
+	// print_token(*tk_list);
 	return (SUCCESS);
 }

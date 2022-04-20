@@ -34,12 +34,12 @@ void	parse_word(t_cmd **cmd, t_token **tk_lst);
 // 02_PARSER --- 02_fill_flags.c
 int		fill_flags(t_token	**tk_node, t_cmd *last_cmd);
 // 02_PARSER --- 03_parse_heredoc.c
-int	parse_heredoc(t_data *data, t_token **tk_lst);
+int		parse_heredoc(t_data *data, t_token **tk_lst);
 // 02_PARSER --- 04_parse_redir_in.c
 void	parse_redir_in(t_cmd **last_cmd, t_token **tk_lst);
 // 02_PARSER --- 05_parse_redir_out.c
 char	*get_relative_path(char *file_to_open);
-void	parse_redir_out(t_data *data, t_cmd **last_cmd, t_token **tk_lst);
+void	parse_redir_out(t_cmd **last_cmd, t_token **tk_lst);
 // 02_PARSER --- 06_parse_append.c
 void	parse_append(t_cmd **last_cmd, t_token **tk_lst);
 // 02_PARSER --- 07_parse_pipe.c
@@ -47,16 +47,20 @@ void	parse_pipe(t_cmd **cmd, t_token **tk_lst);
 
 // 03_BUILTINS --- 00_get_echo.c
 void	get_echo(t_cmd *cmd);
-// 03_BUILTINS --- 01_change_directory.c
+// 03_BUILTINS --- 01_cd.c
 int		change_directory(t_cmd *cmd, t_env **env);
-// 03_BUILTINS --- 02_get_pwd.c
+// 03_BUILTINS --- 02_pwd.c
 char	*grep_value(t_env *env, char *var_name);
 void	get_pwd(t_cmd *cmd, t_env *env);
-// 03_BUILTINS --- 03_export_new_var.c
+// 03_BUILTINS --- 03_export.c
+bool	export_err_msg(char *line);
+bool	is_a_valid_identifier(char *line);
 int		export_new_var(t_cmd *cmd, t_env **env);
-// 03_BUILTINS --- 05_get_env.c
+// 03_BUILTINS --- 04_unset.c
+int		unset_variable(t_cmd *cmd, t_env **env);
+// 03_BUILTINS --- 05_env.c
 int		get_env(t_cmd *cmd, t_env **env);
-// 03_BUILTINS --- 06_exit_minishell.c
+// 03_BUILTINS --- 06_exit.c
 int		exit_minishell(t_data *data, t_cmd *cmd);
 
 // 04_EXEC --- get_path.c

@@ -86,7 +86,7 @@ int	tokenize_var(t_data *data)
 		if (tmp->type == VAR)
 		{
 			new_lst = split_var(tmp->str, tk_lst);
-			print_token(data->token);
+			// print_token(data->token);
 			if (tmp->join == true)
 				set_new_lst_to_true(&new_lst);
 			tmp = insert_lst_between(&data->token, tmp, new_lst);

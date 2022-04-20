@@ -42,7 +42,8 @@ void	ft_lstdelone_env(t_env *lst, void (*del)(void *))
 		(*del)(lst->var_name);
 	if (del && lst && lst->var_value)
 		(*del)(lst->var_value);
-	free(lst);
+	if (lst)
+		free(lst);
 }
 
 void	ft_lstclear_env(t_env **lst, void (*del)(void *))
@@ -58,21 +59,28 @@ void	ft_lstclear_env(t_env **lst, void (*del)(void *))
 	}
 }
 
-void	print_env(t_env *lst)
+void	ft_lst_unset_env(t_env **lst, char *var_to_del)
 {
-	t_env *tmp;
-	int i = 0;
-	
-	printf(" ###### PRINTF DE L'ENV RECUPERE ######\n");
-	tmp = lst;
-	while (tmp)
+	t_env	*tmp;
+
+	tmp = *lst;
+	// trouve le bon node
+	while (tmp->next)
 	{
-		// if (tmp->prev == NULL)
-		printf("NODE : %d - LINE : %s - VAR_NAME : %s - VAR_VALUE: |%s|\n", i, tmp->line, tmp->var_name, tmp->var_value);
-		// else
-			// printf("Current str: %s ~ Previous str: %s\n", tmp->str, tmp->prev->str);
-		printf("----------------------------------------------------------\n");
+		if (ft_strcmp(var_to_del, tmp->var_name) == SUCCESS)
+			break;
 		tmp = tmp->next;
-		i++;
 	}
+	// raccorde (!!!! quand on supprime le 1er node)
+	if (tmp->prev)
+	{
+		tmp->prev->next = tmp->next;
+		if (tmp->next)
+			tmp->next->prev = tmp->prev;
+	}
+	else
+		tmp->next->prev = NULL;
+	// suppression du node
+	ft_lstdelone_env(tmp, &free);
+
 }

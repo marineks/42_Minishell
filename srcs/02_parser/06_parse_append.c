@@ -42,10 +42,7 @@ void	parse_append(t_cmd **last_cmd, t_token **tk_lst)
 
 	tmp = *tk_lst;
 	cmd = ft_lstlast_cmd(*last_cmd);
-	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~\nPARSE - Parse_append function\n");
 	cmd->infos.redir_out = true;
-	// char *test = get_absolute_path(data->envp, tmp->next->str);
-	// printf("test : %s\n", test);
 	file = get_relative_path(tmp->next->str);
 	fd = open(file, O_CREAT | O_RDWR | O_APPEND, S_IRWXU);
 	if (fd == -1)
@@ -53,15 +50,11 @@ void	parse_append(t_cmd **last_cmd, t_token **tk_lst)
 		cmd->infos.error = errno;
 		cmd->infos.err_msg = ft_strdup(strerror(errno));
 		cmd->infos.fd_out = 2;
-		printf("N° d'erreur : %d - Erreur : %s - Fd : %d\n", cmd->infos.error,\
-	cmd->infos.err_msg, cmd->infos.fd_out);
 	}
 	else
 		cmd->infos.fd_out = fd;
 	free(file);
-	printf("Fd : %d\n", cmd->infos.fd_out);
-	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-	if (tmp->next->next && tmp->next->next->type != PIPE)
+	if (tmp->next->next)
 		tmp = tmp->next->next;
 	else
 		tmp = tmp->next;

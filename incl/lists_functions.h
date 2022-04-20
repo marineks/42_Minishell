@@ -17,7 +17,7 @@ t_env	*ft_lstnew_env(char *line, char *name, char *value);
 void	ft_lstadd_back_env(t_env **alst, t_env *new_node);
 void	ft_lstdelone_env(t_env *lst, void (*del)(void *));
 void	ft_lstclear_env(t_env **lst, void (*del)(void *));
-void	print_env(t_env *lst);
+void	ft_lst_unset_env(t_env **lst, char *var_to_del);
 
 // 05_UTILS // lists_functions --- token_list_functions.c
 t_token	*ft_lstnew_token(char *str, int type, int state);
