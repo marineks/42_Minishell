@@ -9,13 +9,13 @@
 void	fill_cmd(t_cmd *last_cmd, char *tk_str)
 {
 	last_cmd->infos.cmd = tk_str;
-	if (ft_strcmp("echo", tk_str)
-		|| ft_strcmp("cd", tk_str)
-		|| ft_strcmp("pwd", tk_str)
-		|| ft_strcmp("export", tk_str)
-		|| ft_strcmp("unset", tk_str)
-		|| ft_strcmp("env", tk_str)
-		|| ft_strcmp("exit", tk_str))
+	if (!ft_strcmp("echo", tk_str)
+		|| !ft_strcmp("cd", tk_str)
+		|| !ft_strcmp("pwd", tk_str)
+		|| !ft_strcmp("export", tk_str)
+		|| !ft_strcmp("unset", tk_str)
+		|| !ft_strcmp("env", tk_str)
+		|| !ft_strcmp("exit", tk_str))
 		last_cmd->infos.builtin = true;
 }
 

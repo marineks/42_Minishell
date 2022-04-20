@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char *envp[])
 				tokenize_var(&data);
 				// print_token(data.token);
 				create_cmds(&data, data.token);
-				// print_cmd(data.cmd);
+				print_cmd(data.cmd);
 				if (ft_strcmp(data.cmd->infos.cmd, "pwd") == SUCCESS)
 					get_pwd(data.cmd, data.env_copy);
 				if (ft_strcmp(data.cmd->infos.cmd, "env") == SUCCESS)

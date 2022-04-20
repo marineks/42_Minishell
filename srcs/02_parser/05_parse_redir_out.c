@@ -53,7 +53,7 @@ void	parse_redir_out(t_cmd **last_cmd, t_token **tk_lst)
 		cmd->infos.fd_out = 2;
 	}
 	else
-	// if cmd->infos.fd_out != 0 
+	// if cmd->infos.fd_out != 1 || 2 
 		// close(cmd->infos.fd_out)
 		cmd->infos.fd_out = fd;
 	free(file);
