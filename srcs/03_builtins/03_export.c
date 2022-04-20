@@ -5,6 +5,11 @@ static void	add_var_to_env(t_env **env_lst, char *line, char *var, char *val)
 	t_env	*tmp;
 
 	tmp = *env_lst;
+	if (ft_strcmp(val, "$?") == SUCCESS)
+	{
+		free(val);
+		val = ft_itoa(g_exit_status);
+	}
 	if (grep_value(*env_lst, var) == NULL)
 		ft_lstadd_back_env(env_lst, ft_lstnew_env(ft_strdup(line), var, val));
 	else
