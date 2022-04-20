@@ -26,6 +26,7 @@ int	get_env(t_cmd *cmd, t_env **env)
 		write(cmd->infos.fd_out, "\n", 1);
 		tmp = tmp->next;
 	}
+	g_exit_status = 0;
 	return (g_exit_status);
 }
 

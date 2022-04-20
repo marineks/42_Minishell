@@ -97,5 +97,6 @@ int	change_directory(t_cmd *cmd, t_env **env)
 	}
 	free(path);
 	update_all_pwds(env);
+	g_exit_status = 0;
 	return (g_exit_status);
 }

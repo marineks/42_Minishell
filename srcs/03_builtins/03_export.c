@@ -74,6 +74,7 @@ int	export_new_var(t_cmd *cmd, t_env **env)
 	}
 	if (error_occured == true)
 		return (FAILURE);
+	g_exit_status = 0;
 	return (SUCCESS);
 }
 
