@@ -46,7 +46,7 @@ int	main(int argc, char **argv, char *envp[])
 					unset_variable(data.cmd, &data.env_copy);
 				if (ft_strcmp(data.cmd->infos.cmd, "exit") == SUCCESS)
 					exit_minishell(&data, data.cmd);
-
+				
 				escape_to_amsterdam(&data);
 			} 
 			escape_to_brazil(&data);

@@ -67,7 +67,7 @@ int parse_heredoc(t_data *data, t_token **tk_lst)
 		waitpid(pid, &status, 0);
 		read(pipe_fds[READ], str, 1000);
 		data->cmd->infos.fd_in = pipe_fds[READ];
-		close(pipe_fds[READ]);
+		close(pipe_fds[READ]); // peut etre a close pendant l'exec car si on close le fd, on peut plus y acceder
 	}
 	// printf("Heredoc | fd_in récupéré : %d\n", data->cmd->infos.fd_in);
 	if (tmp->next->next)
