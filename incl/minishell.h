@@ -65,6 +65,8 @@ int		exit_minishell(t_data *data, t_cmd *cmd);
 
 // 04_EXEC --- convert_env.c
 char	**convert_env_copy_to_array(t_env *env);
+// 04_EXEC --- exec.c
+int		exec(t_data *data, t_cmd *cmd_lst, int pipe_fd_in);
 // 04_EXEC --- get_path.c
 char	*grep_path(char *envp[], char *cmd);
 

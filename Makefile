@@ -59,8 +59,9 @@ SRCS = main.c 											\
 	03_builtins/04_unset.c 								\
 	03_builtins/05_env.c 								\
 	03_builtins/06_exit.c 								\
-	04_exec/get_path.c 									\
 	04_exec/convert_env.c								\
+	04_exec/exec.c										\
+	04_exec/get_path.c 									\
 	05_utils/gnl/get_next_line.c						\
 	05_utils/gnl/get_next_line_utils.c					\
 	05_utils/lists_functions/cmd_list_functions.c		\

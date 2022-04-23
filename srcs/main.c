@@ -47,6 +47,7 @@ int	main(int argc, char **argv, char *envp[])
 				if (ft_strcmp(data.cmd->infos.cmd, "exit") == SUCCESS)
 					exit_minishell(&data, data.cmd);
 				
+				exec(&data, data.cmd, 1);
 				escape_to_amsterdam(&data);
 			} 
 			escape_to_brazil(&data);
