@@ -24,6 +24,11 @@ void	get_echo(t_cmd *cmd)
 		}
 		while (cmd->infos.flags[i])
 		{
+			if (ft_strcmp("$?", cmd->infos.flags[i]) == SUCCESS)
+			{
+				free(cmd->infos.flags[i]);
+				cmd->infos.flags[i] = ft_itoa(g_exit_status);
+			}
 			len = ft_strlen(cmd->infos.flags[i]);
 			write(cmd->infos.fd_out, cmd->infos.flags[i], len);
 			write(cmd->infos.fd_out, " ", 1);
@@ -32,4 +37,5 @@ void	get_echo(t_cmd *cmd)
 	}
 	if (print_newline == true)
 		write(cmd->infos.fd_out, "\n", 1);
+	g_exit_status = 0;
 }

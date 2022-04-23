@@ -38,4 +38,5 @@ void	get_pwd(t_cmd *cmd, t_env *env)
 	}
 	write(cmd->infos.fd_out, tmp->var_value, ft_strlen(tmp->var_value));
 	write(cmd->infos.fd_out, "\n", 1);
+	g_exit_status = 0;
 }
