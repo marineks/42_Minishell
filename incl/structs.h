@@ -51,6 +51,13 @@ typedef	struct	s_env
 	struct s_env	*next;
 }				t_env;
 
+typedef	struct	s_exec
+{
+	char	*path;
+	char	**env_array;
+	char	**cmd_and_flags;
+}				t_exec;
+
 typedef struct	s_data 
 {
 	int		nb_cmd;
