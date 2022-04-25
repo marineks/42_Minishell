@@ -34,13 +34,13 @@ char	**convert_env_copy_to_array(t_env *env)
 	}
 	env_array[i] = NULL;
 
-	tmp = env;
-	i = 0;
-	while (tmp)
-	{
-		printf("ENV ARRAY - i : %d - line : %s\n", i, env_array[i]);
-		tmp = tmp->next;
-		i++;
-	}
+	// tmp = env;
+	// i = 0;
+	// while (tmp)
+	// {
+	// 	printf("ENV ARRAY - i : %d - line : %s\n", i, env_array[i]);
+	// 	tmp = tmp->next;
+	// 	i++;
+	// }
 	return (env_array);
 }
