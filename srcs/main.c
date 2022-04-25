@@ -7,13 +7,14 @@ int	main(int argc, char **argv, char *envp[])
 	t_data data;
 
 	(void) argv;
+	if (*envp == NULL)
+	{
+		ft_putstr_fd("Pas de env pas de minishell\n", 2);
+		return (-1);
+	}
 	g_exit_status = 0;
 	ft_memset(&data, 0, sizeof(t_data));
-	// if (!envp)
-	// {
-	// 	ft_putstr_fd("pas de env pd", 2);
-	// 	return (-1);
-	// }
+
 	if (argc != 1)
 		printf("Command usage: ./minishell\n");
 	else
@@ -53,8 +54,8 @@ int	main(int argc, char **argv, char *envp[])
 				if (ft_strcmp(data.cmd->infos.cmd, "exit") == SUCCESS)
 					exit_minishell(&data, data.cmd);
 				
-				// if (data.cmd)
-				// 	exec(&data, data.cmd, 1);
+				if (data.cmd)
+					exec(&data, data.cmd, 1);
 				escape_to_amsterdam(&data);
 			} 
 			escape_to_brazil(&data);

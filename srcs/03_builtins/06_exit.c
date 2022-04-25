@@ -5,6 +5,8 @@ static bool	is_a_valid_exit(char *flag)
 	int	i;
 
 	i = 0;
+	if (flag[i] == '-' || flag[i] == '+')
+		i++;
 	while (flag[i])
 	{
 		if (!ft_isdigit(flag[i]))
@@ -23,13 +25,14 @@ static int	too_many_arg_err(void)
 	return (g_exit_status);
 }
 
-static int	numeric_arg_err(char *flag)
+static void	numeric_arg_err(t_data *data, char *flag)
 {
 	ft_putstr_fd("bash: exit: ",  STDERR_FILENO);
 	ft_putstr_fd(flag,  STDERR_FILENO);
 	ft_putstr_fd(" : numeric argument required\n",  STDERR_FILENO);
 	g_exit_status = 2;
-	return (g_exit_status);
+	escape_to_brazil(data);
+	exit(g_exit_status);
 }
 
 /**
@@ -43,10 +46,10 @@ int	exit_minishell(t_data *data, t_cmd *cmd)
 {
 	if (cmd->infos.flags)
 	{
-		if (cmd->infos.flags[1])
+		if (is_a_valid_exit(cmd->infos.flags[0]) == false)
+			numeric_arg_err(data, cmd->infos.flags[0]);
+		else if (cmd->infos.flags[1])
 			return (too_many_arg_err());
-		else if (is_a_valid_exit(cmd->infos.flags[0]) == false)
-			return (numeric_arg_err(cmd->infos.flags[0]));
 		else
 			g_exit_status = ft_atoi(cmd->infos.flags[0]) % 256;
 	}

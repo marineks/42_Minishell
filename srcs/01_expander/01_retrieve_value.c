@@ -9,12 +9,6 @@ static int	var_exists(t_data *data, char *var)
 	i = 0;
 	len = ft_strlen(var);
 	tmp = data->env_copy;
-	// while (data->envp[i])
-	// {
-	// 	if (ft_strncmp(data->envp[i], var, len) == SUCCESS)
-	// 		return (SUCCESS);
-	// 	i++;
-	// }
 	while (tmp)
 	{
 		if (ft_strncmp(tmp->line, var, len) == SUCCESS)
@@ -41,14 +35,7 @@ static char	*grep_env_var(t_data *data, char *var)
 		i++;
 		tmp = tmp->next;
 	}
-	// while (data->envp[i])
-	// {
-	// 	if (ft_strncmp(data->envp[i], var, len) == SUCCESS)
-	// 		break ;
-	// 	i++;
-	// }
-	// str = ft_strdup(data->envp[i] + len);
-	str = ft_strdup(tmp->var_value);
+	str = tmp->var_value;
 	return (str);
 }
 
