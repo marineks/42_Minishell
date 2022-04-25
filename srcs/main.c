@@ -7,8 +7,14 @@ int	main(int argc, char **argv, char *envp[])
 	t_data data;
 
 	(void) argv;
+	if (*envp == NULL)
+	{
+		ft_putstr_fd("Pas de env pas de minishell\n", 2);
+		return (-1);
+	}
 	g_exit_status = 0;
 	ft_memset(&data, 0, sizeof(t_data));
+
 	if (argc != 1)
 		printf("Command usage: ./minishell\n");
 	else

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static int	find_str(char *haystack, char *needle)
+int	find_str(char *haystack, char *needle)
 {
 	int	i;
 
@@ -17,7 +17,7 @@ static int	find_str(char *haystack, char *needle)
 	return (FAILURE);
 }
 
-static char	*replace_exit_status(char *flags)
+char	*replace_exit_status(char *flags)
 {
 	char	*exit_value;
 	char	*new_str;
