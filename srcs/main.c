@@ -9,6 +9,11 @@ int	main(int argc, char **argv, char *envp[])
 	(void) argv;
 	g_exit_status = 0;
 	ft_memset(&data, 0, sizeof(t_data));
+	// if (!envp)
+	// {
+	// 	ft_putstr_fd("pas de env pd", 2);
+	// 	return (-1);
+	// }
 	if (argc != 1)
 		printf("Command usage: ./minishell\n");
 	else

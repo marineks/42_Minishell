@@ -4,14 +4,22 @@ static int	var_exists(t_data *data, char *var)
 {
 	int		i;
 	int		len;
+	t_env	*tmp;
 
 	i = 0;
 	len = ft_strlen(var);
-	while (data->envp[i])
+	tmp = data->env_copy;
+	// while (data->envp[i])
+	// {
+	// 	if (ft_strncmp(data->envp[i], var, len) == SUCCESS)
+	// 		return (SUCCESS);
+	// 	i++;
+	// }
+	while (tmp)
 	{
-		if (ft_strncmp(data->envp[i], var, len) == SUCCESS)
+		if (ft_strncmp(tmp->line, var, len) == SUCCESS)
 			return (SUCCESS);
-		i++;
+		tmp = tmp->next;
 	}
 	return (FAILURE);
 }
@@ -21,16 +29,26 @@ static char	*grep_env_var(t_data *data, char *var)
 	char	*str;
 	int		i;
 	int		len;
+	t_env	*tmp;
 
 	i = 0;
 	len = ft_strlen(var);
-	while (data->envp[i])
+	tmp = data->env_copy;
+	while (tmp)
 	{
-		if (ft_strncmp(data->envp[i], var, len) == SUCCESS)
+		if (ft_strncmp(tmp->line, var, len) == SUCCESS)
 			break ;
 		i++;
+		tmp = tmp->next;
 	}
-	str = ft_strdup(data->envp[i] + len);
+	// while (data->envp[i])
+	// {
+	// 	if (ft_strncmp(data->envp[i], var, len) == SUCCESS)
+	// 		break ;
+	// 	i++;
+	// }
+	// str = ft_strdup(data->envp[i] + len);
+	str = ft_strdup(tmp->var_value);
 	return (str);
 }
 
