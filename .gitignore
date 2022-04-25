@@ -54,3 +54,5 @@ minishell/
 .vscode
 .nfs*
 vcpkg
+minishell
+.gitignore
