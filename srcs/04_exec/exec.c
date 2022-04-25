@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	exec_builtin(t_data *data, t_cmd *cmd)
+int	exec_one_builtin(t_data *data, t_cmd *cmd)
 {
 	if (ft_strcmp(cmd->infos.cmd, "pwd") == SUCCESS)
 		get_pwd(cmd, data->env_copy);
@@ -63,19 +63,20 @@ void	child_process(t_data *data, t_cmd *cmd, int *tube_fd)
 {
 	t_exec	*exec;
 
+	exec = get_execve_infos(data, cmd);
 	if (cmd->infos.error)
 		g_exit_status = 1;
-	// else if (is_built_in(cmd->cmd_param[0]))
-	// {
-	// 	close(tube_fd[0]);
-	// 	if (cmd->outfile < 0 && cmd->next)
-	// 		cmd->outfile = tube_fd[1];
-	// 	else
-	// 		close(tube_fd[1]);
-	// 	launch_built_in(data, cmd);
-	// }
-	exec = get_execve_infos(data, cmd);
-	if (exec->path)
+	else if (cmd->infos.builtin == true)
+	{
+		close(tube_fd[READ]);
+		if (cmd->infos.fd_out == STDOUT_FILENO && cmd->right->is_pipe == true) // potentiel bug
+			cmd->infos.fd_out = tube_fd[WRITE];
+		else
+			close(tube_fd[WRITE]);
+		// launch_built_in(data, cmd);
+		exec_one_builtin(data, cmd);
+	}
+	else if (exec->path)
 	{
 		redir_in_out(cmd, tube_fd);
 		execve(exec->path, exec->cmd_and_flags, exec->env_array);
@@ -92,7 +93,7 @@ void	child_process(t_data *data, t_cmd *cmd, int *tube_fd)
 
 void	parent_process(t_cmd *cmd, int *tube_fd)
 {
-	close(tube_fd[1]);
+	close(tube_fd[WRITE]);
 	if (cmd->infos.fd_in > STDIN_FILENO)
 		close(cmd->infos.fd_in);
 	if (cmd->infos.fd_in == STDIN_FILENO)
@@ -148,7 +149,7 @@ int	exec(t_data *data)
 
 	cmd_lst = data->cmd;
 	if (cmd_lst->right == NULL && cmd_lst->infos.builtin == true)
-		exec_builtin(data, cmd_lst);
+		exec_one_builtin(data, cmd_lst);
 	else
 	{
 		while (cmd_lst)
