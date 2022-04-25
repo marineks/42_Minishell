@@ -10,8 +10,6 @@ void	init_infos(t_cmd **cmd)
 	(*cmd)->infos.redir_out = false;
 	(*cmd)->infos.fd_in = 0;
 	(*cmd)->infos.fd_out = 1;
-	(*cmd)->infos.fdp_in = 0;
-	(*cmd)->infos.fdp_out = 1;
 	(*cmd)->infos.error = 0;
 	(*cmd)->infos.err_msg  = NULL;
 }

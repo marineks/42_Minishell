@@ -5,15 +5,15 @@ int	exec_builtin(t_data *data, t_cmd *cmd)
 	if (ft_strcmp(cmd->infos.cmd, "pwd") == SUCCESS)
 		get_pwd(cmd, data->env_copy);
 	else if (ft_strcmp(cmd->infos.cmd, "env") == SUCCESS)
-		get_env(cmd, data->env_copy);
+		get_env(cmd, &data->env_copy);
 	else if (ft_strcmp(cmd->infos.cmd, "echo") == SUCCESS)
 		get_echo(cmd);
 	else if (ft_strcmp(cmd->infos.cmd, "export") == SUCCESS)
-		export_new_var(cmd, data->env_copy);
+		export_new_var(cmd, &data->env_copy);
 	else if (ft_strcmp(cmd->infos.cmd, "cd") == SUCCESS)
-		change_directory(cmd, data->env_copy);
+		change_directory(cmd, &data->env_copy);
 	else if (ft_strcmp(cmd->infos.cmd, "unset") == SUCCESS)
-		unset_variable(cmd, data->env_copy);
+		unset_variable(cmd, &data->env_copy);
 	else if (ft_strcmp(cmd->infos.cmd, "exit") == SUCCESS)
 		exit_minishell(data, cmd);
 	return (SUCCESS);
@@ -31,14 +31,14 @@ int	exec_one_cmd(t_data *data, t_cmd *cmd)
 	pid = fork();
 	if (pid < 0)
 	{
-		ft_putstr(strerror(errno), STDERR_FILENO);
+		ft_putstr_fd(strerror(errno), STDERR_FILENO);
 		return (FAILURE);
 	}
 	if (pid == 0) // child process
 	{
 		if (execve(exec->path, exec->cmd_and_flags, exec->env_array) == -1)
 		{
-			ft_putstr(strerror(errno), STDERR_FILENO);
+			ft_putstr_fd(strerror(errno), STDERR_FILENO);
 			return (FAILURE);
 		}
 		exit(0);
@@ -95,7 +95,48 @@ void	child_process(t_data *data, t_cmd *cmd, int *tube_fd)
 		g_exit_status = 127;
 	}
 	free_excve_infos(exec);
-	exit_process(data, tube_fd);
+	exit(g_exit_status);
+	// exit_process(data, tube_fd);
+}
+
+void	parent_process(t_cmd *cmd, int *tube_fd)
+{
+	close(tube_fd[1]);
+	if (cmd->infos.fd_in > STDIN_FILENO)
+		close(cmd->infos.fd_in);
+	if (cmd->infos.fd_in == STDIN_FILENO)
+		cmd->infos.fd_in = tube_fd[READ];
+	if (cmd->right && cmd->right->right->infos.fd_in == STDIN_FILENO)
+		cmd->right->right->infos.fd_in = tube_fd[READ];
+	else
+		close(tube_fd[READ]);
+	return ;
+}
+
+void	wait_for_dat_ass(t_data *data, t_cmd *cmd)
+{
+	t_cmd	*tmp;
+	int	status;
+	int	pid;
+
+	tmp = cmd;
+	while (tmp)
+	{
+		pid = waitpid(0, &status, 0);
+		if (pid == data->pid)
+		{
+			if (WIFEXITED(status))
+				g_exit_status = WEXITSTATUS(status);
+		}
+		if (tmp->infos.fd_out >= 0)
+			close(tmp->infos.fd_out);
+		if (tmp->infos.fd_in > 0)
+			close(tmp->infos.fd_in);
+		if (tmp->right)
+			tmp = tmp->right->right;
+		else
+			tmp = tmp->right;
+	}
 }
 
 void	exec_cmd(t_data *data, t_cmd *cmd, int *tube_fd)
@@ -115,8 +156,8 @@ int	exec(t_data *data)
 	int		tube_fd[2];
 
 	cmd_lst = data->cmd;
-	if (cmd_lst->right == NULL)
-		exec_one_cmd(data, cmd_lst);
+	if (cmd_lst->right == NULL && cmd_lst->infos.builtin == true)
+		exec_builtin(data, cmd_lst);
 	else
 	{
 		while (cmd_lst)
@@ -129,7 +170,7 @@ int	exec(t_data *data)
 			else
 				cmd_lst = cmd_lst->right;
 		}
-		wait_all_and_finish(data, data->cmd);
+		wait_for_dat_ass(data, data->cmd);
 	}
 	return (SUCCESS);
 }

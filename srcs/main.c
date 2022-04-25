@@ -34,7 +34,7 @@ int	main(int argc, char **argv, char *envp[])
 				create_cmds(&data, data.token);
 				// print_cmd(data.cmd);
 				if (data.cmd)
-					exec(&data, data.cmd, 1);
+					exec(&data);
 				escape_to_amsterdam(&data);
 			} 
 			escape_to_brazil(&data);
