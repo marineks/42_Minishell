@@ -46,6 +46,8 @@ void	parse_append(t_cmd **last_cmd, t_token **tk_lst);
 void	parse_pipe(t_cmd **cmd, t_token **tk_lst);
 
 // 03_BUILTINS --- 00_get_echo.c
+int		find_str(char *haystack, char *needle);
+char	*replace_exit_status(char *flags);
 void	get_echo(t_cmd *cmd);
 // 03_BUILTINS --- 01_cd.c
 int		change_directory(t_cmd *cmd, t_env **env);
