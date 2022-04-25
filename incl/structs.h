@@ -30,6 +30,8 @@ typedef struct	s_infos
 	bool			redir_out;
 	int				fd_in;
 	int				fd_out;
+	int				fdp_in;
+	int				fdp_out;
 	int				error;
 	char			*err_msg;
 }				t_infos;

@@ -26,24 +26,34 @@ int	exec_one_cmd(t_data *data, t_cmd *cmd)
 	return (SUCCESS);
 }
 
-int	exec_pipe(t_cmd *cmd, int pipe_fd_in)
+// 	if (cmd->infos.redir_in == true)
+	// 	dup2(tube_fd[READ], cmd->infos.fd_in);
+	// if (cmd->infos.redir_out == true)
+	// 	dup2(tube_fd[WRITE], cmd->infos.fd_out);
+
+int	manage_pipe(t_cmd *cmd)
 {
+	t_cmd	*tmp;
 	int		tube_fd[2];
 
-	if (pipe(tube_fd) == -1)
+	tmp = cmd;
+	while (tmp->right && tmp->right->is_pipe == true)
 	{
-        perror("Pipe");
-        return (FAILURE);
-    }
-	if (cmd->infos.redir_in == true)
-		dup2(tube_fd[READ], cmd->infos.fd_in);
-	if (cmd->infos.redir_out == true)
-		dup2(tube_fd[WRITE], cmd->infos.fd_out);
-	else
-	{
-		dup2(tube_fd[1], STDOUT_FILENO);
-		close(tube_fd[0]);
+		if (pipe(tube_fd) == -1)
+		{
+			ft_putstr(strerror(errno), STDERR_FILENO);
+			return (FAILURE);
+		}
+		tmp->infos.fdp_in = tube_fd[READ];
+		tmp->infos.fdp_in = tube_fd[WRITE];
+		tmp = tmp->right->right;
 	}
+	return (SUCCESS);
+}
+
+int	exec_cmd(t_data *data, t_cmd *cmd)
+{
+	
 }
 
 int	exec(t_data *data, t_cmd *cmd_lst, int pipe_fd_in)
@@ -54,11 +64,9 @@ int	exec(t_data *data, t_cmd *cmd_lst, int pipe_fd_in)
 		return (exec_one_cmd(data, cmd_lst));
 	else if (cmd_lst->is_pipe == true)
 	{
-		exec_pipe(cmd_lst, pipe_fd_in);
-		// if (cmd_lst->infos.builtin == true)
-		// 	exec_built_in();
-		// else
-		// 	exec_cmd();
+		if (manage_pipe(cmd_lst) == FAILURE)
+			return (FAILURE);
+		exec_cmd(data, cmd_lst);
 	}
 	return (SUCCESS);
 }
