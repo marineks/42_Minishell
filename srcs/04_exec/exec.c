@@ -19,33 +19,26 @@ int	exec_builtin(t_data *data, t_cmd *cmd)
 	return (SUCCESS);
 }
 
-int	exec_one_cmd(t_data *data, t_cmd *cmd)
+void	exit_process(t_data *data, int *tube_fd, t_exec *exec)
 {
-	int	pid;
-	int status;
-	t_exec	*exec;
+	t_cmd	*cmd;
 
-	if (cmd->infos.builtin == true)
-		return (exec_builtin(data, cmd));
-	exec = get_execve_infos(data, cmd);
-	pid = fork();
-	if (pid < 0)
+	cmd = data->cmd;
+	while (cmd)
 	{
-		ft_putstr_fd(strerror(errno), STDERR_FILENO);
-		return (FAILURE);
+		if (cmd->infos.fd_in > STDIN_FILENO)
+			close(cmd->infos.fd_in);
+		if (cmd->infos.fd_out > STDOUT_FILENO)
+			close(cmd->infos.fd_out);
+		if (cmd->right)
+			cmd = cmd->right->right;
+		else
+			cmd = cmd->right;
 	}
-	if (pid == 0) // child process
-	{
-		if (execve(exec->path, exec->cmd_and_flags, exec->env_array) == -1)
-		{
-			ft_putstr_fd(strerror(errno), STDERR_FILENO);
-			return (FAILURE);
-		}
-		exit(0);
-	}
-	waitpid(pid, &status, 0);
+	close(tube_fd[READ]);
+	close(tube_fd[WRITE]);
 	free_excve_infos(exec);
-	return (SUCCESS);
+	exit(g_exit_status);
 }
 
 void	redir_in_out(t_cmd *cmd, int *tube_fd)
@@ -94,9 +87,7 @@ void	child_process(t_data *data, t_cmd *cmd, int *tube_fd)
 		write(STDERR_FILENO, ": command not found\n", 20);
 		g_exit_status = 127;
 	}
-	free_excve_infos(exec);
-	exit(g_exit_status);
-	// exit_process(data, tube_fd);
+	exit_process(data, tube_fd, exec);
 }
 
 void	parent_process(t_cmd *cmd, int *tube_fd)
@@ -128,9 +119,9 @@ void	wait_for_dat_ass(t_data *data, t_cmd *cmd)
 			if (WIFEXITED(status))
 				g_exit_status = WEXITSTATUS(status);
 		}
-		if (tmp->infos.fd_out >= 0)
+		if (tmp->infos.fd_out > STDOUT_FILENO)
 			close(tmp->infos.fd_out);
-		if (tmp->infos.fd_in > 0)
+		if (tmp->infos.fd_in > STDIN_FILENO)
 			close(tmp->infos.fd_in);
 		if (tmp->right)
 			tmp = tmp->right->right;
