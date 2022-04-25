@@ -124,9 +124,9 @@ bool	is_a_valid_identifier(char *line)
 
 bool	export_err_msg(char *line)
 {
-	ft_putstr_fd("Minishell : export: « ", STDERR_FILENO);
+	ft_putstr_fd("bash: export: `", STDERR_FILENO);
 	ft_putstr_fd(line, STDERR_FILENO);
-	ft_putstr_fd(" » : not a valid identifier\n", STDERR_FILENO);
+	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 	g_exit_status = 1;
 	return (true);
 }
