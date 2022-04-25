@@ -50,12 +50,10 @@ void	parse_redir_out(t_cmd **last_cmd, t_token **tk_lst)
 	{
 		cmd->infos.error = errno;
 		cmd->infos.err_msg = ft_strdup(strerror(errno));
-		cmd->infos.fd_out = 2;
 	}
-	else
 	// if cmd->infos.fd_out != 1 || 2 
 		// close(cmd->infos.fd_out)
-		cmd->infos.fd_out = fd;
+	cmd->infos.fd_out = fd;
 	free(file);
 	if (tmp->next->next)
 		tmp = tmp->next->next;

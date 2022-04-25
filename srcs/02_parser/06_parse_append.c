@@ -49,10 +49,8 @@ void	parse_append(t_cmd **last_cmd, t_token **tk_lst)
 	{
 		cmd->infos.error = errno;
 		cmd->infos.err_msg = ft_strdup(strerror(errno));
-		cmd->infos.fd_out = 2;
 	}
-	else
-		cmd->infos.fd_out = fd;
+	cmd->infos.fd_out = fd;
 	free(file);
 	if (tmp->next->next)
 		tmp = tmp->next->next;

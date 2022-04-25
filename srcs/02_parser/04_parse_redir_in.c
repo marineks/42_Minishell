@@ -26,11 +26,8 @@ void	parse_redir_in(t_cmd **last_cmd, t_token **tk_lst)
 
 	tmp = *tk_lst;
 	cmd = ft_lstlast_cmd(*last_cmd);
-	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~\nPARSE - Parse_redir_in function\n");
 	if (cmd->infos.cmd && ft_strcmp(cmd->infos.cmd, "echo") == SUCCESS)
 	{
-		printf("Fd in : %d - Fd out : %d\n", cmd->infos.fd_in, cmd->infos.fd_out);
-		printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 		*tk_lst = tmp->next->next;
 		return ;
 	}
@@ -41,15 +38,9 @@ void	parse_redir_in(t_cmd **last_cmd, t_token **tk_lst)
 	{
 		cmd->infos.error = errno;
 		cmd->infos.err_msg = ft_strdup(strerror(errno));
-		cmd->infos.fd_out = 2;
-		printf("N° d'erreur : %d - Erreur : %s - Fd in : %d - Fd out : %d\n",
-		cmd->infos.error, cmd->infos.err_msg,  cmd->infos.fd_in, cmd->infos.fd_out);
 	}
-	else
-		cmd->infos.fd_in = fd;
+	cmd->infos.fd_in = fd;
 	free(file);
-	printf("Fd in : %d\n", cmd->infos.fd_in);
-	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 	if (tmp->next->next)
 		tmp = tmp->next->next;
 	else

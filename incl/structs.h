@@ -30,8 +30,6 @@ typedef struct	s_infos
 	bool			redir_out;
 	int				fd_in;
 	int				fd_out;
-	int				fdp_in;
-	int				fdp_out;
 	int				error;
 	char			*err_msg;
 }				t_infos;
@@ -71,6 +69,7 @@ typedef struct	s_data
 	char	**cmd_tab;
 	t_token	*token;
 	t_cmd	*cmd;
+	pid_t	pid;
 }				t_data;
 
 #endif

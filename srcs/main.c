@@ -33,21 +33,6 @@ int	main(int argc, char **argv, char *envp[])
 				// print_token(data.token);
 				create_cmds(&data, data.token);
 				// print_cmd(data.cmd);
-				if (ft_strcmp(data.cmd->infos.cmd, "pwd") == SUCCESS)
-					get_pwd(data.cmd, data.env_copy);
-				if (ft_strcmp(data.cmd->infos.cmd, "env") == SUCCESS)
-					get_env(data.cmd, &data.env_copy);
-				if (ft_strcmp(data.cmd->infos.cmd, "echo") == SUCCESS)
-					get_echo(data.cmd);
-				if (ft_strcmp(data.cmd->infos.cmd, "export") == SUCCESS)
-					export_new_var(data.cmd, &data.env_copy);
-				if (ft_strcmp(data.cmd->infos.cmd, "cd") == SUCCESS)
-					change_directory(data.cmd, &data.env_copy);
-				if (ft_strcmp(data.cmd->infos.cmd, "unset") == SUCCESS)
-					unset_variable(data.cmd, &data.env_copy);
-				if (ft_strcmp(data.cmd->infos.cmd, "exit") == SUCCESS)
-					exit_minishell(&data, data.cmd);
-				
 				if (data.cmd)
 					exec(&data, data.cmd, 1);
 				escape_to_amsterdam(&data);
