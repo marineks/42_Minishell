@@ -2,7 +2,7 @@
 # define MINISHELL_H
 
 #include "libraries.h"
-int	g_exit_status;
+extern int	g_exit_status;
 
 // 00_LEXER --- tokenize.c
 int		tokenize(t_data *data, char *line);

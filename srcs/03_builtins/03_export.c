@@ -26,6 +26,25 @@ static void	add_var_to_env(t_env **env_lst, char *line, char *var, char *val)
 	}
 }
 
+static void	manage_export_alone(t_cmd *cmd, t_env **env)
+{
+	t_env	*tmp;
+
+	tmp = *env;
+	if (!cmd->infos.flags)
+	{
+		while (tmp)
+		{
+			write(cmd->infos.fd_out, "export ", 7);
+			write(cmd->infos.fd_out, tmp->var_name, ft_strlen(tmp->var_name));
+			write(cmd->infos.fd_out, "=\"", 2);
+			write(cmd->infos.fd_out, tmp->var_value, ft_strlen(tmp->var_value));
+			write(cmd->infos.fd_out, "\"\n", 2);
+			tmp = tmp->next;
+		}
+	}
+}
+
 /**
  * @brief Set export attribute for shell variables, which shall cause them to
  * 		  be in the environment of subsequently executed commands.
@@ -62,6 +81,7 @@ int	export_new_var(t_cmd *cmd, t_env **env)
 
 	i = 0;
 	error_occured = false;
+	manage_export_alone(cmd, env);
 	while (cmd->infos.flags && cmd->infos.flags[i])
 	{
 		if (ft_strchr(cmd->infos.flags[i], '=') == NULL)

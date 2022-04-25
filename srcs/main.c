@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+int	g_exit_status;
 
 int	main(int argc, char **argv, char *envp[])
 {
