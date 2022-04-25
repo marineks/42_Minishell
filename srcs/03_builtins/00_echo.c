@@ -44,6 +44,22 @@ static char	*replace_exit_status(char *flags)
 	return (new_str);
 }
 
+static int	check_nl(char *str)
+{
+	int	i;
+
+	i = 2;
+	if (ft_strlen(str) < 2 || str[0] != '-' || str[1] != 'n')
+		return (FAILURE);
+	while (str[i])
+	{
+		if (str[i] != 'n')
+			return (FAILURE);
+		i++;
+	}
+	return (SUCCESS);
+}
+
 /**
  * @brief The command "echo" prints a string. "echo -n" does not print the final
  * 		  newline. 
@@ -59,7 +75,7 @@ void	get_echo(t_cmd *cmd)
 
 	print_newline = true;
 	i = 0;
-	if (cmd->infos.flags && ft_strcmp("-n", cmd->infos.flags[i]) == SUCCESS)
+	if (cmd->infos.flags && check_nl(cmd->infos.flags[i]) == SUCCESS)
 	{
 		print_newline = false;
 		i++;
