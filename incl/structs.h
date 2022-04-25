@@ -13,13 +13,6 @@ typedef struct	s_token
 	struct s_token	*next;
 }				t_token;
 
-typedef struct	s_pipe 
-{	
-	t_list	*lst;
-	char 	**cmd;
-	int 	nb_pipes;
-}				t_pipe;
-
 typedef struct	s_infos 
 {	
 	char			*cmd;
@@ -60,13 +53,9 @@ typedef	struct	s_exec
 
 typedef struct	s_data 
 {
-	int		nb_cmd;
 	char 	**envp;
 	t_env	*env_copy;
 	char	*line;
-	t_pipe	*pipe;
-	char	**cmd_lines;
-	char	**cmd_tab;
 	t_token	*token;
 	t_cmd	*cmd;
 	pid_t	pid;
