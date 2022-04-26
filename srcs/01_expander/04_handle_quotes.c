@@ -53,10 +53,7 @@ int	handle_quotes(t_data *data)
 	while (tmp)
 	{
 		if (if_quotes(tmp->str) == true) // si quotes dans la string
-		{
 			remove_quotes(&tmp);
-			printf("tmp str: %s\n", tmp->str);
-		}
 		tmp = tmp->next;
 	}
 	return (SUCCESS);

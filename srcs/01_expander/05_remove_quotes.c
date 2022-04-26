@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 static void	change_default_to_quote(t_token **tk_node, int *i)
 {
 	if ((*tk_node)->str[*i] == '\'')
@@ -55,8 +54,8 @@ int	remove_quotes(t_token **tk_node)
 		new_line[j++] = (*tk_node)->str[i++];
 	}
 	new_line[j] = '\0';
-	// printf("newline : %s\n", new_line);
 	free((*tk_node)->str);
 	(*tk_node)->str = new_line;
+	(*tk_node)->join = true;
 	return (SUCCESS);
 }

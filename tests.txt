@@ -4,3 +4,15 @@ $_2P$2P$P2$PP2
 salut $myu "dssdsi$PROUT user $USER'"
 
 $USER $POP
+
+liste chainée de commande avec un maillon sur deux qui contient un pipe
+sorte de boucle qui parcours la liste
+- verifier de syntaxe de la liste de cmd : LE PREMIER MAILLON DOIT ETRE UNE cmd
+(si c'est un pipe faut dire qu'il y a une erreur).
+- verifier que la commande c'est un pipe ou une commande.
+
+ex : 3 cmds et 2 pipes :
+- je lis la 1ere cmd,
+ATTENTION CHECK SI C'EST UN BUILTIN. car Le seul cas où tu fork pas c'est quand t'as un builtin.
+- je cree le pipe, je fork -> en gros tu fais un pipex.
+cree une boucle pour gerer les pipe et pas une seule commande
