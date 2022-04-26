@@ -77,8 +77,6 @@ char	*grep_path(char *envp[], char *cmd);
 void	escape_to_amsterdam(t_data *data);
 // 05_UTILS --- brazil.c
 void	escape_to_brazil(t_data *data);
-// 05_UTILS --- exit_whisperer.c
-int		check_exit(char *line);
 // 05_UTILS --- init_struct.c
 char	*call_me_by_your_name(char *line);
 char	*call_me_by_your_value(char *line);
