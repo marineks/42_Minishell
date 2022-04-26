@@ -35,10 +35,14 @@ void	exit_process(t_data *data, int *tube_fd, t_exec *exec)
 		else
 			cmd = cmd->right;
 	}
-	close(tube_fd[READ]);
-	close(tube_fd[WRITE]);
+	if (tube_fd)
+	{
+		close(tube_fd[READ]);
+		close(tube_fd[WRITE]);
+	}
 	if (exec)
 		free_excve_infos(exec);
+	escape_to_brazil(data);
 	exit(g_exit_status);
 }
 
@@ -164,7 +168,10 @@ int	exec(t_data *data)
 
 	cmd_lst = data->cmd;
 	if (cmd_lst->right == NULL && cmd_lst->infos.builtin == true)
+	{
 		exec_one_builtin(data, cmd_lst);
+		exit_process(data, NULL, NULL);
+	}
 	else
 	{
 		while (cmd_lst)

@@ -35,7 +35,7 @@ static char	*grep_env_var(t_data *data, char *var)
 		i++;
 		tmp = tmp->next;
 	}
-	str = tmp->var_value;
+	str = ft_strdup(tmp->var_value);
 	return (str);
 }
 
