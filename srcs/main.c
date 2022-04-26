@@ -26,8 +26,6 @@ int	main(int argc, char **argv, char *envp[])
 				add_history(data.line);
 				if (tokenize(&data, data.line) == FAILURE)
 					printf("tokenize pb\n");
-				if (data.token->type == END)
-					break;
 				if (specify(&data.token) == FAILURE)
 				{
 					escape_to_amsterdam(&data);

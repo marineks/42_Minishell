@@ -37,19 +37,38 @@ void	exit_process(t_data *data, int *tube_fd, t_exec *exec)
 	}
 	close(tube_fd[READ]);
 	close(tube_fd[WRITE]);
-	free_excve_infos(exec);
+	if (exec)
+		free_excve_infos(exec);
 	exit(g_exit_status);
+}
+
+int	exec_builtin_with_pipe(t_data *data, t_cmd *cmd)
+{
+	int tmp_fd_out;
+
+	if (cmd->infos.fd_out > STDOUT_FILENO)
+	{
+		tmp_fd_out = dup(STDOUT_FILENO);
+		dup2(cmd->infos.fd_out, STDOUT_FILENO);
+	}
+	exec_one_builtin(data, cmd);
+	if (cmd->infos.fd_out > STDOUT_FILENO)
+	{
+		dup2(tmp_fd_out, STDOUT_FILENO);
+		close(tmp_fd_out);
+	}
+	return (SUCCESS);
 }
 
 void	redir_in_out(t_cmd *cmd, int *tube_fd)
 {
-	close(tube_fd[READ]);
-	if (cmd->infos.fd_in > 0)
+	close(tube_fd[READ]); 
+	if (cmd->infos.builtin == false && cmd->infos.fd_in > STDIN_FILENO)
 	{
 		dup2(cmd->infos.fd_in, STDIN_FILENO);
 		close(cmd->infos.fd_in);
 	}
-	if (cmd->infos.fd_out > 1)
+	if (cmd->infos.fd_out > STDOUT_FILENO)
 	{
 		dup2(cmd->infos.fd_out, STDOUT_FILENO);
 		close(cmd->infos.fd_out);
@@ -63,21 +82,17 @@ void	child_process(t_data *data, t_cmd *cmd, int *tube_fd)
 {
 	t_exec	*exec;
 
-	exec = get_execve_infos(data, cmd);
+	exec = NULL;
 	if (cmd->infos.error)
 		g_exit_status = 1;
 	else if (cmd->infos.builtin == true)
 	{
-		close(tube_fd[READ]);
-		if (cmd->infos.fd_out == STDOUT_FILENO && cmd->right->is_pipe == true) // potentiel bug
-			cmd->infos.fd_out = tube_fd[WRITE];
-		else
-			close(tube_fd[WRITE]);
-		// launch_built_in(data, cmd);
-		exec_one_builtin(data, cmd);
+		redir_in_out(cmd, tube_fd);
+		exec_builtin_with_pipe(data, cmd);
 	}
-	else if (exec->path)
+	else if (grep_path(convert_env_copy_to_array(data->env_copy), cmd->infos.cmd))
 	{
+		exec = get_execve_infos(data, cmd);
 		redir_in_out(cmd, tube_fd);
 		execve(exec->path, exec->cmd_and_flags, exec->env_array);
 		g_exit_status = 126;
