@@ -37,6 +37,7 @@ static void	free_path_tab(char **path_tab)
 		i++;
 	}
 	free(path_tab);
+
 }
 
 // faire fonction pour récup le file de la cmd (en gros strjoin du chemin 
