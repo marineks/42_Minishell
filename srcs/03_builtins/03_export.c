@@ -25,16 +25,15 @@ static void	add_var_to_env(t_env **env_lst, char *line, char *var, char *val)
 	}
 }
 
-static void	manage_export_alone(t_cmd *cmd, t_env **env, t_env **env_export)
+static void	manage_export_alone(t_cmd *cmd, t_env **env)
 {
 	t_env	*tmp;
 
-	tmp = *env_export;
+	tmp = *env;
 	if (!cmd->infos.flags)
 	{
 		while (tmp)
 		{
-			
 			write(cmd->infos.fd_out, "export ", 7);
 			write(cmd->infos.fd_out, tmp->var_name, ft_strlen(tmp->var_name));
 			write(cmd->infos.fd_out, "=\"", 2);
@@ -74,14 +73,14 @@ static void	manage_export_alone(t_cmd *cmd, t_env **env, t_env **env_export)
  * @param env The environment where the variables should be added
  * @return int - 0 for SUCCESS and 1 for FAILURE
  */
-int	export_new_var(t_cmd *cmd, t_env **env, t_env **env_export)
+int	export_new_var(t_cmd *cmd, t_env **env)
 {
 	int		i;
 	bool	error_occured;
 
 	i = 0;
 	error_occured = false;
-	manage_export_alone(cmd, env, env_export);
+	manage_export_alone(cmd, env);
 	while (cmd->infos.flags && cmd->infos.flags[i])
 	{
 		if (ft_strchr(cmd->infos.flags[i], '=') == NULL)
