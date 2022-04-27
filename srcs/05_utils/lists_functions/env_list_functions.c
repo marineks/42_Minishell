@@ -37,11 +37,20 @@ void	ft_lstadd_back_env(t_env **alst, t_env *new_node)
 void	ft_lstdelone_env(t_env *lst, void (*del)(void *))
 {
 	if (del && lst && lst->line)
+	{
 		(*del)(lst->line);
+		lst->line = NULL;
+	}
 	if (del && lst && lst->var_name)
+	{
 		(*del)(lst->var_name);
+		lst->var_name = NULL;
+	}
 	if (del && lst && lst->var_value)
+	{
 		(*del)(lst->var_value);
+		lst->var_value = NULL;
+	}
 	if (lst)
 		free(lst);
 }

@@ -34,7 +34,7 @@ static void	add_var_to_env(t_data *data, char *line, char *var, char *val)
 	if (find_str(val, "$?") == SUCCESS)
 		val = replace_exit_status(val);
 	if (grep_value(data->env_copy, var) == NULL)
-		ft_lstadd_back_env(&data->env_copy, ft_lstnew_env(ft_strdup(line), var, val));
+		ft_lstadd_back_env(&data->env_copy, ft_lstnew_env(ft_strdup(line), ft_strdup(var), ft_strdup(val)));
 	else
 	{
 		while (tmp->next)
