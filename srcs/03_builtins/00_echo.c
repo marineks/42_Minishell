@@ -5,6 +5,8 @@ int	find_str(char *haystack, char *needle)
 	int	i;
 
 	i = 0;
+	if (!haystack)
+		return (FAILURE);
 	while (haystack[i])
 	{
 		if (haystack[i] == needle[0])

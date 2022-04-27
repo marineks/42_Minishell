@@ -1,17 +1,40 @@
 #include "minishell.h"
 
-static void	add_var_to_env(t_env **env_lst, char *line, char *var, char *val)
+static void	add_var_to_export(t_env **env_exp, char *line, char *var, char *val)
 {
 	t_env	*tmp;
 
-	tmp = *env_lst;
-	// do add env export
+	tmp = *env_exp;
+	if (find_str(val, "$?") == SUCCESS)
+		val = replace_exit_status(val);
+	if (grep_value(*env_exp, var) == NULL)
+		ft_lstadd_back_env(env_exp, ft_lstnew_env(ft_strdup(line), var, val));
+	else
+	{
+		while (tmp->next)
+		{
+			if (ft_strcmp(var, tmp->var_name) == SUCCESS)
+				break;
+			tmp = tmp->next;
+		}
+		free(tmp->var_value);
+		tmp->var_value = val;
+		free(var);
+	}
+}
+
+static void	add_var_to_env(t_data *data, char *line, char *var, char *val)
+{
+	t_env	*tmp;
+
+	tmp = data->env_copy;
+	add_var_to_export(&data->env_export, line, var, val);
 	if (ft_strchr(line, '=') == NULL)
 		return ;
 	if (find_str(val, "$?") == SUCCESS)
 		val = replace_exit_status(val);
-	if (grep_value(*env_lst, var) == NULL)
-		ft_lstadd_back_env(env_lst, ft_lstnew_env(ft_strdup(line), var, val));
+	if (grep_value(data->env_copy, var) == NULL)
+		ft_lstadd_back_env(&data->env_copy, ft_lstnew_env(ft_strdup(line), var, val));
 	else
 	{
 		while (tmp->next)
@@ -37,9 +60,14 @@ static void	manage_export_alone(t_cmd *cmd, t_env **env_export)
 		{
 			ft_putstr_fd("export ", cmd->infos.fd_out);
 			ft_putstr_fd(tmp->var_name, cmd->infos.fd_out);
-			ft_putstr_fd("=\"", cmd->infos.fd_out);
-			ft_putstr_fd(tmp->var_value, cmd->infos.fd_out);
-			ft_putstr_fd("\"\n", cmd->infos.fd_out);
+			if (ft_strchr(tmp->line, '='))
+			{
+				ft_putstr_fd("=\"", cmd->infos.fd_out);
+				ft_putstr_fd(tmp->var_value, cmd->infos.fd_out);
+				ft_putstr_fd("\"\n", cmd->infos.fd_out);
+			}
+			else
+				ft_putchar_fd('\n', cmd->infos.fd_out);
 			tmp = tmp->next;
 		}
 	}
@@ -74,14 +102,14 @@ static void	manage_export_alone(t_cmd *cmd, t_env **env_export)
  * @param env The environment where the variables should be added
  * @return int - 0 for SUCCESS and 1 for FAILURE
  */
-int	export_new_var(t_cmd *cmd, t_env **env, t_env **env_export)
+int	export_new_var(t_data *data, t_cmd *cmd, t_env **env_exp)
 {
 	int		i;
 	bool	error_occured;
 
 	i = 0;
 	error_occured = false;
-	manage_export_alone(cmd, env_export);
+	manage_export_alone(cmd, env_exp);
 	while (cmd->infos.flags && cmd->infos.flags[i])
 	{
 		// if (ft_strchr(cmd->infos.flags[i], '=') == NULL)
@@ -90,7 +118,7 @@ int	export_new_var(t_cmd *cmd, t_env **env, t_env **env_export)
 		// 	continue;
 		// }
 		if (is_a_valid_identifier(cmd->infos.flags[i]) == true)
-			add_var_to_env(env, cmd->infos.flags[i],\
+			add_var_to_env(data, cmd->infos.flags[i],\
 			call_me_by_your_name(cmd->infos.flags[i]),\
 			call_me_by_your_value(cmd->infos.flags[i]));
 		else

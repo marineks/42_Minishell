@@ -34,6 +34,8 @@ char	*call_me_by_your_value(char *line)
 		}
 		i++;
 	}
+	if (start == 0)
+		return (NULL);
 	len = ft_strlen(line) - start;
 	var_value = ft_substr(line, start, len);
 	return (var_value);

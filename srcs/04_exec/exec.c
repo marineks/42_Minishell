@@ -17,7 +17,7 @@ int	exec_one_builtin(t_data *data, t_cmd *cmd)
 	else if (ft_strcmp(cmd->infos.cmd, "echo") == SUCCESS)
 		get_echo(cmd);
 	else if (ft_strcmp(cmd->infos.cmd, "export") == SUCCESS)
-		export_new_var(cmd, &data->env_copy, &data->env_export);
+		export_new_var(data, cmd, &data->env_export);
 	else if (ft_strcmp(cmd->infos.cmd, "cd") == SUCCESS)
 		change_directory(cmd, &data->env_copy);
 	else if (ft_strcmp(cmd->infos.cmd, "unset") == SUCCESS)
