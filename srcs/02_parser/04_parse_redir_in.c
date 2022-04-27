@@ -33,11 +33,12 @@ void	parse_redir_in(t_cmd **last_cmd, t_token **tk_lst)
 	}
 	cmd->infos.redir_in = true;
 	file = get_relative_path(tmp->next->str);
-	fd = open(file, O_CREAT | O_RDWR, S_IRWXU);
+	fd = open(file, O_RDWR, S_IRWXU);
 	if (fd == -1)
 	{
 		cmd->infos.error = errno;
 		cmd->infos.err_msg = ft_strdup(strerror(errno));
+		printf("bash: %s: %s\n", tmp->next->str, cmd->infos.err_msg);
 	}
 	cmd->infos.fd_in = fd;
 	free(file);

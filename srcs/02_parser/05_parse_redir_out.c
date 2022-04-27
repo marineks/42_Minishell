@@ -45,15 +45,16 @@ void	parse_redir_out(t_cmd **last_cmd, t_token **tk_lst)
 	cmd = ft_lstlast_cmd(*last_cmd);
 	cmd->infos.redir_out = true;
 	file = get_relative_path(tmp->next->str);
-	fd = open(file, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
-	if (fd == -1)
+	if (cmd->infos.fd_in != -1)
 	{
-		cmd->infos.error = errno;
-		cmd->infos.err_msg = ft_strdup(strerror(errno));
+		fd = open(file, O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
+		if (fd == -1)
+		{
+			cmd->infos.error = errno;
+			cmd->infos.err_msg = ft_strdup(strerror(errno));
+		}
+		cmd->infos.fd_out = fd;
 	}
-	// if cmd->infos.fd_out != 1 || 2 
-		// close(cmd->infos.fd_out)
-	cmd->infos.fd_out = fd;
 	free(file);
 	if (tmp->next->next)
 		tmp = tmp->next->next;

@@ -16,3 +16,5 @@ ex : 3 cmds et 2 pipes :
 ATTENTION CHECK SI C'EST UN BUILTIN. car Le seul cas où tu fork pas c'est quand t'as un builtin.
 - je cree le pipe, je fork -> en gros tu fais un pipex.
 cree une boucle pour gerer les pipe et pas une seule commande
+
+cat <Makefile >out1 <poil >out2
