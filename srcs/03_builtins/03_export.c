@@ -5,10 +5,11 @@ static void	add_var_to_env(t_env **env_lst, char *line, char *var, char *val)
 	t_env	*tmp;
 
 	tmp = *env_lst;
+	// do add env export
+	if (ft_strchr(line, '=') == NULL)
+		return ;
 	if (find_str(val, "$?") == SUCCESS)
-	{
 		val = replace_exit_status(val);
-	}
 	if (grep_value(*env_lst, var) == NULL)
 		ft_lstadd_back_env(env_lst, ft_lstnew_env(ft_strdup(line), var, val));
 	else
@@ -25,20 +26,20 @@ static void	add_var_to_env(t_env **env_lst, char *line, char *var, char *val)
 	}
 }
 
-static void	manage_export_alone(t_cmd *cmd, t_env **env)
+static void	manage_export_alone(t_cmd *cmd, t_env **env_export)
 {
 	t_env	*tmp;
 
-	tmp = *env;
+	tmp = *env_export;
 	if (!cmd->infos.flags)
 	{
 		while (tmp)
 		{
-			write(cmd->infos.fd_out, "export ", 7);
-			write(cmd->infos.fd_out, tmp->var_name, ft_strlen(tmp->var_name));
-			write(cmd->infos.fd_out, "=\"", 2);
-			write(cmd->infos.fd_out, tmp->var_value, ft_strlen(tmp->var_value));
-			write(cmd->infos.fd_out, "\"\n", 2);
+			ft_putstr_fd("export ", cmd->infos.fd_out);
+			ft_putstr_fd(tmp->var_name, cmd->infos.fd_out);
+			ft_putstr_fd("=\"", cmd->infos.fd_out);
+			ft_putstr_fd(tmp->var_value, cmd->infos.fd_out);
+			ft_putstr_fd("\"\n", cmd->infos.fd_out);
 			tmp = tmp->next;
 		}
 	}
@@ -73,22 +74,22 @@ static void	manage_export_alone(t_cmd *cmd, t_env **env)
  * @param env The environment where the variables should be added
  * @return int - 0 for SUCCESS and 1 for FAILURE
  */
-int	export_new_var(t_cmd *cmd, t_env **env)
+int	export_new_var(t_cmd *cmd, t_env **env, t_env **env_export)
 {
 	int		i;
 	bool	error_occured;
 
 	i = 0;
 	error_occured = false;
-	manage_export_alone(cmd, env);
+	manage_export_alone(cmd, env_export);
 	while (cmd->infos.flags && cmd->infos.flags[i])
 	{
-		if (ft_strchr(cmd->infos.flags[i], '=') == NULL)
-		{
-			i++;
-			continue;
-		}
-		else if (is_a_valid_identifier(cmd->infos.flags[i]) == true)
+		// if (ft_strchr(cmd->infos.flags[i], '=') == NULL)
+		// {
+		// 	i++;
+		// 	continue;
+		// }
+		if (is_a_valid_identifier(cmd->infos.flags[i]) == true)
 			add_var_to_env(env, cmd->infos.flags[i],\
 			call_me_by_your_name(cmd->infos.flags[i]),\
 			call_me_by_your_value(cmd->infos.flags[i]));

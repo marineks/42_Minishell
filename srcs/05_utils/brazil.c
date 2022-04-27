@@ -10,6 +10,8 @@ void	escape_to_brazil(t_data *data)
 		ft_lstclear_cmd(&data->cmd, &free);
 	if (data->env_copy)
 		ft_lstclear_env(&data->env_copy, &free);
+	if (data->env_export)
+		ft_lstclear_env(&data->env_export, &free);
 	rl_clear_history ();
 	// clear_history ();
 }

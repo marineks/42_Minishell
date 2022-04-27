@@ -57,7 +57,7 @@ void	get_pwd(t_cmd *cmd, t_env *env);
 // 03_BUILTINS --- 03_export.c
 bool	export_err_msg(char *line);
 bool	is_a_valid_identifier(char *line);
-int		export_new_var(t_cmd *cmd, t_env **env);
+int		export_new_var(t_cmd *cmd, t_env **env, t_env **env_export);
 // 03_BUILTINS --- 04_unset.c
 int		unset_variable(t_cmd *cmd, t_env **env);
 // 03_BUILTINS --- 05_env.c

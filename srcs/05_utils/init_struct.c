@@ -60,10 +60,41 @@ t_env	*stock_envp_in_chained_list(char **envp)
 	return (env_list);
 }
 
-int	init_data(t_data *data, char *envp[])
+static void    sort_export(t_env *env_export)
 {
-	data->envp = envp;
-	data->env_copy = stock_envp_in_chained_list(envp);
-	data->token = NULL;
-	return (SUCCESS);
+    t_env    *next_node;
+    t_env    *current;
+    char    *tmp_var;
+    char    *tmp_val;
+
+    current = env_export;
+    next_node = current->next;
+    while (current != NULL)
+    {
+        next_node = current->next;
+        while (next_node != NULL)
+        {
+            if (current->var_name[0] > next_node->var_name[0])
+            {
+                tmp_var = current->var_name;
+                tmp_val = current->var_value;
+                current->var_name = next_node->var_name;
+                current->var_value = next_node->var_value;
+                next_node->var_name = tmp_var;
+                next_node->var_value = tmp_val;
+            }
+            next_node = next_node->next;
+        }
+        current = current->next;
+    }
+}
+
+int    init_data(t_data *data, char *envp[])
+{
+    data->envp = envp;
+    data->env_copy = stock_envp_in_chained_list(envp);
+    data->env_export = stock_envp_in_chained_list(envp);
+    sort_export(data->env_export);
+    data->token = NULL;
+    return (SUCCESS);
 }
