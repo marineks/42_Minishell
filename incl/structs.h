@@ -55,6 +55,7 @@ typedef struct	s_data
 {
 	char 	**envp;
 	t_env	*env_copy;
+	t_env	*env_export;
 	char	*line;
 	t_token	*token;
 	t_cmd	*cmd;

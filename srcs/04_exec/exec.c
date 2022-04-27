@@ -2,6 +2,7 @@
 
 int	exec_one_builtin(t_data *data, t_cmd *cmd)
 {
+	printf("Exec one builtin : je rentre dedans\n");
 	if (ft_strcmp(cmd->infos.cmd, "pwd") == SUCCESS)
 		get_pwd(cmd, data->env_copy);
 	else if (ft_strcmp(cmd->infos.cmd, "env") == SUCCESS)
@@ -18,6 +19,14 @@ int	exec_one_builtin(t_data *data, t_cmd *cmd)
 		exit_minishell(data, cmd);
 	return (SUCCESS);
 }
+
+// int	exec_builtin_in_pipe(t_data *data, t_cmd *cmd)
+// {
+// 	//
+// 	exec_one_builtin(data, cmd);
+// 	// dup2(cmd->infos.fd_out, )
+// 	return (SUCCESS);
+// }
 
 void	exit_process(t_data *data, int *tube_fd, t_exec *exec)
 {
@@ -103,6 +112,7 @@ void	child_process(t_data *data, t_cmd *cmd, int *tube_fd)
 	}
 	else
 	{
+		dprintf(STDERR_FILENO, "command not found error \n");
 		write(STDERR_FILENO, cmd->infos.cmd, ft_strlen(cmd->infos.cmd));
 		write(STDERR_FILENO, ": command not found\n", 20);
 		g_exit_status = 127;

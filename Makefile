@@ -94,6 +94,9 @@ EOC		:="\033[0;0m"
 #########################################
 all:	${NAME}
 
+run:	all
+		./minishell
+
 ${OBJ_DIR}%.o : ${SRCS_DIR}%.c
 	@$(MKDIR) $(@D)
 	$(CC) $(CFLAGS) $(IFLAGS) -o $@ -c $< 

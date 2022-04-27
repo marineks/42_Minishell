@@ -60,10 +60,17 @@ t_env	*stock_envp_in_chained_list(char **envp)
 	return (env_list);
 }
 
+static t_env*	sort_export(t_env *env_export)
+{
+	
+	return (env_lst);
+}
+
 int	init_data(t_data *data, char *envp[])
 {
 	data->envp = envp;
 	data->env_copy = stock_envp_in_chained_list(envp);
+	data->env_export = sort_export(stock_envp_in_chained_list(envp));
 	data->token = NULL;
 	return (SUCCESS);
 }
