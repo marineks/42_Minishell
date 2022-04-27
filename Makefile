@@ -71,7 +71,6 @@ SRCS = main.c 											\
 	05_utils/lists_functions/token_list_functions.c		\
 	05_utils/amsterdam.c								\
 	05_utils/brazil.c									\
-	05_utils/exit_whisperer.c							\
 	05_utils/init_struct.c								\
 
 SRC	= $(addprefix $(SRCS_DIR),$(SRCS))

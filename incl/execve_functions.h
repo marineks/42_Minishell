@@ -5,6 +5,7 @@
 
 // 05_UTILS // execve_functions --- 00_execve_infos.c
 t_exec	*get_execve_infos(t_data *data, t_cmd *cmd);
+void	free_double_array(char **array);
 void	free_excve_infos(t_exec *exec_infos);
 // 05_UTILS // execve_functions --- 01_convert_env.c
 char	**convert_env_copy_to_array(t_env *env);

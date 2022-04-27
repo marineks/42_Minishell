@@ -27,17 +27,15 @@ static char *stock_buffer(t_token **tk_lst)
 	return (str);
 }
 
-// TO DO : attention à la str statique, trouver un moyen d'allouer la bonne mémoire
 int parse_heredoc(t_data *data, t_token **tk_lst)
 {
 	pid_t	pid;
 	int		pipe_fds[2];
 	int		status;
-	char	str[1000];
 	char	*buffer;
 	t_token	*tmp;
+	t_data	heredoc;
 
-	tmp = *tk_lst;
 	data->cmd->infos.redir_in = true;
 	if (pipe(pipe_fds) == -1)
 	{
@@ -52,12 +50,34 @@ int parse_heredoc(t_data *data, t_token **tk_lst)
 	}
 	else if (pid == 0)
 	{
+		ft_memset(&heredoc, 0, sizeof(t_data));
+		init_data(&heredoc, convert_env_copy_to_array(data->env_copy));
 		close(pipe_fds[READ]);
 		buffer = stock_buffer(tk_lst);
-		// printf("Heredoc | Buffer récupéré : %s\n", buffer);
+		tokenize(&heredoc, buffer);
+		specify(&heredoc.token);
+		expand_tokens(&heredoc, &heredoc.token);
+		handle_quotes(&heredoc);
+		free(buffer);
+		buffer = NULL;
+		// print_token(heredoc.token);
+		tmp = heredoc.token;
+		while (tmp->next)
+		{
+			if (!buffer)
+				buffer = ft_strdup(tmp->str);
+			else
+				buffer = ft_strjoin(buffer, tmp->str);
+			buffer = ft_strjoin(buffer, "\n");
+			// printf("après le passage : %s\n", buffer);
+			tmp = tmp->next;
+		}
+		// printf("buffer : %s\n", buffer);
 		write(pipe_fds[WRITE], buffer, ft_strlen(buffer) + 1);
 		close(pipe_fds[WRITE]);
 		free(buffer);
+		free_double_array(heredoc.envp);
+		escape_to_brazil(&heredoc);
 		escape_to_brazil(data);
 		exit(0);
 	}
@@ -65,13 +85,9 @@ int parse_heredoc(t_data *data, t_token **tk_lst)
 	{
 		wait(NULL);
 		close(pipe_fds[WRITE]);
-		// read(pipe_fds[READ], str, 1000);
-		//printf(" str %s | pipe fd in : %d| fd _in : %d\n", str, pipe_fds[READ] ,data->cmd->infos.fd_in);
 		data->cmd->infos.fd_in = pipe_fds[READ];
-		// printf(" str %s | pipe fd in : %d| fd _in : %d\n", str, pipe_fds[READ] ,data->cmd->infos.fd_in);
-		// close(pipe_fds[READ]); // peut etre a close pendant l'exec car si on close le fd, on peut plus y acceder
 	}
-	// printf("Heredoc | fd_in récupéré : %d\n", data->cmd->infos.fd_in);
+	tmp = *tk_lst;
 	if (tmp->next->next)
 		tmp = tmp->next->next;
 	else
