@@ -1,5 +1,13 @@
 #include "minishell.h"
 
+void	close_fd_one_builtin(t_cmd *cmd)
+{
+	if (cmd->infos.fd_in > STDIN_FILENO)
+		close(cmd->infos.fd_in);
+	if (cmd->infos.fd_out > STDOUT_FILENO)
+		close(cmd->infos.fd_out);
+}
+
 int	exec_one_builtin(t_data *data, t_cmd *cmd)
 {
 	if (ft_strcmp(cmd->infos.cmd, "pwd") == SUCCESS)
@@ -170,7 +178,7 @@ int	exec(t_data *data)
 	if (cmd_lst->right == NULL && cmd_lst->infos.builtin == true)
 	{
 		exec_one_builtin(data, cmd_lst);
-		exit_process(data, NULL, NULL);
+		close_fd_one_builtin(cmd_lst);
 	}
 	else
 	{
