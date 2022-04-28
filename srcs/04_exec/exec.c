@@ -93,10 +93,12 @@ void	redir_in_out(t_cmd *cmd, int *tube_fd)
 void	child_process(t_data *data, t_cmd *cmd, int *tube_fd)
 {
 	t_exec	*exec;
+	char	*path;
 	char	**array_copy;
 
 	exec = NULL;
 	array_copy = convert_env_copy_to_array(data->env_copy);
+	path = grep_path(array_copy, cmd->infos.cmd);
 	if (cmd->infos.error)
 		g_exit_status = 1;
 	else if (cmd->infos.builtin == true)
@@ -104,7 +106,7 @@ void	child_process(t_data *data, t_cmd *cmd, int *tube_fd)
 		redir_in_out(cmd, tube_fd);
 		exec_builtin_with_pipe(data, cmd);
 	}
-	else if (grep_path(array_copy, cmd->infos.cmd))
+	else if (path)
 	{
 		exec = get_execve_infos(data, cmd);
 		redir_in_out(cmd, tube_fd);
@@ -118,6 +120,7 @@ void	child_process(t_data *data, t_cmd *cmd, int *tube_fd)
 		g_exit_status = 127;
 	}
 	free_double_array(array_copy);
+	free(path);
 	exit_process(data, tube_fd, exec);
 }
 
