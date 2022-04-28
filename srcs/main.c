@@ -20,6 +20,7 @@ int	main(int argc, char **argv, char *envp[])
 	else
 		{
 			init_data(&data, envp);
+			interpret_signal(BASIC);
 			while (1)
 			{
 				data.line = readline(PROMPT);

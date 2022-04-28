@@ -81,6 +81,7 @@ void	escape_to_brazil(t_data *data);
 char	*call_me_by_your_name(char *line);
 char	*call_me_by_your_value(char *line);
 int		init_data(t_data *data, char *envp[]);
-
+// 05_UTILS --- signals.c
+void	interpret_signal(int action);
 
 #endif

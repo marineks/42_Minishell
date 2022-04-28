@@ -19,6 +19,14 @@ enum e_states
 	DOUBLE
 };
 
+enum e_action
+{
+	BASIC,
+	IGNORE,
+	DEFAULT_ACTION,
+	HEREDOC_MODE
+};
+
 enum e_pipesfd
 {
 	READ,
