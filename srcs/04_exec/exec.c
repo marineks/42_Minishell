@@ -107,8 +107,6 @@ void	child_process(t_data *data, t_cmd *cmd, int *tube_fd)
 	else if (grep_path(array_copy, cmd->infos.cmd))
 	{
 		exec = get_execve_infos(data, cmd);
-		if (ft_strcmp(cmd->infos.cmd, "sleep") == SUCCESS || ft_strcmp(cmd->infos.cmd, "cat") == SUCCESS)
-			interpret_signal(BASIC);
 		redir_in_out(cmd, tube_fd);
 		execve(exec->path, exec->cmd_and_flags, exec->env_array);
 		g_exit_status = 126;
@@ -170,7 +168,7 @@ void	exec_cmd(t_data *data, t_cmd *cmd, int *tube_fd)
 		return ;
 	else if (data->pid == 0)
 	{
-		interpret_signal(DEFAULT_ACTION);
+		interpret_signal(DEFAULT_ACTION, NULL);
 		child_process(data, cmd, tube_fd);
 	}
 	else
@@ -183,7 +181,7 @@ int	exec(t_data *data)
 	int		tube_fd[2];
 
 	cmd_lst = data->cmd;
-	interpret_signal(IGNORE);
+	interpret_signal(IGNORE, data->cmd->infos.cmd);
 	if (cmd_lst->right == NULL && cmd_lst->infos.builtin == true)
 	{
 		exec_one_builtin(data, cmd_lst);
@@ -203,6 +201,6 @@ int	exec(t_data *data)
 		}
 		wait_for_dat_ass(data, data->cmd);
 	}
-	interpret_signal(BASIC);
+	interpret_signal(BASIC, NULL);
 	return (SUCCESS);
 }
