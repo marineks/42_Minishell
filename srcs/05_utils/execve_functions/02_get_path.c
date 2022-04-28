@@ -50,6 +50,8 @@ char	*grep_path(char *envp[], char *cmd)
 	char	*path;
 
 	i = 0;
+	if (ft_strchr(cmd, '/'))
+		return (ft_strdup(cmd));
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "PATH=", 4) == SUCCESS)
