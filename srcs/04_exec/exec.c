@@ -21,7 +21,7 @@ int	exec_one_builtin(t_data *data, t_cmd *cmd)
 	else if (ft_strcmp(cmd->infos.cmd, "cd") == SUCCESS)
 		change_directory(cmd, &data->env_copy);
 	else if (ft_strcmp(cmd->infos.cmd, "unset") == SUCCESS)
-		unset_variable(cmd, &data->env_copy);
+		unset_variable(data, cmd);
 	else if (ft_strcmp(cmd->infos.cmd, "exit") == SUCCESS)
 		exit_minishell(data, cmd);
 	return (SUCCESS);
@@ -93,8 +93,10 @@ void	redir_in_out(t_cmd *cmd, int *tube_fd)
 void	child_process(t_data *data, t_cmd *cmd, int *tube_fd)
 {
 	t_exec	*exec;
+	char	**array_copy;
 
 	exec = NULL;
+	array_copy = convert_env_copy_to_array(data->env_copy);
 	if (cmd->infos.error)
 		g_exit_status = 1;
 	else if (cmd->infos.builtin == true)
@@ -102,7 +104,7 @@ void	child_process(t_data *data, t_cmd *cmd, int *tube_fd)
 		redir_in_out(cmd, tube_fd);
 		exec_builtin_with_pipe(data, cmd);
 	}
-	else if (grep_path(convert_env_copy_to_array(data->env_copy), cmd->infos.cmd))
+	else if (grep_path(array_copy, cmd->infos.cmd))
 	{
 		exec = get_execve_infos(data, cmd);
 		redir_in_out(cmd, tube_fd);
@@ -115,6 +117,7 @@ void	child_process(t_data *data, t_cmd *cmd, int *tube_fd)
 		write(STDERR_FILENO, ": command not found\n", 20);
 		g_exit_status = 127;
 	}
+	free_double_array(array_copy);
 	exit_process(data, tube_fd, exec);
 }
 

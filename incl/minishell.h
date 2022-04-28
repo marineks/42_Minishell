@@ -59,7 +59,7 @@ bool	export_err_msg(char *line);
 bool	is_a_valid_identifier(char *line);
 int		export_new_var(t_data *data, t_cmd *cmd, t_env **env_exp);
 // 03_BUILTINS --- 04_unset.c
-int		unset_variable(t_cmd *cmd, t_env **env);
+int		unset_variable(t_data *data, t_cmd *cmd);
 // 03_BUILTINS --- 05_env.c
 int		get_env(t_cmd *cmd, t_env **env);
 // 03_BUILTINS --- 06_exit.c

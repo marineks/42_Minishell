@@ -58,7 +58,7 @@ char	*grep_path(char *envp[], char *cmd)
 	}
 	path_tab = ft_split(envp[i] + 5, ':');
 	i = 0;
-	while (path_tab[i])
+	while (path_tab[i] != NULL)
 	{
 		path = ft_strjoin_path(path_tab[i], cmd);
 		if (access(path, X_OK) == SUCCESS)
@@ -66,8 +66,10 @@ char	*grep_path(char *envp[], char *cmd)
 			free_path_tab(path_tab);
 			return (path);
 		}
+		free(path);
 		i++;
 	}
-	free_path_tab(path_tab);
+	if (path_tab)
+		free_path_tab(path_tab);
 	return (NULL);
 }
