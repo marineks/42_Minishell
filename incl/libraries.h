@@ -18,6 +18,7 @@
 # include "gnl.h"
 # include "lists_functions.h"
 # include "execve_functions.h"
+# include <signal.h>
 # include <errno.h>
 // pour Mac
 # include <string.h>

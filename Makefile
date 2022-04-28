@@ -60,6 +60,7 @@ SRCS = main.c 											\
 	03_builtins/05_env.c 								\
 	03_builtins/06_exit.c 								\
 	04_exec/exec.c										\
+	04_exec/signals.c 									\
 	05_utils/execve_functions/00_execve_infos.c			\
 	05_utils/execve_functions/01_convert_env.c			\
 	05_utils/execve_functions/02_get_path.c				\
