@@ -16,7 +16,7 @@ static char *stock_buffer(t_token **tk_lst)
 		free(line);
 		write(1, "> ", 2);
 		line = get_next_line(0);
-		if (ft_strncmp(line, delimiter, (ft_strlen(line) - 1)) == SUCCESS)
+		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == SUCCESS)
 			break;
 		if (!str)
 			str = ft_strdup(line);
