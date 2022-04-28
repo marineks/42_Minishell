@@ -24,6 +24,12 @@ int	main(int argc, char **argv, char *envp[])
 			{
 				interpret_signal(BASIC, NULL);
 				data.line = readline(PROMPT);
+				if (data.line == NULL)
+				{
+					write(1, "\n", 1);
+					escape_to_brazil(&data);
+					exit(130);
+				}
 				add_history(data.line);
 				if (tokenize(&data, data.line) == FAILURE)
 					printf("tokenize pb\n");
