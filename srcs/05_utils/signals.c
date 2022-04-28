@@ -16,7 +16,6 @@ static void	handle_cat(int signum)
 {
 	if (signum == SIGINT)
 		write(1, "\n", 1);
-	g_exit_status = 0;
 	rl_replace_line("", 0);
 	rl_on_new_line();
 }

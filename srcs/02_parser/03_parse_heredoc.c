@@ -62,7 +62,6 @@ int parse_heredoc(t_data *data, t_token **tk_lst)
 		handle_quotes(&heredoc);
 		free(buffer);
 		buffer = NULL;
-		// print_token(heredoc.token);
 		tmp = heredoc.token;
 		while (tmp->next)
 		{
@@ -71,10 +70,8 @@ int parse_heredoc(t_data *data, t_token **tk_lst)
 			else
 				buffer = ft_strjoin(buffer, tmp->str);
 			buffer = ft_strjoin(buffer, "\n");
-			// printf("après le passage : %s\n", buffer);
 			tmp = tmp->next;
 		}
-		// printf("buffer : %s\n", buffer);
 		write(pipe_fds[WRITE], buffer, ft_strlen(buffer) + 1);
 		close(pipe_fds[WRITE]);
 		free(buffer);
