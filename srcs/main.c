@@ -20,9 +20,9 @@ int	main(int argc, char **argv, char *envp[])
 	else
 		{
 			init_data(&data, envp);
-			interpret_signal(BASIC, NULL);
 			while (1)
 			{
+				interpret_signal(BASIC, NULL);
 				data.line = readline(PROMPT);
 				add_history(data.line);
 				if (tokenize(&data, data.line) == FAILURE)

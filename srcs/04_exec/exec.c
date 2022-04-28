@@ -149,6 +149,10 @@ void	wait_for_dat_ass(t_data *data, t_cmd *cmd)
 		{
 			if (WIFEXITED(status))
 				g_exit_status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				g_exit_status = WTERMSIG(status) + 128;
+			else if (WIFSTOPPED(status))
+				g_exit_status = WSTOPSIG(status) + 128;
 		}
 		if (tmp->infos.fd_out > STDOUT_FILENO)
 			close(tmp->infos.fd_out);
@@ -201,6 +205,5 @@ int	exec(t_data *data)
 		}
 		wait_for_dat_ass(data, data->cmd);
 	}
-	interpret_signal(BASIC, NULL);
 	return (SUCCESS);
 }

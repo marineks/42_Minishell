@@ -42,6 +42,7 @@ int parse_heredoc(t_data *data, t_token **tk_lst)
 		perror("Pipe");
 		return (FAILURE);
 	}
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -52,6 +53,7 @@ int parse_heredoc(t_data *data, t_token **tk_lst)
 	{
 		ft_memset(&heredoc, 0, sizeof(t_data));
 		init_data(&heredoc, convert_env_copy_to_array(data->env_copy));
+		interpret_signal(HEREDOC_MODE, NULL);
 		close(pipe_fds[READ]);
 		buffer = stock_buffer(tk_lst);
 		tokenize(&heredoc, buffer);
@@ -79,7 +81,7 @@ int parse_heredoc(t_data *data, t_token **tk_lst)
 		free_double_array(heredoc.envp);
 		escape_to_brazil(&heredoc);
 		escape_to_brazil(data);
-		exit(0);
+		exit(g_exit_status);
 	}
 	else
 	{
