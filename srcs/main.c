@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char *envp[])
 				data.line = readline(PROMPT);
 				if (data.line == NULL)
 				{
-					write(1, "\n", 1);
+					write(1, "exit\n", 5);
 					escape_to_brazil(&data);
 					exit(130);
 				}

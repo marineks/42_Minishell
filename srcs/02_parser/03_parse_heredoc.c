@@ -14,22 +14,23 @@ static char *stock_buffer(t_token **tk_lst)
 	while (line)
 	{
 		free(line);
-		write(1, "> ", 2);
-		line = get_next_line(0);
-		// if (!line)
-		// {
-		// 	ft_putstr_fd("bash: warning: here-document delimited by end-of-file (wanted `",STDERR_FILENO);
-		// 	ft_putstr_fd(delimiter, STDERR_FILENO);
-		// 	ft_putstr_fd("')\n", STDERR_FILENO);
-		// 	break;
-		// }
+		line = readline("> ");
+		if (!line)
+		{
+			ft_putchar_fd('\n', STDERR_FILENO);
+			break;
+		}
 		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == SUCCESS)
 			break;
 		if (!str)
 			str = ft_strdup(line);
 		else
+		{
+			str = ft_strjoin(str, "\n");
 			str = ft_strjoin(str, line);
+		}	
 	}
+	str = ft_strjoin(str, "\n");
 	free(line);
 	return (str);
 }
@@ -50,6 +51,7 @@ int parse_heredoc(t_data *data, t_token **tk_lst)
 		return (FAILURE);
 	}
 	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -63,22 +65,22 @@ int parse_heredoc(t_data *data, t_token **tk_lst)
 		interpret_signal(HEREDOC_MODE, NULL);
 		close(pipe_fds[READ]);
 		buffer = stock_buffer(tk_lst);
-		tokenize(&heredoc, buffer);
-		specify(&heredoc.token);
-		expand_tokens(&heredoc, &heredoc.token);
-		handle_quotes(&heredoc);
-		free(buffer);
-		buffer = NULL;
-		tmp = heredoc.token;
-		while (tmp->next)
-		{
-			if (!buffer)
-				buffer = ft_strdup(tmp->str);
-			else
-				buffer = ft_strjoin(buffer, tmp->str);
-			buffer = ft_strjoin(buffer, "\n");
-			tmp = tmp->next;
-		}
+		// tokenize(&heredoc, buffer);
+		// specify(&heredoc.token);
+		// expand_tokens(&heredoc, &heredoc.token);
+		// handle_quotes(&heredoc);
+		// free(buffer);
+		// buffer = NULL;
+		// tmp = heredoc.token;
+		// while (tmp->next)
+		// {
+		// 	if (!buffer)
+		// 		buffer = ft_strdup(tmp->str);
+		// 	else
+		// 		buffer = ft_strjoin(buffer, tmp->str);
+		// 	buffer = ft_strjoin(buffer, "\n");
+		// 	tmp = tmp->next;
+		// }
 		write(pipe_fds[WRITE], buffer, ft_strlen(buffer) + 1);
 		close(pipe_fds[WRITE]);
 		free(buffer);

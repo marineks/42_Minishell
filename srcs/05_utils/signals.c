@@ -52,7 +52,6 @@ static void	handle_heredoc(int signum)
 	if (signum == SIGINT)
 	{
 		g_exit_status = 130;
-		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		close(STDIN_FILENO);
 	}
@@ -87,5 +86,8 @@ void	interpret_signal(int action, char *cmd)
 	else if (action == DEFAULT_ACTION)
 		signal(SIGINT, SIG_DFL);
 	else if (action == HEREDOC_MODE)
+	{
+		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, handle_heredoc);
+	}		
 }
