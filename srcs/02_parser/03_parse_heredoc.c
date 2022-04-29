@@ -16,6 +16,13 @@ static char *stock_buffer(t_token **tk_lst)
 		free(line);
 		write(1, "> ", 2);
 		line = get_next_line(0);
+		if (!line)
+		{
+			ft_putstr_fd("bash: warning: here-document delimited by end-of-file (wanted `",STDERR_FILENO);
+			ft_putstr_fd(delimiter, STDERR_FILENO);
+			ft_putstr_fd("')\n", STDERR_FILENO);
+			break;
+		}
 		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == SUCCESS)
 			break;
 		if (!str)
