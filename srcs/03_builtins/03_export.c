@@ -30,16 +30,19 @@ static void	add_var_to_env(t_data *data, char *line, char *var, char *val)
 {
 	t_env	*tmp;
 	char	*keep_var;
+	char	*value;
 
 	tmp = data->env_copy;
+	printf("var : %s\n", var);
 	keep_var = ft_strdup(var);
 	add_var_to_export(&data->env_export, line, var, val);
 	if (ft_strchr(line, '=') == NULL)
 		return ;
 	if (find_str(val, "$?") == SUCCESS)
 		val = replace_exit_status(val);
-	if (grep_value(data->env_copy, keep_var) == NULL)
-		ft_lstadd_back_env(&data->env_copy, ft_lstnew_env(ft_strdup(line), keep_var, ft_strdup(val)));
+	value = grep_value(data->env_copy, keep_var);
+	if (value == NULL)
+		ft_lstadd_back_env(&data->env_copy, ft_lstnew_env(ft_strdup(line), ft_strdup(keep_var), ft_strdup(val)));
 	else
 	{
 		while (tmp->next)
@@ -52,7 +55,9 @@ static void	add_var_to_env(t_data *data, char *line, char *var, char *val)
 		tmp->var_value = val;
 		
 	}
-	free(keep_var);
+	if (keep_var)
+		free(keep_var);
+	free(value);
 }
 
 static void	manage_export_alone(t_cmd *cmd, t_env **env_export)

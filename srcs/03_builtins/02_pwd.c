@@ -11,6 +11,7 @@ char	*grep_value(t_env *env, char *var_name)
 	{
 		if (ft_strcmp(var_name, tmp->var_name) == SUCCESS)
 		{
+			printf("var value :%s\n", tmp->var_value);
 			value = ft_strdup(tmp->var_value);
 			break;
 		}
