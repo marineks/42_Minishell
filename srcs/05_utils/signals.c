@@ -36,6 +36,17 @@ static void	handle_subprocess(int signum)
 	rl_on_new_line();
 }
 
+static void	handle_ignore(int signum)
+{
+	if (signum == SIGINT)
+	{
+		g_exit_status = 130;
+		write(1, "\n", 1);
+		// rl_replace_line("", 0);
+		// rl_on_new_line();
+	}
+}
+
 static void	handle_heredoc(int signum)
 {
 	if (signum == SIGINT)
@@ -68,7 +79,10 @@ void	interpret_signal(int action, char *cmd)
 			signal(SIGQUIT, handle_cat);
 		}
 		else
+		{
+			signal(SIGINT, handle_ignore);
 			signal(SIGQUIT, SIG_IGN);
+		}	
 	}
 	else if (action == DEFAULT_ACTION)
 		signal(SIGINT, SIG_DFL);
