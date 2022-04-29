@@ -3,11 +3,13 @@
 static void	add_var_to_export(t_env **env_exp, char *line, char *var, char *val)
 {
 	t_env	*tmp;
+	char	*value;
 
 	tmp = *env_exp;
+	value = grep_value(*env_exp, var);
 	if (find_str(val, "$?") == SUCCESS)
 		val = replace_exit_status(val);
-	if (grep_value(*env_exp, var) == NULL)
+	if (value == NULL)
 		ft_lstadd_back_env(env_exp, ft_lstnew_env(ft_strdup(line), var, val));
 	else
 	{
@@ -21,32 +23,36 @@ static void	add_var_to_export(t_env **env_exp, char *line, char *var, char *val)
 		tmp->var_value = val;
 		free(var);
 	}
+	free(value);
 }
 
 static void	add_var_to_env(t_data *data, char *line, char *var, char *val)
 {
 	t_env	*tmp;
+	char	*keep_var;
 
 	tmp = data->env_copy;
+	keep_var = ft_strdup(var);
 	add_var_to_export(&data->env_export, line, var, val);
 	if (ft_strchr(line, '=') == NULL)
 		return ;
 	if (find_str(val, "$?") == SUCCESS)
 		val = replace_exit_status(val);
-	if (grep_value(data->env_copy, var) == NULL)
-		ft_lstadd_back_env(&data->env_copy, ft_lstnew_env(ft_strdup(line), ft_strdup(var), ft_strdup(val)));
+	if (grep_value(data->env_copy, keep_var) == NULL)
+		ft_lstadd_back_env(&data->env_copy, ft_lstnew_env(ft_strdup(line), keep_var, ft_strdup(val)));
 	else
 	{
 		while (tmp->next)
 		{
-			if (ft_strcmp(var, tmp->var_name) == SUCCESS)
+			if (ft_strcmp(keep_var, tmp->var_name) == SUCCESS)
 				break;
 			tmp = tmp->next;
 		}
 		free(tmp->var_value);
 		tmp->var_value = val;
-		free(var);
+		
 	}
+	free(keep_var);
 }
 
 static void	manage_export_alone(t_cmd *cmd, t_env **env_export)
@@ -54,6 +60,7 @@ static void	manage_export_alone(t_cmd *cmd, t_env **env_export)
 	t_env	*tmp;
 
 	tmp = *env_export;
+	sort_export(tmp);
 	if (!cmd->infos.flags)
 	{
 		while (tmp)

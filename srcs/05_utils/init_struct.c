@@ -62,7 +62,7 @@ t_env	*stock_envp_in_chained_list(char **envp)
 	return (env_list);
 }
 
-static void    sort_export(t_env *env_export)
+void    sort_export(t_env *env_export)
 {
     t_env    *next_node;
     t_env    *current;
