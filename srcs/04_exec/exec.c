@@ -111,6 +111,12 @@ void	child_process(t_data *data, t_cmd *cmd, int *tube_fd)
 		exec = get_execve_infos(data, cmd);
 		redir_in_out(cmd, tube_fd);
 		execve(exec->path, exec->cmd_and_flags, exec->env_array);
+		if (ft_strchr(cmd->infos.cmd, '/'))
+		{
+			ft_putstr_fd("bash: ", STDERR_FILENO);
+			ft_putstr_fd(cmd->infos.cmd, STDERR_FILENO);
+			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		}
 		g_exit_status = 126;
 	}
 	else
