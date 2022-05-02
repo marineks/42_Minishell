@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   01_convert_env.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/02 17:04:43 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/02 17:05:00 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	count_len_env(t_env *env)
 {
-	int len;
-	t_env *tmp;
+	int		len;
+	t_env	*tmp;
 
 	len = 0;
 	tmp = env;
@@ -17,9 +29,9 @@ int	count_len_env(t_env *env)
 
 char	**convert_env_copy_to_array(t_env *env)
 {
-	int i;
-	t_env *tmp;
-	char **env_array;
+	int		i;
+	t_env	*tmp;
+	char	**env_array;
 
 	i = 0;
 	tmp = env;
@@ -33,14 +45,5 @@ char	**convert_env_copy_to_array(t_env *env)
 		i++;
 	}
 	env_array[i] = NULL;
-
-	// tmp = env;
-	// i = 0;
-	// while (tmp)
-	// {
-	// 	printf("ENV ARRAY - i : %d - line : %s\n", i, env_array[i]);
-	// 	tmp = tmp->next;
-	// 	i++;
-	// }
 	return (env_array);
 }

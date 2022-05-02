@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   02_get_path.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/02 17:08:40 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/02 17:08:44 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static char	*ft_strjoin_path(char const *s1, char const *s2)
@@ -37,7 +49,20 @@ static void	free_path_tab(char **path_tab)
 		i++;
 	}
 	free(path_tab);
+}
 
+static int	get_right_index(char *envp[])
+{
+	int	index;
+
+	index = 0;
+	while (envp[index])
+	{
+		if (ft_strncmp(envp[index], "PATH=", 4) == SUCCESS)
+			break ;
+		index++;
+	}
+	return (index);
 }
 
 // faire fonction pour récup le file de la cmd (en gros strjoin du chemin 
@@ -49,15 +74,9 @@ char	*grep_path(char *envp[], char *cmd)
 	char	**path_tab;
 	char	*path;
 
-	i = 0;
 	if (ft_strchr(cmd, '/'))
 		return (ft_strdup(cmd));
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], "PATH=", 4) == SUCCESS)
-			break ;
-		i++;
-	}
+	i = get_right_index(envp);
 	path_tab = ft_split(envp[i] + 5, ':');
 	i = 0;
 	while (path_tab[i] != NULL)
