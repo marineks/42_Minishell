@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_list_functions.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/02 17:15:45 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/02 17:16:16 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 t_env	*ft_lstnew_env(char *line, char *name, char *value)
@@ -68,19 +80,25 @@ void	ft_lstclear_env(t_env **lst, void (*del)(void *))
 	}
 }
 
+/**
+ * @brief Unsets the variable in env, that is : deletes the node in the chained 
+ * 		  list t_env. 3 steps : 1) finds which node to delete ; 2) Links the
+ * 		  node->prev with node->next ; 3) deletes the current node.
+ * 
+ * @param lst 
+ * @param var_to_del 
+ */
 void	ft_lst_unset_env(t_env **lst, char *var_to_del)
 {
 	t_env	*tmp;
 
 	tmp = *lst;
-	// trouve le bon node
 	while (tmp->next)
 	{
 		if (ft_strcmp(var_to_del, tmp->var_name) == SUCCESS)
-			break;
+			break ;
 		tmp = tmp->next;
 	}
-	// raccorde (!!!! quand on supprime le 1er node)
 	if (tmp->prev)
 	{
 		tmp->prev->next = tmp->next;
@@ -89,7 +107,5 @@ void	ft_lst_unset_env(t_env **lst, char *var_to_del)
 	}
 	else
 		tmp->next->prev = NULL;
-	// suppression du node
 	ft_lstdelone_env(tmp, &free);
-
 }

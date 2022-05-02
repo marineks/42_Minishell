@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   brazil.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/02 17:19:27 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/02 17:19:28 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	escape_to_brazil(t_data *data)
@@ -13,5 +25,4 @@ void	escape_to_brazil(t_data *data)
 	if (data->env_export)
 		ft_lstclear_env(&data->env_export, &free);
 	rl_clear_history ();
-	// clear_history ();
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_struct.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/02 17:20:27 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/02 17:23:25 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*call_me_by_your_name(char *line)
@@ -9,7 +21,7 @@ char	*call_me_by_your_name(char *line)
 	while (line[i])
 	{
 		if (line[i] == '=')
-			break;
+			break ;
 		i++;
 	}
 	timothee = ft_substr(line, 0, i);
@@ -30,7 +42,7 @@ char	*call_me_by_your_value(char *line)
 		if (line[i] == '=')
 		{
 			start = i + 1;
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -62,41 +74,41 @@ t_env	*stock_envp_in_chained_list(char **envp)
 	return (env_list);
 }
 
-void    sort_export(t_env *env_export)
+void	sort_export(t_env *env_export)
 {
-    t_env    *next_node;
-    t_env    *current;
-    char    *tmp_var;
-    char    *tmp_val;
+	t_env	*next_node;
+	t_env	*current;
+	char	*tmp_var;
+	char	*tmp_val;
 
-    current = env_export;
-    next_node = current->next;
-    while (current != NULL)
-    {
-        next_node = current->next;
-        while (next_node != NULL)
-        {
-            if (current->var_name[0] > next_node->var_name[0])
-            {
-                tmp_var = current->var_name;
-                tmp_val = current->var_value;
-                current->var_name = next_node->var_name;
-                current->var_value = next_node->var_value;
-                next_node->var_name = tmp_var;
-                next_node->var_value = tmp_val;
-            }
-            next_node = next_node->next;
-        }
-        current = current->next;
-    }
+	current = env_export;
+	next_node = current->next;
+	while (current != NULL)
+	{
+		next_node = current->next;
+		while (next_node != NULL)
+		{
+			if (current->var_name[0] > next_node->var_name[0])
+			{
+				tmp_var = current->var_name;
+				tmp_val = current->var_value;
+				current->var_name = next_node->var_name;
+				current->var_value = next_node->var_value;
+				next_node->var_name = tmp_var;
+				next_node->var_value = tmp_val;
+			}
+			next_node = next_node->next;
+		}
+		current = current->next;
+	}
 }
 
-int    init_data(t_data *data, char *envp[])
+int	init_data(t_data *data, char *envp[])
 {
-    data->envp = envp;
-    data->env_copy = stock_envp_in_chained_list(envp);
-    data->env_export = stock_envp_in_chained_list(envp);
-    sort_export(data->env_export);
-    data->token = NULL;
-    return (SUCCESS);
+	data->envp = envp;
+	data->env_copy = stock_envp_in_chained_list(envp);
+	data->env_export = stock_envp_in_chained_list(envp);
+	sort_export(data->env_export);
+	data->token = NULL;
+	return (SUCCESS);
 }

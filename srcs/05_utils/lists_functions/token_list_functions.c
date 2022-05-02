@@ -61,8 +61,8 @@ void	ft_lstclear_token(t_token **lst, void (*del)(void *))
 t_token	*insert_lst_between(t_token **head, t_token *to_del, t_token *insert)
 {
 	t_token	*tmp;
-	tmp = *head;
 
+	tmp = *head;
 	if (tmp == NULL)
 		*head = insert;
 	else if (tmp == to_del)
@@ -91,16 +91,13 @@ t_token	*insert_lst_between(t_token **head, t_token *to_del, t_token *insert)
 void	print_token(t_token *lst)
 {
 	t_token *tmp;
-	int i = 0;
 	
+	int i = 0;
 	printf("lst = %p\n", lst);
 	tmp = lst;
 	while (tmp)
 	{
-		// if (tmp->prev == NULL)
 		printf("NODE : %d - TYPE : %d - STATE : %d - Str: |%s|\n", i, tmp->type, tmp->state, tmp->str);
-		// else
-			// printf("Current str: %s ~ Previous str: %s\n", tmp->str, tmp->prev->str);
 		printf("----------------------------------------------------------\n");
 		tmp = tmp->next;
 		i++;
