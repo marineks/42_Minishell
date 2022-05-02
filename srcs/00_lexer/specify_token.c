@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   specify_token.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/02 14:46:58 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/02 14:47:19 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /**
@@ -40,10 +52,9 @@ int	specify(t_token **tk_list)
 	while (tmp)
 	{
 		check_var_type(&tmp);
-		if (check_ops_rule(&tmp) == FAILURE) // Les règles de grammaire doivent s'appliquer cmd par cmd
+		if (check_ops_rule(&tmp) == FAILURE)
 			return (FAILURE);
 		tmp = tmp->next;
 	}
-	// print_token(*tk_list);
 	return (SUCCESS);
 }
