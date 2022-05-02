@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 16:05:16 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/02/16 16:10:49 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/02 23:22:51 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strjoin(char *s1, char const *s2)
 	size_t	j;
 
 	i = 0;
-	if (*s1 == '\0' || *s2 == '\0')
+	if ((s1 == NULL || s2 == NULL) && (*s1 == '\0' || *s2 == '\0'))
 		return (NULL);
 	res = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!res)

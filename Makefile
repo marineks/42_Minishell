@@ -72,7 +72,6 @@ SRCS = main.c 											\
 	05_utils/amsterdam.c								\
 	05_utils/brazil.c									\
 	05_utils/init_struct.c								\
-	05_utils/signals.c 									\
 
 SRC	= $(addprefix $(SRCS_DIR),$(SRCS))
 
