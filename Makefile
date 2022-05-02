@@ -64,11 +64,11 @@ SRCS = main.c 											\
 	05_utils/execve_functions/01_convert_env.c			\
 	05_utils/execve_functions/02_get_path.c				\
 	05_utils/execve_functions/03_create_cmd_array.c		\
-	05_utils/gnl/get_next_line.c						\
-	05_utils/gnl/get_next_line_utils.c					\
 	05_utils/lists_functions/cmd_list_functions.c		\
 	05_utils/lists_functions/env_list_functions.c 		\
 	05_utils/lists_functions/token_list_functions.c		\
+	05_utils/signals/sig_handlers.c 					\
+	05_utils/signals/signals.c 							\
 	05_utils/amsterdam.c								\
 	05_utils/brazil.c									\
 	05_utils/init_struct.c								\

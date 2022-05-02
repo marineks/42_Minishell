@@ -82,6 +82,12 @@ char	*call_me_by_your_name(char *line);
 char	*call_me_by_your_value(char *line);
 void    sort_export(t_env *env_export);
 int		init_data(t_data *data, char *envp[]);
+// 05_UTILS --- sig_handlers.c
+void	handle_basic(int signum);
+void	handle_cat(int signum);
+void	handle_subprocess(int signum);
+void	handle_ignore(int signum);
+void	handle_heredoc(int signum);
 // 05_UTILS --- signals.c
 void	interpret_signal(int action, char *cmd);
 
