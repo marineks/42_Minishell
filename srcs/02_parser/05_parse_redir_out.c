@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   05_parse_redir_out.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/02 16:05:13 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/02 16:05:26 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
@@ -13,8 +25,8 @@
 
 char	*get_relative_path(char *file_to_open)
 {
-	char *path;
-	char *res;
+	char	*path;
+	char	*res;
 
 	path = ft_strdup("./");
 	res = ft_strjoin(path, file_to_open);
@@ -62,16 +74,3 @@ void	parse_redir_out(t_cmd **last_cmd, t_token **tk_lst)
 		tmp = tmp->next;
 	*tk_lst = tmp;
 }
-
-/*
-A noter : si on fait ls > test2.txt puis echo coucou > test2.txt
-le nouveau contenu va écraser le précédent
-
-cmd REDIR_OUT OUTPUT_FILE word
-exemple : grep test > test.txt test1.txt
-En gros, si y a un word après l'OUTPUT_FILE il va dans le echo, pas dans la redir
-
-ATTENTION !!!!!!
-SI LINE COMMENCE PAR UN REDIR IL FAUT CREER LA LISTE CHAINEE ! 
-DU COUP FAIRE CONDITION existence cmd + FONCTION POUR PALLIER CA
-*/

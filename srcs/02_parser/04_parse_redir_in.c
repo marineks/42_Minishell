@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   04_parse_redir_in.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/02 15:47:16 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/02 15:50:29 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
@@ -12,10 +24,14 @@
 	Exemple : sort < mylist.txt => on "sort" par ordre alpha le contenu qui se
 				trouve dans "mylist.txt".
 				wc -l < test.txt => affiche le nb de lignes dans le fichier test
-	
-	Problem car avec ECHO ça marche différemment :
-https://unix.stackexchange.com/questions/63658/redirecting-the-content-of-a-file-to-the-command-echo)
 */
+
+static void	set_and_display_error(t_cmd *cmd, char *infile)
+{
+	cmd->infos.error = errno;
+	cmd->infos.err_msg = ft_strdup(strerror(errno));
+	printf("bash: %s: %s\n", infile, cmd->infos.err_msg);
+}
 
 void	parse_redir_in(t_cmd **last_cmd, t_token **tk_lst)
 {
@@ -35,11 +51,7 @@ void	parse_redir_in(t_cmd **last_cmd, t_token **tk_lst)
 	file = get_relative_path(tmp->next->str);
 	fd = open(file, O_RDWR, S_IRWXU);
 	if (fd == -1)
-	{
-		cmd->infos.error = errno;
-		cmd->infos.err_msg = ft_strdup(strerror(errno));
-		printf("bash: %s: %s\n", tmp->next->str, cmd->infos.err_msg);
-	}
+		set_and_display_error(cmd, tmp->next->str);
 	cmd->infos.fd_in = fd;
 	free(file);
 	if (tmp->next->next)
