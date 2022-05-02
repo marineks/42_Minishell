@@ -1,23 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   02_pwd.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/02 16:53:55 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/02 16:54:01 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-
-char	*grep_value(t_env *env, char *var_name)
-{
-	char	*value;
-	t_env	*tmp;
-
-	value = NULL;
-	tmp = env;
-	while (tmp)
-	{
-		if (ft_strcmp(var_name, tmp->var_name) == SUCCESS)
-		{
-			value = ft_strdup(tmp->var_value);
-			break;
-		}
-		tmp = tmp->next;
-	}
-	return (value);
-}
 
 /**
  * @brief Display the pwd (Print Working Directory) on the terminal
@@ -33,7 +26,7 @@ void	get_pwd(t_cmd *cmd, t_env *env)
 	while (tmp->next)
 	{
 		if (ft_strcmp("PWD", tmp->var_name) == SUCCESS)
-			break;
+			break ;
 		tmp = tmp->next;
 	}
 	write(cmd->infos.fd_out, tmp->var_value, ft_strlen(tmp->var_value));

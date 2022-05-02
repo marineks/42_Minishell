@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   01_cd.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/02 16:46:57 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/02 16:47:28 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	too_many_arg_err(void)
@@ -16,7 +28,7 @@ static char	*find_home_path(t_env *env)
 	while (tmp->next)
 	{
 		if (ft_strcmp(tmp->var_name, "HOME") == SUCCESS)
-			break;
+			break ;
 		tmp = tmp->next;
 	}
 	path = ft_strdup(tmp->var_value);
@@ -45,7 +57,7 @@ void	update_all_pwds(t_env **env)
 	while (tmp->next)
 	{
 		if (ft_strcmp("PWD", tmp->var_name) == SUCCESS)
-			break;
+			break ;
 		tmp = tmp->next;
 	}
 	tmp_pwd = ft_strdup(tmp->var_value);
@@ -55,7 +67,7 @@ void	update_all_pwds(t_env **env)
 	while (tmp->next)
 	{
 		if (ft_strcmp("OLDPWD", tmp->var_name) == SUCCESS)
-			break;
+			break ;
 		tmp = tmp->next;
 	}
 	free(tmp->var_value);
@@ -77,7 +89,7 @@ void	update_all_pwds(t_env **env)
  */
 int	change_directory(t_cmd *cmd, t_env **env)
 {
-	char *path;
+	char	*path;
 
 	if (cmd->infos.flags)
 	{

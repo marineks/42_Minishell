@@ -1,7 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   05_env.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/02 16:55:41 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/02 16:56:46 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /**
  * @brief Display the env variables and values on the terminal
+ * 
+ * POINT CULTURE SUR LE CODE 127 :
+ * Value 127 is returned by /bin/sh when the given command is not found within 
+ * your PATH system variable and it is not a built-in shell command. In other 
+ * words, the system understands your command, because it doesn't know where to
+ * find the binary you're trying to call.
  * 
  * @param env our chained list of env variables
  */
@@ -29,10 +47,3 @@ int	get_env(t_cmd *cmd, t_env **env)
 	g_exit_status = 0;
 	return (g_exit_status);
 }
-
-/* POINT CULTURE SUR LE CODE 127 :
-Value 127 is returned by /bin/sh when the given command is not found within your
-PATH system variable and it is not a built-in shell command. In other words, the
-system understands your command, because it doesn't know where to find 
-the binary you're trying to call.
-*/
