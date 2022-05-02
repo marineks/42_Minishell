@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   04_handle_quotes.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/02 15:18:41 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/02 15:19:41 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	count_length(char *str, int count, int i)
@@ -16,7 +28,7 @@ int	count_length(char *str, int count, int i)
 			i++;
 			continue ;
 		}
-		else if ((str[i] == '\'' && state == SIMPLE) 
+		else if ((str[i] == '\'' && state == SIMPLE)
 			|| (str[i] == '\"' && state == DOUBLE))
 		{
 			state = DEFAULT;
@@ -31,7 +43,7 @@ int	count_length(char *str, int count, int i)
 
 bool	if_quotes(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -45,14 +57,14 @@ bool	if_quotes(char *str)
 
 int	handle_quotes(t_data *data)
 {
-	t_token *tmp;
-	int i;
+	t_token	*tmp;
+	int		i;
 
 	i = 0;
 	tmp = data->token;
 	while (tmp)
 	{
-		if (if_quotes(tmp->str) == true) // si quotes dans la string
+		if (if_quotes(tmp->str) == true)
 			remove_quotes(&tmp);
 		tmp = tmp->next;
 	}

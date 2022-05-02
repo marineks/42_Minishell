@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   06_tokenize_var.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/02 15:21:30 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/02 15:22:03 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static char	*copy_word(char *str, int end, int start)
@@ -21,7 +33,7 @@ static char	*copy_word(char *str, int end, int start)
 
 static int	create_empty_str_in_new_node(t_token **tk_lst)
 {
-	char *str;
+	char	*str;
 
 	str = (char *)malloc(sizeof(char) * 1);
 	if (!str)
@@ -36,7 +48,7 @@ static t_token	*split_var(char *str, t_token *tk_lst)
 	int		i;
 	int		start;
 	char	*new_word;
-	
+
 	i = 0;
 	if (!str[i])
 		create_empty_str_in_new_node(&tk_lst);
@@ -62,7 +74,7 @@ static t_token	*split_var(char *str, t_token *tk_lst)
 
 void	set_new_lst_to_true(t_token **new_lst)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = *new_lst;
 	while (tmp)
@@ -86,7 +98,6 @@ int	tokenize_var(t_data *data)
 		if (tmp->type == VAR)
 		{
 			new_lst = split_var(tmp->str, tk_lst);
-			// print_token(data->token);
 			if (tmp->join == true)
 				set_new_lst_to_true(&new_lst);
 			tmp = insert_lst_between(&data->token, tmp, new_lst);

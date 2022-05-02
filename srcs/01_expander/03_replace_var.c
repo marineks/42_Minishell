@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   03_replace_var.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/02 15:15:39 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/02 15:18:01 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	erase_var(t_token **tk_node, char *str, int index)
@@ -17,7 +29,7 @@ int	erase_var(t_token **tk_node, char *str, int index)
 	{
 		if (str[i] == '$' && i == index)
 		{
-			i = i + count_len_var(str + index) + 1; 
+			i = i + count_len_var(str + index) + 1;
 			if (str[i] == '\0')
 				break ;
 		}
@@ -44,14 +56,14 @@ void	copy_var_value(char *new_str, char *var_value, int *j)
 
 int	erase_and_replace(t_token **tk_node, char *str, char *var_value, int index)
 {
-	int i;
-	int j;
-	char *new_str;
+	int		i;
+	int		j;
+	char	*new_str;
 
 	i = 0;
 	j = 0;
-	new_str = (char *)malloc(sizeof(char) *
-		(ft_strlen(str) - count_len_var(str + index) + ft_strlen(var_value)));
+	new_str = (char *)malloc(sizeof(char) * (\
+		ft_strlen(str) - count_len_var(str + index) + ft_strlen(var_value)));
 	if (!new_str)
 		return (FAILURE);
 	while (str[i])
@@ -61,7 +73,7 @@ int	erase_and_replace(t_token **tk_node, char *str, char *var_value, int index)
 			copy_var_value(new_str, var_value, &j);
 			i = i + count_len_var(str + index) + 1;
 			if (str[i] == '\0')
-				break ;	
+				break ;
 		}
 		new_str[j++] = str[i++];
 	}
@@ -83,7 +95,8 @@ int	replace_var(t_token **tk_node, char *var_value, int index)
 	}
 	else
 	{
-		if (erase_and_replace(tk_node, (*tk_node)->str, var_value, index) == FAILURE)
+		if (erase_and_replace(tk_node,
+				(*tk_node)->str, var_value, index) == FAILURE)
 		{
 			free(var_value);
 			return (FAILURE);

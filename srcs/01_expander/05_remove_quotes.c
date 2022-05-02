@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   05_remove_quotes.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/02 15:20:00 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/02 15:20:59 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void	change_default_to_quote(t_token **tk_node, int *i)
@@ -11,8 +23,8 @@ static void	change_default_to_quote(t_token **tk_node, int *i)
 
 static bool	if_quotes_and_default(t_token **tk_node, int i)
 {
-	if (((*tk_node)->str[i] == '\'' || (*tk_node)->str[i] == '\"') 
-			&& (*tk_node)->state == DEFAULT)
+	if (((*tk_node)->str[i] == '\'' || (*tk_node)->str[i] == '\"')
+		&& (*tk_node)->state == DEFAULT)
 		return (true);
 	else
 		return (false);
@@ -20,7 +32,7 @@ static bool	if_quotes_and_default(t_token **tk_node, int i)
 
 static bool	change_back_to_default(t_token **tk_node, int *i)
 {
-	if (((*tk_node)->str[*i] == '\'' && (*tk_node)->state == SIMPLE) 
+	if (((*tk_node)->str[*i] == '\'' && (*tk_node)->state == SIMPLE)
 		|| ((*tk_node)->str[*i] == '\"' && (*tk_node)->state == DOUBLE))
 	{
 		(*tk_node)->state = DEFAULT;

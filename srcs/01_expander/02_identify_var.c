@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   02_identify_var.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/02 15:14:21 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/02 15:15:18 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 bool	is_var_compliant(char c)
 {
-	if (c == ' ' || c == '$' || c == '\0' || c == '\'' || c == '\"' 
+	if (c == ' ' || c == '$' || c == '\0' || c == '\'' || c == '\"'
 		|| (c >= '\t' && c <= '\r')
 		|| c == '=' || c == '[' || c == ']' || c == '{' || c == '}')
 		return (false);
@@ -24,7 +36,7 @@ int	count_len_var(char *str)
 		return (count + 1);
 	while (str[i])
 	{
-		if(is_var_compliant(str[i]) == false)
+		if (is_var_compliant(str[i]) == false)
 			break ;
 		count++;
 		i++;
@@ -36,7 +48,7 @@ char	*identify_variable(char *str)
 {
 	char	*var;
 	int		start;
-	int 	len;
+	int		len;
 	int		i;
 
 	i = 0;

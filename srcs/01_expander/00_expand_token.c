@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   00_expand_token.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/02 15:07:41 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/02 15:08:47 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
@@ -37,7 +49,7 @@ static bool	var_surrounded_by_quotes(char *str, int i)
 		if (str[i - 1] == '\"' && str[i + 1] == '\"')
 			return (true);
 		else
-			return (false); 
+			return (false);
 	}
 	return (false);
 }
@@ -45,26 +57,25 @@ static bool	var_surrounded_by_quotes(char *str, int i)
 int	expand_tokens(t_data *data, t_token **tk_list)
 {
 	t_token	*tmp;
-	int	i;
+	int		i;
 
 	tmp = *tk_list;
 	while (tmp)
 	{
 		if (tmp->type == VAR)
 		{
-				i = 0;
-				while (tmp->str[i])
-				{
-					update_state(&tmp, tmp->str[i]);
-					if (tmp->str[i] == '$'
-						&& is_next_char_a_sep(tmp->str[i + 1]) == false
-						&& var_surrounded_by_quotes(tmp->str, i) == false
-						&& (tmp->state == DEFAULT || tmp->state == DOUBLE)
-						)
-						replace_var(&tmp, retrieve_val(tmp->str + i, data), i);
-					else
-						i++;
-				}
+			i = 0;
+			while (tmp->str[i])
+			{
+				update_state(&tmp, tmp->str[i]);
+				if (tmp->str[i] == '$'
+					&& is_next_char_a_sep(tmp->str[i + 1]) == false
+					&& var_surrounded_by_quotes(tmp->str, i) == false
+					&& (tmp->state == DEFAULT || tmp->state == DOUBLE))
+					replace_var(&tmp, retrieve_val(tmp->str + i, data), i);
+				else
+					i++;
+			}
 		}
 		tmp = tmp->next;
 	}

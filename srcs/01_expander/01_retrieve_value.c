@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   01_retrieve_value.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/02 15:09:16 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/02 15:13:57 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	var_exists(t_data *data, char *var)
@@ -46,7 +58,7 @@ char	*retrieve_val(char *str, t_data *data)
 
 	var = identify_variable(str);
 	if (var && var_exists(data, var) == SUCCESS)
-		value =	grep_env_var(data, var);
+		value = grep_env_var(data, var);
 	else
 		value = NULL;
 	free(var);
