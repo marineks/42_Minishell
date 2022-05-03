@@ -65,13 +65,16 @@ int		get_env(t_cmd *cmd, t_env **env);
 // 03_BUILTINS --- 06_exit.c
 int		exit_minishell(t_data *data, t_cmd *cmd);
 
-// 04_EXEC --- convert_env.c
-char	**convert_env_copy_to_array(t_env *env);
+// 04_EXEC --- exec_builtin.c
+void	close_fd_one_builtin(t_cmd *cmd);
+int		exec_one_builtin(t_data *data, t_cmd *cmd);
+int		exec_builtin_with_pipe(t_data *data, t_cmd *cmd);
+// 04_EXEC --- exec_processes.c
+void	child_process(t_data *data, t_cmd *cmd, int *tube_fd);
+void	parent_process(t_cmd *cmd, int *tube_fd);
 // 04_EXEC --- exec.c
+void	redir_in_out(t_cmd *cmd, int *tube_fd);
 int		exec(t_data *data);
-// int		exec(t_data *data, t_cmd *cmd_lst, int pipe_fd_in);
-// 04_EXEC --- get_path.c
-char	*grep_path(char *envp[], char *cmd);
 
 // 05_UTILS --- amsterdam.c
 void	escape_to_amsterdam(t_data *data);
