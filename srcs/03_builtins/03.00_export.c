@@ -6,7 +6,7 @@
 /*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 15:25:48 by tmanolis          #+#    #+#             */
-/*   Updated: 2022/05/03 17:17:52 by tmanolis         ###   ########.fr       */
+/*   Updated: 2022/05/03 17:39:51 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	add_var_to_export(t_env **env_exp, char *line, char *var, char *val)
 
 	tmp = *env_exp;
 	if (find_str(val, "$?") == SUCCESS)
-		val = replace_exit_status(val); // si leaks il faut free val avant
+		val = replace_exit_status(val);
 	if (is_var_already_exported(*env_exp, var) == FAILURE)
 		ft_lstadd_back_env(env_exp, ft_lstnew_env(line, var, val));
 	else
@@ -51,7 +51,7 @@ static void	add_var_to_export(t_env **env_exp, char *line, char *var, char *val)
 		while (tmp->next)
 		{
 			if (ft_strcmp(var, tmp->var_name) == SUCCESS)
-				break;
+				break ;
 			tmp = tmp->next;
 		}
 		free(tmp->line);
@@ -63,14 +63,22 @@ static void	add_var_to_export(t_env **env_exp, char *line, char *var, char *val)
 	}
 }
 
+static void	clean_and_replace_var(t_env *tmp, char *line, char *var, char *val)
+{
+	free(tmp->line);
+	free(tmp->var_value);
+	tmp->line = ft_strdup(line);
+	tmp->var_value = val;
+	free(var);
+}
 
 static void	add_var_to_env(t_data *data, char *line, char *var, char *val)
 {
 	t_env	*tmp;
 
 	tmp = data->env_copy;
-	add_var_to_export(&data->env_export, ft_strdup(line), ft_strdup(var), ft_strdup(val));
-	
+	add_var_to_export(&data->env_export, ft_strdup(line), ft_strdup(var), \
+	ft_strdup(val));
 	if (ft_strchr(line, '=') == NULL)
 	{
 		free(var);
@@ -80,20 +88,17 @@ static void	add_var_to_env(t_data *data, char *line, char *var, char *val)
 	if (find_str(val, "$?") == SUCCESS)
 		val = replace_exit_status(val);
 	if (is_var_already_exported(data->env_copy, var) == FAILURE)
-		ft_lstadd_back_env(&data->env_copy, ft_lstnew_env(ft_strdup(line), var, val));
+		ft_lstadd_back_env(&data->env_copy, ft_lstnew_env(ft_strdup(line), \
+		var, val));
 	else
 	{
 		while (tmp->next)
 		{
 			if (ft_strcmp(var, tmp->var_name) == SUCCESS)
-				break;
+				break ;
 			tmp = tmp->next;
 		}
-		free(tmp->line);
-		free(tmp->var_value);
-		tmp->line = ft_strdup(line);
-		tmp->var_value = val;
-		free(var);
+		clean_and_replace_var(tmp, line, var, val);
 	}
 }
 
@@ -129,7 +134,7 @@ static void	add_var_to_env(t_data *data, char *line, char *var, char *val)
 int	export_new_var(t_data *data, t_cmd *cmd, t_env **env_exp)
 {
 	int		i;
-	bool	error_occured; 
+	bool	error_occured;
 
 	i = 0;
 	error_occured = false;
@@ -137,8 +142,8 @@ int	export_new_var(t_data *data, t_cmd *cmd, t_env **env_exp)
 	while (cmd->infos.flags && cmd->infos.flags[i])
 	{
 		if (is_a_valid_identifier(cmd->infos.flags[i]) == true)
-			add_var_to_env(data, cmd->infos.flags[i],\
-			call_me_by_your_name(cmd->infos.flags[i]),\
+			add_var_to_env(data, cmd->infos.flags[i], \
+			call_me_by_your_name(cmd->infos.flags[i]), \
 			call_me_by_your_value(cmd->infos.flags[i]));
 		else
 			error_occured = export_err_msg(cmd->infos.flags[i]);
