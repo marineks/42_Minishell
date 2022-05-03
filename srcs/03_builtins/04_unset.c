@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   04_unset.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/03 15:18:28 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/03 15:18:36 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	grep_var(t_env *env, char *var_name)
@@ -34,7 +46,7 @@ static int	grep_var(t_env *env, char *var_name)
  */
 int	unset_variable(t_data *data, t_cmd *cmd)
 {
-	int	i;
+	int		i;
 	bool	error_occured;
 
 	i = 0;
