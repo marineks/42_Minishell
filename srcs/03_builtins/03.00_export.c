@@ -1,17 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   03.00_export.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/03 15:25:48 by tmanolis          #+#    #+#             */
+/*   Updated: 2022/05/03 17:17:52 by tmanolis         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int	var_exists(t_env *env, char *var_name)
+static void	manage_export_alone(t_cmd *cmd, t_env **env_export)
 {
 	t_env	*tmp;
 
-	tmp = env;
-	while (tmp)
+	sort_export(*env_export);
+	tmp = *env_export;
+	if (!cmd->infos.flags)
 	{
-		if (ft_strcmp(tmp->var_name, var_name) == SUCCESS)
-			return (SUCCESS);
-		tmp = tmp->next;
+		while (tmp)
+		{
+			ft_putstr_fd("export ", cmd->infos.fd_out);
+			ft_putstr_fd(tmp->var_name, cmd->infos.fd_out);
+			if (ft_strchr(tmp->line, '='))
+			{
+				ft_putstr_fd("=\"", cmd->infos.fd_out);
+				ft_putstr_fd(tmp->var_value, cmd->infos.fd_out);
+				ft_putstr_fd("\"\n", cmd->infos.fd_out);
+			}
+			else
+				ft_putchar_fd('\n', cmd->infos.fd_out);
+			tmp = tmp->next;
+		}
 	}
-	return (FAILURE);
 }
 
 static void	add_var_to_export(t_env **env_exp, char *line, char *var, char *val)
@@ -21,7 +44,7 @@ static void	add_var_to_export(t_env **env_exp, char *line, char *var, char *val)
 	tmp = *env_exp;
 	if (find_str(val, "$?") == SUCCESS)
 		val = replace_exit_status(val); // si leaks il faut free val avant
-	if (var_exists(*env_exp, var) == FAILURE)
+	if (is_var_already_exported(*env_exp, var) == FAILURE)
 		ft_lstadd_back_env(env_exp, ft_lstnew_env(line, var, val));
 	else
 	{
@@ -40,12 +63,14 @@ static void	add_var_to_export(t_env **env_exp, char *line, char *var, char *val)
 	}
 }
 
+
 static void	add_var_to_env(t_data *data, char *line, char *var, char *val)
 {
 	t_env	*tmp;
 
 	tmp = data->env_copy;
 	add_var_to_export(&data->env_export, ft_strdup(line), ft_strdup(var), ft_strdup(val));
+	
 	if (ft_strchr(line, '=') == NULL)
 	{
 		free(var);
@@ -54,7 +79,7 @@ static void	add_var_to_env(t_data *data, char *line, char *var, char *val)
 	}
 	if (find_str(val, "$?") == SUCCESS)
 		val = replace_exit_status(val);
-	if (var_exists(data->env_copy, var) == FAILURE)
+	if (is_var_already_exported(data->env_copy, var) == FAILURE)
 		ft_lstadd_back_env(&data->env_copy, ft_lstnew_env(ft_strdup(line), var, val));
 	else
 	{
@@ -69,31 +94,6 @@ static void	add_var_to_env(t_data *data, char *line, char *var, char *val)
 		tmp->line = ft_strdup(line);
 		tmp->var_value = val;
 		free(var);
-	}
-}
-
-static void	manage_export_alone(t_cmd *cmd, t_env **env_export)
-{
-	t_env	*tmp;
-
-	tmp = *env_export;
-	sort_export(tmp);
-	if (!cmd->infos.flags)
-	{
-		while (tmp)
-		{
-			ft_putstr_fd("export ", cmd->infos.fd_out);
-			ft_putstr_fd(tmp->var_name, cmd->infos.fd_out);
-			if (ft_strchr(tmp->line, '='))
-			{
-				ft_putstr_fd("=\"", cmd->infos.fd_out);
-				ft_putstr_fd(tmp->var_value, cmd->infos.fd_out);
-				ft_putstr_fd("\"\n", cmd->infos.fd_out);
-			}
-			else
-				ft_putchar_fd('\n', cmd->infos.fd_out);
-			tmp = tmp->next;
-		}
 	}
 }
 
@@ -148,32 +148,4 @@ int	export_new_var(t_data *data, t_cmd *cmd, t_env **env_exp)
 		return (FAILURE);
 	g_exit_status = 0;
 	return (SUCCESS);
-}
-
-/**
- * @brief Checks if the variable given is a valid variable according to 
- * 		  POSIX standards.
- * 
- * 			Examples where the line is not a valid identifier:
- * 			- The variable begins by a digit (export 1test=foo);
- * 			- The variable begins by the char '=' (export =foo).
- * 
- * @param line The variable to check
- */
-bool	is_a_valid_identifier(char *line)
-{
-	if (line[0] >= '0' && line[0] <= '9')
-		return (false);
-	else if (line[0] == '=')
-		return (false);
-	return (true);
-}
-
-bool	export_err_msg(char *line)
-{
-	ft_putstr_fd("bash: export: `", STDERR_FILENO);
-	ft_putstr_fd(line, STDERR_FILENO);
-	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
-	g_exit_status = 1;
-	return (true);
 }

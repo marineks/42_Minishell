@@ -54,10 +54,12 @@ int		change_directory(t_cmd *cmd, t_env **env);
 // 03_BUILTINS --- 02_pwd.c
 char	*grep_value(t_env *env, char *var_name);
 void	get_pwd(t_cmd *cmd, t_env *env);
-// 03_BUILTINS --- 03_export.c
-bool	export_err_msg(char *line);
-bool	is_a_valid_identifier(char *line);
+// 03_BUILTINS --- 03.00_export.c
 int		export_new_var(t_data *data, t_cmd *cmd, t_env **env_exp);
+// 03_BUILTINS --- 03.01_export_utils.c
+bool	export_err_msg(char *line);
+int		is_var_already_exported(t_env *env, char *var_name);
+bool	is_a_valid_identifier(char *line);
 // 03_BUILTINS --- 04_unset.c
 int		unset_variable(t_data *data, t_cmd *cmd);
 // 03_BUILTINS --- 05_env.c
