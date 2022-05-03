@@ -3,6 +3,7 @@ RESET="\e[39m"
 BLACK="\e[30m"
 BOLD_RED="\e[1;31m"
 BOLD_GREEN="\e[1;32m"
+BOLD_YELLOW="\e[1;33m"
 YELLOW="\e[33m"
 BLUE="\e[34m"
 MAGENTA="\e[35m"
@@ -12,7 +13,13 @@ PINK="\e[38;5;225m"
 LIGHT_BLUE="\e[38;5;45m"
 ORANGE="\e[1;38;5;214m"
 
-printf "$ORANGE ### Minishell tester ### $RESET"
+chmod 755 minishell
+
+if [ -f "output.txt" ] ; then
+    rm "output.txt"
+fi
+
+printf "$LIGHT_BLUE ### Minishell tester ### $RESET"
 echo
 echo
 
@@ -20,13 +27,27 @@ echo
 # Comparer les outputs, les mettre dans un output file
 # et print le OK/ KO sur le terminal
 test() {
-	MINISHELL=$(echo $*"; exit" | ./minishell 2>&-)
-	EXPECTED=$(echo $*"; exit" | bash --posix 2>&-)
-	if [ X"$MINISHELL" = X"$EXPECTED" ]
+	MINISHELL=$(echo $@ | ./minishell 2>&-)
+	EXPECTED=$(echo $@ | bash --posix 2>&-)
+	MINISHELL_EXIT=$?
+	BASH_EXIT=$?
+	if [ "$MINISHELL" = "$EXPECTED" ] && [ "$MINISHELL_EXIT" = "$BASH_EXIT" ]
 	then 
 		printf "$BOLD_GREEN OK $RESET"
 	else
-		printf "$BOLD_RED KO $RESET"
+		if [ "$MINISHELL" != "$EXPECTED" ] && [ "$MINISHELL_EXIT" = "$BASH_EXIT" ]
+		then
+			printf "$PINK KO $RESET"
+		elif [ "$MINISHELL" = "$EXPECTED" ] && [ "$MINISHELL_EXIT" != "$BASH_EXIT" ]
+		then
+			printf "$BOLD_YELLOW EXIT_KO $RESET"
+			touch output.txt
+			echo "Test : $@" >> output.txt
+			echo "Expected exit code : $BASH_EXIT" " Yours : $MINISHELL_EXIT" >> output.txt
+			echo >> output.txt
+		else
+			printf "$BOLD_RED KO $RESET"
+		fi
 	fi
 }
 
@@ -42,7 +63,7 @@ test 'echo <<< newtest.txt'
 test '||'
 echo 
 
-# ---- BUILTIN TESTS ----
+# # ---- BUILTIN TESTS ----
 # ECHO (+ a bit of QUOTES and ENV EXPANSION)
 printf " $PINK Echo \n $RESET "
 test 'echo '
@@ -71,7 +92,7 @@ test 'echo salut $myu "dssdsi$HOLA user $USER"'
 test 'echo $=HOME'
 test 'echo $'USER' '
 test 'echo $HOME "test with many         many       spaces"'
-# test 'echo "     " '|''
+test 'echo' '"     "' ' |'
 test 'echo "buenos dias    "$"USER $HOME teeest ||| "'
 test 'echo "buenos dias    '$'USER $HOME teeest ||| "'
 echo
@@ -86,6 +107,8 @@ test 'cd ~/Documents | pwd'
 test 'cd non_existent_path'
 test 'cd too many arguments'
 test 'cd ../../../../../../../../../../../../../ | pwd'
+test 'cd ..///..'
+test 'cd ../\//..'
 echo
 
 # PWD
@@ -98,6 +121,7 @@ echo
 # EXPORT (+ a bit of ENV EXPANSION)
 printf " $BLUE EXPORT \n $RESET "
 test 'export'
+test 'export a | export'
 test 'export 1test'
 test 'export 1foo=bar =bar = '
 test 'export test=ok | env | sort | grep test'
@@ -150,7 +174,7 @@ test 'export test=1 | exit $test'
 echo
 
 # ---- PIPE TESTS ----
-printf " $ORANGE PIPE TESTS \n $RESET "
+printf " $PURPLE PIPE TESTS \n $RESET "
 # EMPTY COMMAND
 test ''
 
@@ -162,13 +186,14 @@ test 'env | sort | grep pwd > result.txt'
 test 'ls | ls | ls | ls | ls'
 
 # CHECK THAT THERE IS ONE PROCESS PER COMMAND
-test 'sleep 3 | sleep 3 | sleep 3'
+test 'time sleep 3 | sleep 3 | sleep 3'
 echo
 
 # ---- REDIR TESTS ----
 # REDIR_IN
 
 # REDIR_OUT
+test ''
 
 # APPEND
 
