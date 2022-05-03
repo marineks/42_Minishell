@@ -6,17 +6,14 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:13:56 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/03 12:00:45 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/03 15:11:38 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_line_in_submode(char *line, char *delimiter)
+static char	*get_line_in_submode(char *line, char *delimiter, char *str)
 {
-	char	*str;
-
-	str = NULL;
 	while (line)
 	{
 		free(line);
@@ -36,6 +33,8 @@ static char	*get_line_in_submode(char *line, char *delimiter)
 			str = ft_strjoin(str, line);
 		}	
 	}
+	if (str == NULL)
+		return (ft_strdup("\n"));
 	str = ft_strjoin(str, "\n");
 	free(line);
 	return (str);
@@ -51,7 +50,7 @@ static char	*stock_buffer(t_token **tk_lst)
 	tmp = *tk_lst;
 	line = (char *)malloc(sizeof(char));
 	delimiter = tmp->next->str;
-	str = get_line_in_submode(line, delimiter);
+	str = get_line_in_submode(line, delimiter, NULL);
 	return (str);
 }
 
