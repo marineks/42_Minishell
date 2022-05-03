@@ -31,7 +31,10 @@ int		tokenize_var(t_data *data);
 void	create_cmds(t_data *data, t_token *token);
 // 02_PARSER --- 01_parse_word.c
 void	parse_word(t_cmd **cmd, t_token **tk_lst);
-// 02_PARSER --- 02_fill_flags.c
+// 02_PARSER --- 02_00_fill_flags_echo.c
+int		add_flags_in_echo_mode(t_token **tk_node, t_cmd *last_cmd);
+int		create_flags_in_echo_mode(t_token **tk_node, t_cmd *last_cmd);
+// 02_PARSER --- 02_00_fill_flags_default.c
 int		fill_flags(t_token	**tk_node, t_cmd *last_cmd);
 // 02_PARSER --- 03_parse_heredoc.c
 int		parse_heredoc(t_data *data, t_token **tk_lst);
