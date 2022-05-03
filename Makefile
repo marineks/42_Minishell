@@ -46,7 +46,8 @@ SRCS = main.c 											\
 	01_expander/06_tokenize_var.c 						\
 	02_parser/00_create_cmds.c							\
 	02_parser/01_parse_word.c							\
-	02_parser/02_fill_flags.c							\
+	02_parser/02_00_fill_flags_echo.c					\
+	02_parser/02_01_fill_flags_default.c 				\
 	02_parser/03_parse_heredoc.c						\
 	02_parser/04_parse_redir_in.c 						\
 	02_parser/05_parse_redir_out.c 						\
@@ -60,7 +61,9 @@ SRCS = main.c 											\
 	03_builtins/04_unset.c 								\
 	03_builtins/05_env.c 								\
 	03_builtins/06_exit.c 								\
-	04_exec/exec.c										\
+	04_exec/exec_builtin.c								\
+	04_exec/exec_processes.c							\
+	04_exec/exec.c 										\
 	05_utils/execve_functions/00_execve_infos.c			\
 	05_utils/execve_functions/01_convert_env.c			\
 	05_utils/execve_functions/02_get_path.c				\

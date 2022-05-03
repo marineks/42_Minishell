@@ -31,7 +31,10 @@ int		tokenize_var(t_data *data);
 void	create_cmds(t_data *data, t_token *token);
 // 02_PARSER --- 01_parse_word.c
 void	parse_word(t_cmd **cmd, t_token **tk_lst);
-// 02_PARSER --- 02_fill_flags.c
+// 02_PARSER --- 02_00_fill_flags_echo.c
+int		add_flags_in_echo_mode(t_token **tk_node, t_cmd *last_cmd);
+int		create_flags_in_echo_mode(t_token **tk_node, t_cmd *last_cmd);
+// 02_PARSER --- 02_00_fill_flags_default.c
 int		fill_flags(t_token	**tk_node, t_cmd *last_cmd);
 // 02_PARSER --- 03_parse_heredoc.c
 int		parse_heredoc(t_data *data, t_token **tk_lst);
@@ -67,13 +70,16 @@ int		get_env(t_cmd *cmd, t_env **env);
 // 03_BUILTINS --- 06_exit.c
 int		exit_minishell(t_data *data, t_cmd *cmd);
 
-// 04_EXEC --- convert_env.c
-char	**convert_env_copy_to_array(t_env *env);
+// 04_EXEC --- exec_builtin.c
+void	close_fd_one_builtin(t_cmd *cmd);
+int		exec_one_builtin(t_data *data, t_cmd *cmd);
+int		exec_builtin_with_pipe(t_data *data, t_cmd *cmd);
+// 04_EXEC --- exec_processes.c
+void	child_process(t_data *data, t_cmd *cmd, int *tube_fd);
+void	parent_process(t_cmd *cmd, int *tube_fd);
 // 04_EXEC --- exec.c
+void	redir_in_out(t_cmd *cmd, int *tube_fd);
 int		exec(t_data *data);
-// int		exec(t_data *data, t_cmd *cmd_lst, int pipe_fd_in);
-// 04_EXEC --- get_path.c
-char	*grep_path(char *envp[], char *cmd);
 
 // 05_UTILS --- amsterdam.c
 void	escape_to_amsterdam(t_data *data);
