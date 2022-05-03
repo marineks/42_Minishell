@@ -1,15 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   03_parse_heredoc.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/03 11:13:56 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/03 12:00:45 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static char *stock_buffer(t_token **tk_lst)
+static char	*get_line_in_submode(char *line, char *delimiter)
 {
-	t_token	*tmp;
-	char	*line;
 	char	*str;
-	char	*delimiter;
 
-	tmp = *tk_lst;
-	line = (char *)malloc(sizeof(char));
-	delimiter = tmp->next->str;
 	str = NULL;
 	while (line)
 	{
@@ -18,10 +24,10 @@ static char *stock_buffer(t_token **tk_lst)
 		if (!line)
 		{
 			ft_putchar_fd('\n', STDERR_FILENO);
-			break;
+			break ;
 		}
 		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == SUCCESS)
-			break;
+			break ;
 		if (!str)
 			str = ft_strdup(line);
 		else
@@ -35,66 +41,59 @@ static char *stock_buffer(t_token **tk_lst)
 	return (str);
 }
 
-int parse_heredoc(t_data *data, t_token **tk_lst)
+static char	*stock_buffer(t_token **tk_lst)
+{
+	t_token	*tmp;
+	char	*line;
+	char	*str;
+	char	*delimiter;
+
+	tmp = *tk_lst;
+	line = (char *)malloc(sizeof(char));
+	delimiter = tmp->next->str;
+	str = get_line_in_submode(line, delimiter);
+	return (str);
+}
+
+static char	*heredoc_child_proc(int *pipe_fds, t_token **tk_lst, t_data *data)
+{
+	char	*buffer;
+
+	interpret_signal(HEREDOC_MODE, NULL);
+	close(pipe_fds[READ]);
+	buffer = stock_buffer(tk_lst);
+	write(pipe_fds[WRITE], buffer, ft_strlen(buffer) + 1);
+	close(pipe_fds[WRITE]);
+	free(buffer);
+	escape_to_brazil(data);
+	exit(g_exit_status);
+}
+
+static void	heredoc_parent_proc(t_data *data, int *pipe_fds)
+{
+	wait(NULL);
+	close(pipe_fds[WRITE]);
+	data->cmd->infos.fd_in = pipe_fds[READ];
+}
+
+int	parse_heredoc(t_data *data, t_token **tk_lst)
 {
 	pid_t	pid;
 	int		pipe_fds[2];
-	int		status;
-	char	*buffer;
 	t_token	*tmp;
-	t_data	heredoc;
 
 	data->cmd->infos.redir_in = true;
 	if (pipe(pipe_fds) == -1)
-	{
-		perror("Pipe");
 		return (FAILURE);
-	}
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == -1)
-	{
-		perror("Fork");
 		return (FAILURE);
-	}
 	else if (pid == 0)
-	{
-		ft_memset(&heredoc, 0, sizeof(t_data));
-		init_data(&heredoc, convert_env_copy_to_array(data->env_copy));
-		interpret_signal(HEREDOC_MODE, NULL);
-		close(pipe_fds[READ]);
-		buffer = stock_buffer(tk_lst);
-		// tokenize(&heredoc, buffer);
-		// specify(&heredoc.token);
-		// expand_tokens(&heredoc, &heredoc.token);
-		// handle_quotes(&heredoc);
-		// free(buffer);
-		// buffer = NULL;
-		// tmp = heredoc.token;
-		// while (tmp->next)
-		// {
-		// 	if (!buffer)
-		// 		buffer = ft_strdup(tmp->str);
-		// 	else
-		// 		buffer = ft_strjoin(buffer, tmp->str);
-		// 	buffer = ft_strjoin(buffer, "\n");
-		// 	tmp = tmp->next;
-		// }
-		write(pipe_fds[WRITE], buffer, ft_strlen(buffer) + 1);
-		close(pipe_fds[WRITE]);
-		free(buffer);
-		free_double_array(heredoc.envp);
-		escape_to_brazil(&heredoc);
-		escape_to_brazil(data);
-		exit(g_exit_status);
-	}
+		heredoc_child_proc(pipe_fds, tk_lst, data);
 	else
-	{
-		wait(NULL);
-		close(pipe_fds[WRITE]);
-		data->cmd->infos.fd_in = pipe_fds[READ];
-	}
+		heredoc_parent_proc(data, pipe_fds);
 	tmp = *tk_lst;
 	if (tmp->next->next)
 		tmp = tmp->next->next;
