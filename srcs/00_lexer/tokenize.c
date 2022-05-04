@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 12:54:12 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/04 14:18:36 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/04 15:41:02 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	tokenize(t_data *data, char *line)
 	int	i;
 	int	end;
 	int	start;
-	int	type;
 	int	state;
 
 	i = 0;

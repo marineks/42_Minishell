@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:46:57 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/02 16:47:28 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/04 16:05:05 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	change_directory(t_cmd *cmd, t_env **env)
 	{
 		if (cmd->infos.flags[1])
 			return (too_many_arg_err());
-		if (ft_strcmp(cmd->infos.flags[0], "~") == SUCCESS)
+		else if (ft_strcmp(cmd->infos.flags[0], "~") == SUCCESS)
 			path = find_home_path(*env);
 		else
 			path = ft_strdup(cmd->infos.flags[0]);
@@ -105,6 +105,7 @@ int	change_directory(t_cmd *cmd, t_env **env)
 	if (chdir(path) != 0)
 	{
 		cmd->infos.err_msg = ft_strdup(strerror(errno));
+		free(path);
 		return (display_chdir_errno(cmd->infos.err_msg, cmd->infos.flags[0]));
 	}
 	free(path);
