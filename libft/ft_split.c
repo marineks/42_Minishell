@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 16:58:10 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/01/09 19:10:38 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/04 16:14:21 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	**ft_split(char const *str, char set)
 	char	**new_tab;
 	size_t	i;
 
-	if (!str)
+	if (!str || !(*str))
 		return (NULL);
 	string_count = ft_new_string_count(str, set);
 	if (string_count == 0)

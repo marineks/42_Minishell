@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 17:08:40 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/04 13:19:30 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/04 16:18:44 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ static int	get_right_index(char *envp[])
 	while (envp[index])
 	{
 		if (ft_strncmp(envp[index], "PATH=", 4) == SUCCESS)
-			break ;
+			return (index);
 		index++;
 	}
-	return (index);
+	return (-1);
 }
 
 // faire fonction pour récup le file de la cmd (en gros strjoin du chemin 
@@ -77,6 +77,8 @@ char	*grep_path(char *envp[], char *cmd)
 	if (ft_strchr(cmd, '/'))
 		return (ft_strdup(cmd));
 	i = get_right_index(envp);
+	if (i == -1)
+		return (NULL);
 	path_tab = ft_split(envp[i] + 5, ':');
 	i = 0;
 	while (path_tab[i] != NULL)
