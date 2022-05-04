@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   03.00_export.c                                     :+:      :+:    :+:   */
+/*   03_00_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 15:25:48 by tmanolis          #+#    #+#             */
-/*   Updated: 2022/05/03 17:39:51 by tmanolis         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:50:45 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,7 @@ static void	add_var_to_env(t_data *data, char *line, char *var, char *val)
 	add_var_to_export(&data->env_export, ft_strdup(line), ft_strdup(var), \
 	ft_strdup(val));
 	if (ft_strchr(line, '=') == NULL)
-	{
-		free(var);
-		free(val);
-		return ;
-	}
+		return (free_var_and_val(var, val));
 	if (find_str(val, "$?") == SUCCESS)
 		val = replace_exit_status(val);
 	if (is_var_already_exported(data->env_copy, var) == FAILURE)

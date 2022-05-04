@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   03.01_export_utils.c                               :+:      :+:    :+:   */
+/*   03_01_export_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 15:34:08 by tmanolis          #+#    #+#             */
-/*   Updated: 2022/05/03 15:52:44 by tmanolis         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:50:48 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,10 @@ bool	export_err_msg(char *line)
 	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 	g_exit_status = 1;
 	return (true);
+}
+
+void	free_var_and_val(char *var, char *val)
+{
+	free(var);
+	free(val);
 }

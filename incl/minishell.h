@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 13:01:15 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/04 13:30:18 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:46:47 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int		export_new_var(t_data *data, t_cmd *cmd, t_env **env_exp);
 bool	export_err_msg(char *line);
 int		is_var_already_exported(t_env *env, char *var_name);
 bool	is_a_valid_identifier(char *line);
+void	free_var_and_val(char *var, char *val);
 // 03_BUILTINS --- 04_unset.c
 int		unset_variable(t_data *data, t_cmd *cmd);
 // 03_BUILTINS --- 05_env.c
