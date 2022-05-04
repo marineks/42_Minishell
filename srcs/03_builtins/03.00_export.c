@@ -1,83 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   03.00_export.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/03 15:25:48 by tmanolis          #+#    #+#             */
+/*   Updated: 2022/05/03 17:39:51 by tmanolis         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-
-int	var_exists(t_env *env, char *var_name)
-{
-	t_env	*tmp;
-
-	tmp = env;
-	while (tmp)
-	{
-		if (ft_strcmp(tmp->var_name, var_name) == SUCCESS)
-			return (SUCCESS);
-		tmp = tmp->next;
-	}
-	return (FAILURE);
-}
-
-static void	add_var_to_export(t_env **env_exp, char *line, char *var, char *val)
-{
-	t_env	*tmp;
-
-	tmp = *env_exp;
-	if (find_str(val, "$?") == SUCCESS)
-		val = replace_exit_status(val); // si leaks il faut free val avant
-	if (var_exists(*env_exp, var) == FAILURE)
-		ft_lstadd_back_env(env_exp, ft_lstnew_env(line, var, val));
-	else
-	{
-		while (tmp->next)
-		{
-			if (ft_strcmp(var, tmp->var_name) == SUCCESS)
-				break;
-			tmp = tmp->next;
-		}
-		free(tmp->line);
-		if (tmp->var_value)
-			free(tmp->var_value);
-		tmp->line = line;
-		tmp->var_value = val;
-		free(var);
-	}
-}
-
-static void	add_var_to_env(t_data *data, char *line, char *var, char *val)
-{
-	t_env	*tmp;
-
-	tmp = data->env_copy;
-	add_var_to_export(&data->env_export, ft_strdup(line), ft_strdup(var), ft_strdup(val));
-	if (ft_strchr(line, '=') == NULL)
-	{
-		free(var);
-		free(val);
-		return ;
-	}
-	if (find_str(val, "$?") == SUCCESS)
-		val = replace_exit_status(val);
-	if (var_exists(data->env_copy, var) == FAILURE)
-		ft_lstadd_back_env(&data->env_copy, ft_lstnew_env(ft_strdup(line), var, val));
-	else
-	{
-		while (tmp->next)
-		{
-			if (ft_strcmp(var, tmp->var_name) == SUCCESS)
-				break;
-			tmp = tmp->next;
-		}
-		free(tmp->line);
-		free(tmp->var_value);
-		tmp->line = ft_strdup(line);
-		tmp->var_value = val;
-		free(var);
-	}
-}
 
 static void	manage_export_alone(t_cmd *cmd, t_env **env_export)
 {
 	t_env	*tmp;
 
+	sort_export(*env_export);
 	tmp = *env_export;
-	sort_export(tmp);
 	if (!cmd->infos.flags)
 	{
 		while (tmp)
@@ -94,6 +34,71 @@ static void	manage_export_alone(t_cmd *cmd, t_env **env_export)
 				ft_putchar_fd('\n', cmd->infos.fd_out);
 			tmp = tmp->next;
 		}
+	}
+}
+
+static void	add_var_to_export(t_env **env_exp, char *line, char *var, char *val)
+{
+	t_env	*tmp;
+
+	tmp = *env_exp;
+	if (find_str(val, "$?") == SUCCESS)
+		val = replace_exit_status(val);
+	if (is_var_already_exported(*env_exp, var) == FAILURE)
+		ft_lstadd_back_env(env_exp, ft_lstnew_env(line, var, val));
+	else
+	{
+		while (tmp->next)
+		{
+			if (ft_strcmp(var, tmp->var_name) == SUCCESS)
+				break ;
+			tmp = tmp->next;
+		}
+		free(tmp->line);
+		if (tmp->var_value)
+			free(tmp->var_value);
+		tmp->line = line;
+		tmp->var_value = val;
+		free(var);
+	}
+}
+
+static void	clean_and_replace_var(t_env *tmp, char *line, char *var, char *val)
+{
+	free(tmp->line);
+	free(tmp->var_value);
+	tmp->line = ft_strdup(line);
+	tmp->var_value = val;
+	free(var);
+}
+
+static void	add_var_to_env(t_data *data, char *line, char *var, char *val)
+{
+	t_env	*tmp;
+
+	tmp = data->env_copy;
+	add_var_to_export(&data->env_export, ft_strdup(line), ft_strdup(var), \
+	ft_strdup(val));
+	if (ft_strchr(line, '=') == NULL)
+	{
+		free(var);
+		free(val);
+		return ;
+	}
+	if (find_str(val, "$?") == SUCCESS)
+		val = replace_exit_status(val);
+	if (is_var_already_exported(data->env_copy, var) == FAILURE)
+		ft_lstadd_back_env(&data->env_copy, ft_lstnew_env(ft_strdup(line), \
+		var, val));
+	else
+	{
+		while (tmp->next)
+		{
+			if (ft_strcmp(var, tmp->var_name) == SUCCESS)
+				break ;
+			tmp = tmp->next;
+		}
+		clean_and_replace_var(tmp, line, var, val);
 	}
 }
 
@@ -129,7 +134,7 @@ static void	manage_export_alone(t_cmd *cmd, t_env **env_export)
 int	export_new_var(t_data *data, t_cmd *cmd, t_env **env_exp)
 {
 	int		i;
-	bool	error_occured; 
+	bool	error_occured;
 
 	i = 0;
 	error_occured = false;
@@ -137,8 +142,8 @@ int	export_new_var(t_data *data, t_cmd *cmd, t_env **env_exp)
 	while (cmd->infos.flags && cmd->infos.flags[i])
 	{
 		if (is_a_valid_identifier(cmd->infos.flags[i]) == true)
-			add_var_to_env(data, cmd->infos.flags[i],\
-			call_me_by_your_name(cmd->infos.flags[i]),\
+			add_var_to_env(data, cmd->infos.flags[i], \
+			call_me_by_your_name(cmd->infos.flags[i]), \
 			call_me_by_your_value(cmd->infos.flags[i]));
 		else
 			error_occured = export_err_msg(cmd->infos.flags[i]);
@@ -148,32 +153,4 @@ int	export_new_var(t_data *data, t_cmd *cmd, t_env **env_exp)
 		return (FAILURE);
 	g_exit_status = 0;
 	return (SUCCESS);
-}
-
-/**
- * @brief Checks if the variable given is a valid variable according to 
- * 		  POSIX standards.
- * 
- * 			Examples where the line is not a valid identifier:
- * 			- The variable begins by a digit (export 1test=foo);
- * 			- The variable begins by the char '=' (export =foo).
- * 
- * @param line The variable to check
- */
-bool	is_a_valid_identifier(char *line)
-{
-	if (line[0] >= '0' && line[0] <= '9')
-		return (false);
-	else if (line[0] == '=')
-		return (false);
-	return (true);
-}
-
-bool	export_err_msg(char *line)
-{
-	ft_putstr_fd("bash: export: `", STDERR_FILENO);
-	ft_putstr_fd(line, STDERR_FILENO);
-	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
-	g_exit_status = 1;
-	return (true);
 }

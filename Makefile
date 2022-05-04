@@ -56,7 +56,8 @@ SRCS = main.c 											\
 	03_builtins/00_echo.c 								\
 	03_builtins/01_cd.c 								\
 	03_builtins/02_pwd.c 								\
-	03_builtins/03_export.c 							\
+	03_builtins/03.00_export.c 							\
+	03_builtins/03.01_export_utils.c 					\
 	03_builtins/04_unset.c 								\
 	03_builtins/05_env.c 								\
 	03_builtins/06_exit.c 								\
