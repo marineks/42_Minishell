@@ -35,6 +35,7 @@ INC_PATH = ./incl/minishell.h
 #########################################
 SRCS = main.c 											\
 	00_lexer/tokenize.c									\
+	00_lexer/tokenize_utils.c 							\
 	00_lexer/specify_token.c							\
 	00_lexer/grammar.c 									\
 	01_expander/00_expand_token.c   					\
