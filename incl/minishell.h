@@ -6,7 +6,7 @@
 /*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 13:01:15 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/04 13:46:47 by tmanolis         ###   ########.fr       */
+/*   Updated: 2022/05/04 15:18:03 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,11 @@ int		change_directory(t_cmd *cmd, t_env **env);
 // 03_BUILTINS --- 02_pwd.c
 char	*grep_value(t_env *env, char *var_name);
 void	get_pwd(t_cmd *cmd, t_env *env);
-// 03_BUILTINS --- 03.00_export.c
+// 03_BUILTINS --- 03_00_export.c
 int		export_new_var(t_data *data, t_cmd *cmd, t_env **env_exp);
-// 03_BUILTINS --- 03.01_export_utils.c
+// 03_BUILTINS --- 03_01_sort_export.c
+void	sort_export(t_env *env_export);
+// 03_BUILTINS --- 03_02_export_utils.c
 bool	export_err_msg(char *line);
 int		is_var_already_exported(t_env *env, char *var_name);
 bool	is_a_valid_identifier(char *line);
@@ -103,7 +105,6 @@ void	escape_to_brazil(t_data *data);
 // 05_UTILS --- init_struct.c
 char	*call_me_by_your_name(char *line);
 char	*call_me_by_your_value(char *line);
-void	sort_export(t_env *env_export);
 int		init_data(t_data *data, char *envp[]);
 // 05_UTILS --- sig_handlers.c
 void	handle_basic(int signum);
