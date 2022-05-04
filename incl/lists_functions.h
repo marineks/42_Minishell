@@ -4,13 +4,13 @@
 # include "structs.h"
 
 // 05_UTILS // lists_functions --- cmd_list_functions.c
-t_cmd	*ft_lstnew_cmd(bool value);
-void	ft_lstadd_back_cmd(t_cmd **alst, t_cmd *new_node);
 void	free_matrix(char **tab);
 void	ft_lstdelone_cmd(t_cmd *lst, void (*del)(void *));
 void	ft_lstclear_cmd(t_cmd **lst, void (*del)(void *));
+// 05_UTILS // lists_functions --- cmd_list_functions.c
+t_cmd	*ft_lstnew_cmd(bool value);
+void	ft_lstadd_back_cmd(t_cmd **alst, t_cmd *new_node);
 t_cmd	*ft_lstlast_cmd(t_cmd *cmd);
-void	print_cmd(t_cmd *lst);
 
 // 05_UTILS // lists_functions --- env_list_functions.c
 t_env	*ft_lstnew_env(char *line, char *name, char *value);

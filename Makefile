@@ -67,6 +67,7 @@ SRCS = main.c 											\
 	05_utils/execve_functions/01_convert_env.c			\
 	05_utils/execve_functions/02_get_path.c				\
 	05_utils/execve_functions/03_create_cmd_array.c		\
+	05_utils/lists_functions/cmd_list_free_functions.c	\
 	05_utils/lists_functions/cmd_list_functions.c		\
 	05_utils/lists_functions/env_list_functions.c 		\
 	05_utils/lists_functions/token_list_functions.c		\
