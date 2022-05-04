@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_list_functions.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/04 12:48:40 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/04 12:48:46 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 t_token	*ft_lstnew_token(char *str, int type, int state)
@@ -55,51 +67,5 @@ void	ft_lstclear_token(t_token **lst, void (*del)(void *))
 		tmp = (*lst)->next;
 		ft_lstdelone_token(*lst, del);
 		*lst = tmp;
-	}
-}
-
-t_token	*insert_lst_between(t_token **head, t_token *to_del, t_token *insert)
-{
-	t_token	*tmp;
-
-	tmp = *head;
-	if (tmp == NULL)
-		*head = insert;
-	else if (tmp == to_del)
-	{
-		*head = insert;
-		insert->next = tmp->next;
-		if (tmp->next != NULL)
-			tmp->next->prev = insert;
-	}
-	else
-	{
-		while (tmp != to_del)
-			tmp = tmp->next;
-		insert->prev = tmp->prev;
-		tmp->prev->next = insert;
-		while (insert->next)
-			insert = insert->next;
-		tmp->next->prev = insert;
-		insert->next = tmp->next;
-	}
-	free(to_del->str);
-	free(to_del);
-	return (insert);
-}
-
-void	print_token(t_token *lst)
-{
-	t_token *tmp;
-	
-	int i = 0;
-	printf("lst = %p\n", lst);
-	tmp = lst;
-	while (tmp)
-	{
-		printf("NODE : %d - TYPE : %d - STATE : %d - Str: |%s|\n", i, tmp->type, tmp->state, tmp->str);
-		printf("----------------------------------------------------------\n");
-		tmp = tmp->next;
-		i++;
 	}
 }

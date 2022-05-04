@@ -51,3 +51,19 @@ void	print_cmd(t_cmd *lst)
 		i++;
 	}
 }
+
+void	print_token(t_token *lst)
+{
+	t_token *tmp;
+	
+	int i = 0;
+	printf("lst = %p\n", lst);
+	tmp = lst;
+	while (tmp)
+	{
+		printf("NODE : %d - TYPE : %d - STATE : %d - Str: |%s|\n", i, tmp->type, tmp->state, tmp->str);
+		printf("----------------------------------------------------------\n");
+		tmp = tmp->next;
+		i++;
+	}
+}

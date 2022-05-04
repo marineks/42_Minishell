@@ -72,6 +72,7 @@ SRCS = main.c 											\
 	05_utils/lists_functions/cmd_list_functions.c		\
 	05_utils/lists_functions/env_list_functions.c 		\
 	05_utils/lists_functions/token_list_functions.c		\
+	05_utils/lists_functions/token_list_insert_funct.c	\
 	05_utils/signals/sig_handlers.c 					\
 	05_utils/signals/signals.c 							\
 	05_utils/amsterdam.c								\

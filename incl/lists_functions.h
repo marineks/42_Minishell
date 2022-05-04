@@ -24,7 +24,7 @@ t_token	*ft_lstnew_token(char *str, int type, int state);
 void	ft_lstadd_back_token(t_token **alst, t_token *new_node);
 void	ft_lstdelone_token(t_token *lst, void (*del)(void *));
 void	ft_lstclear_token(t_token **lst, void (*del)(void *));
+// 05_UTILS // lists_functions --- token_list_insert_funct.c
 t_token	*insert_lst_between(t_token **head, t_token *to_del, t_token *insert);
-void	print_token(t_token *lst);
 
 #endif
