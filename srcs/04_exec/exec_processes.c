@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 15:29:28 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/04 13:37:15 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/04 15:29:47 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	child_process(t_data *data, t_cmd *cmd, int *tube_fd)
 	char	**array_copy;
 
 	exec = NULL;
-	if (!cmd->infos.cmd)
+	if (!cmd->infos.cmd || !cmd->infos.cmd[0])
 		exit_process(data, tube_fd, exec);
 	array_copy = convert_env_copy_to_array(data->env_copy);
 	path = grep_path(array_copy, cmd->infos.cmd);
