@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:09:00 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/04 11:36:17 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/04 11:41:50 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	g_exit_status;
 
-static void	set_up_readline(t_data *data)
+static void	set_up_readline_and_tokenize(t_data *data)
 {
 	interpret_signal(BASIC, NULL);
 	data->line = readline(PROMPT);
@@ -29,7 +29,7 @@ static void	set_up_readline(t_data *data)
 		printf("Issue in the tokenization\n");
 }
 
-static void	parse_and_execute(t_data *data)
+static void	continue_parsing_and_execute(t_data *data)
 {
 	expand_tokens(data, &data->token);
 	handle_quotes(data);
@@ -65,13 +65,13 @@ int	main(int argc, char **argv, char *envp[])
 		init_data(&data, envp);
 		while (1)
 		{
-			set_up_readline(&data);
+			set_up_readline_and_tokenize(&data);
 			if (specify(&data.token) == FAILURE)
 			{
 				escape_to_amsterdam(&data);
 				continue ;
 			}
-			parse_and_execute(&data);
+			continue_parsing_and_execute(&data);
 		}
 		escape_to_brazil(&data);
 	}	
