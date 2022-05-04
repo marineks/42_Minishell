@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/04 13:01:15 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/04 13:01:49 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include "libraries.h"
+# include "libraries.h"
+
 extern int	g_exit_status;
 
 // 00_LEXER --- tokenize.c
@@ -88,7 +101,7 @@ void	escape_to_brazil(t_data *data);
 // 05_UTILS --- init_struct.c
 char	*call_me_by_your_name(char *line);
 char	*call_me_by_your_value(char *line);
-void    sort_export(t_env *env_export);
+void	sort_export(t_env *env_export);
 int		init_data(t_data *data, char *envp[]);
 // 05_UTILS --- sig_handlers.c
 void	handle_basic(int signum);

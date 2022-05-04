@@ -1,8 +1,20 @@
-#ifndef ENUMS_H
-#define ENUMS_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enums.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/04 12:57:25 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/04 12:58:07 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#define PROMPT "🦊🐆\033[1;37m ~ Minishell : \033[0m"
-#define ENV_MSG "Pas de bras, pas de chocolat, pas de env, pas de Minishell\n"
+#ifndef ENUMS_H
+# define ENUMS_H
+
+# define PROMPT "🦊🐆\033[1;37m ~ Minishell : \033[0m"
+# define ENV_MSG "Pas de bras, pas de chocolat, pas de env, pas de Minishell\n"
 
 enum e_output
 {
@@ -36,14 +48,14 @@ enum e_pipesfd
 
 enum e_tk_types
 {
-	BLANK = 1, // whites spaces
-	WORD,	   // e.g. abc , "abc" , 'abc'
-	VAR,	   // e.g. $abc
-	PIPE,	   // e.g ' | '
-	REDIR_IN,  // e.g '<'
-	REDIR_OUT, // e.g '>'
-	HEREDOC,   // e.g '<<' (D stands for double)
-	APPEND,	   // e.g '>>'
+	BLANK = 1,
+	WORD,
+	VAR,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	HEREDOC,
+	APPEND,
 	END
 };
 
