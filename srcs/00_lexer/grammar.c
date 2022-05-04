@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:45:13 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/04 14:23:34 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/04 16:49:42 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ static int	check_consecutive_ops(t_token *tk_node)
 {
 	if (tk_node->next)
 	{
-		if (tk_node->type == REDIR_OUT && tk_node->next->type == PIPE)
-			return (FALSE);
-		if (tk_node->type >= 4 && tk_node->next
+		if ( tk_node->type >= 4 && tk_node->next->type == END)
+			return (TRUE);
+		if (tk_node->type > 4 && tk_node->next
 			&& (tk_node->next->type != WORD && tk_node->next->type != VAR))
+			return (TRUE);
+		if (tk_node->type >= 4 && tk_node->next->type == PIPE)
 			return (TRUE);
 		if ((tk_node->type >= 4 && tk_node->next->type == PIPE)
 			&& tk_node->next->type != END)
