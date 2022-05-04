@@ -21,6 +21,12 @@ extern int	g_exit_status;
 int		tokenize(t_data *data, char *line);
 int		specify(t_token **tk_list);
 int		check_ops_rule(t_token **tk_list);
+// 00_LEXER --- tokenize_utils.c
+int		which_state(int state, char *line, int i);
+int		is_separator(char *line, int i);
+int		stock_word(t_token **tk_list, char *line, int index, int start);
+int		stock_separator(t_token **tk_list, char *line, int index, int type);
+int		stock_as_word_or_sep(int *i, char *line, int start, t_data *data);
 
 // 01_EXPANDER --- 00_expand_token.c
 int		expand_tokens(t_data *data, t_token **tk_list);
