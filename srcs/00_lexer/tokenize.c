@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenize.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/04 12:54:12 by msanjuan          #+#    #+#             */
+/*   Updated: 2022/05/04 12:55:54 by msanjuan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -14,7 +25,7 @@
 **	for further inspection or processing.
 */
 
-int which_state(int state, char *line, int i)
+int	which_state(int state, char *line, int i)
 {
 	if (line[i] == '\'' && state == DEFAULT)
 		state = SIMPLE;
@@ -27,7 +38,7 @@ int which_state(int state, char *line, int i)
 	return (state);
 }
 
-int is_separator(char *line, int i)
+int	is_separator(char *line, int i)
 {
 	if (((line[i] > 8 && line[i] < 14) || line[i] == 32))
 		return (BLANK);
@@ -47,10 +58,10 @@ int is_separator(char *line, int i)
 		return (0);
 }
 
-int stock_word(t_token **tk_list, char *line, int index, int start)
+int	stock_word(t_token **tk_list, char *line, int index, int start)
 {
-	int i;
-	char *word;
+	int		i;
+	char	*word;
 
 	i = 0;
 	word = (char *)malloc(sizeof(char) * (index - start + 1));
@@ -67,10 +78,10 @@ int stock_word(t_token **tk_list, char *line, int index, int start)
 	return (SUCCESS);
 }
 
-int stock_separator(t_token **tk_list, char *line, int index, int type)
+int	stock_separator(t_token **tk_list, char *line, int index, int type)
 {
-	int i;
-	char *sep;
+	int		i;
+	char	*sep;
 
 	i = 0;
 	if (type == APPEND || type == HEREDOC)
@@ -110,13 +121,13 @@ int stock_separator(t_token **tk_list, char *line, int index, int type)
  *	- in order to do so, we first make sure that the separator is not inhibited
  *	  by quotes (states : SIMPLE or DOUBLE)
  */
-int tokenize(t_data *data, char *line)
+int	tokenize(t_data *data, char *line)
 {
-	int i;
-	int end;
-	int start;
-	int type;
-	int state;
+	int	i;
+	int	end;
+	int	start;
+	int	type;
+	int	state;
 
 	i = 0;
 	start = 0;
@@ -132,7 +143,8 @@ int tokenize(t_data *data, char *line)
 			{
 				if (i != 0 && is_separator(line, i - 1) == 0)
 					stock_word(&data->token, line, i, start);
-				if (type == APPEND || type == HEREDOC || type == PIPE || type == REDIR_IN || type == REDIR_OUT || type == END)
+				if (type == APPEND || type == HEREDOC || type == PIPE
+					|| type == REDIR_IN || type == REDIR_OUT || type == END)
 				{
 					stock_separator(&data->token, line, i, type);
 					if (type == APPEND || type == HEREDOC)
@@ -145,7 +157,7 @@ int tokenize(t_data *data, char *line)
 	}
 	if (state != DEFAULT)
 	{
-		printf("Unclosed quotes error\n");
+		printf("Minishell : syntax error : the quotes are unclosed\n");
 		return (FAILURE);
 	}
 	return (SUCCESS);

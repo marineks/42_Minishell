@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 17:20:27 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/03 17:19:25 by tmanolis         ###   ########.fr       */
+/*   Updated: 2022/05/04 12:53:23 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	sort_export(t_env *env_export)
 	char	*tmp_val;
 
 	current = env_export;
-	// next_node = current->next;
 	while (current != NULL)
 	{
 		next_node = current->next;
@@ -99,7 +98,6 @@ void	sort_export(t_env *env_export)
 			}
 			next_node = next_node->next;
 		}
-		// printf("next node : %p\n", next_node);
 		current = current->next;
 	}
 }
