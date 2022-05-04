@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list_functions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 17:15:45 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/02 17:16:16 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/04 20:24:44 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,9 @@ void	ft_lst_unset_env(t_env **lst, char *var_to_del)
 			tmp->next->prev = tmp->prev;
 	}
 	else
+	{
 		tmp->next->prev = NULL;
+		*lst = tmp->next;
+	}
 	ft_lstdelone_env(tmp, &free);
 }

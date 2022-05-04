@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_processes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 15:29:28 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/04 16:08:56 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/04 18:25:32 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	redir_fd_and_execve(t_cmd *cmd, int *tube_fd, t_exec *exec)
 		ft_putstr_fd(cmd->infos.cmd, STDERR_FILENO);
 		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 	}
-	g_exit_status = 126;
+	g_exit_status = 127;
 }
 
 static void	display_err_cmd_not_found(t_cmd *cmd)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:09:00 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/04 11:41:50 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/04 18:18:54 by tmanolis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	g_exit_status;
 
-static void	set_up_readline_and_tokenize(t_data *data)
+static int	set_up_readline_and_tokenize(t_data *data)
 {
 	interpret_signal(BASIC, NULL);
 	data->line = readline(PROMPT);
@@ -25,8 +25,9 @@ static void	set_up_readline_and_tokenize(t_data *data)
 		exit(130);
 	}
 	add_history(data->line);
-	if (tokenize(data, data->line) == FAILURE)
-		printf("Issue in the tokenization\n");
+	if (tokenize(data, data->line) != SUCCESS)
+		return (FAILURE);
+	return (SUCCESS);
 }
 
 static void	continue_parsing_and_execute(t_data *data)
@@ -65,7 +66,8 @@ int	main(int argc, char **argv, char *envp[])
 		init_data(&data, envp);
 		while (1)
 		{
-			set_up_readline_and_tokenize(&data);
+			if (set_up_readline_and_tokenize(&data) == FAILURE)
+				continue ;
 			if (specify(&data.token) == FAILURE)
 			{
 				escape_to_amsterdam(&data);
