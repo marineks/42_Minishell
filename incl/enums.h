@@ -2,6 +2,7 @@
 #define ENUMS_H
 
 #define PROMPT "🦊🐆\033[1;37m ~ Minishell : \033[0m"
+#define ENV_MSG "Pas de bras, pas de chocolat, pas de env, pas de Minishell\n"
 
 enum e_output
 {
