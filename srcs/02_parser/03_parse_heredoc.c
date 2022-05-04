@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:13:56 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/03 15:11:38 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/04 16:39:54 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int	parse_heredoc(t_data *data, t_token **tk_lst)
 		return (FAILURE);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGPIPE, SIG_IGN);
 	pid = fork();
 	if (pid == -1)
 		return (FAILURE);
