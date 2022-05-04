@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 13:01:15 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/04 13:01:49 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:30:18 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int		exit_minishell(t_data *data, t_cmd *cmd);
 void	close_fd_one_builtin(t_cmd *cmd);
 int		exec_one_builtin(t_data *data, t_cmd *cmd);
 int		exec_builtin_with_pipe(t_data *data, t_cmd *cmd);
+void	exit_process(t_data *data, int *tube_fd, t_exec *exec);
 // 04_EXEC --- exec_processes.c
 void	child_process(t_data *data, t_cmd *cmd, int *tube_fd);
 void	parent_process(t_cmd *cmd, int *tube_fd);

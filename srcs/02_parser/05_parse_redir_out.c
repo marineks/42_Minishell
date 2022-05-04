@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:05:13 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/02 16:05:26 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:13:56 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ char	*get_relative_path(char *file_to_open)
 	char	*path;
 	char	*res;
 
+	if (file_to_open[0] == '/')
+		return (ft_strdup(file_to_open));
 	path = ft_strdup("./");
 	res = ft_strjoin(path, file_to_open);
 	return (res);

@@ -6,38 +6,11 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 15:29:28 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/03 15:54:50 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:37:15 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	exit_process(t_data *data, int *tube_fd, t_exec *exec)
-{
-	t_cmd	*cmd;
-
-	cmd = data->cmd;
-	while (cmd)
-	{
-		if (cmd->infos.fd_in > STDIN_FILENO)
-			close(cmd->infos.fd_in);
-		if (cmd->infos.fd_out > STDOUT_FILENO)
-			close(cmd->infos.fd_out);
-		if (cmd->right)
-			cmd = cmd->right->right;
-		else
-			cmd = cmd->right;
-	}
-	if (tube_fd)
-	{
-		close(tube_fd[READ]);
-		close(tube_fd[WRITE]);
-	}
-	if (exec)
-		free_excve_infos(exec);
-	escape_to_brazil(data);
-	exit(g_exit_status);
-}
 
 static void	redir_fd_and_execve(t_cmd *cmd, int *tube_fd, t_exec *exec)
 {
@@ -59,6 +32,12 @@ static void	display_err_cmd_not_found(t_cmd *cmd)
 	g_exit_status = 127;
 }
 
+static void	exec_builtin(t_cmd *cmd, t_data *data, int *tube_fd)
+{
+	redir_in_out(cmd, tube_fd);
+	exec_builtin_with_pipe(data, cmd);
+}
+
 void	child_process(t_data *data, t_cmd *cmd, int *tube_fd)
 {
 	t_exec	*exec;
@@ -66,15 +45,14 @@ void	child_process(t_data *data, t_cmd *cmd, int *tube_fd)
 	char	**array_copy;
 
 	exec = NULL;
+	if (!cmd->infos.cmd)
+		exit_process(data, tube_fd, exec);
 	array_copy = convert_env_copy_to_array(data->env_copy);
 	path = grep_path(array_copy, cmd->infos.cmd);
 	if (cmd->infos.error)
 		g_exit_status = 1;
 	else if (cmd->infos.builtin == true)
-	{
-		redir_in_out(cmd, tube_fd);
-		exec_builtin_with_pipe(data, cmd);
-	}
+		exec_builtin(cmd, data, tube_fd);
 	else if (path)
 	{
 		exec = get_execve_infos(data, cmd);

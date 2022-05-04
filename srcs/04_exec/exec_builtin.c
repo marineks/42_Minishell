@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 15:26:55 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/03 15:34:58 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/04 13:30:00 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,31 @@ int	exec_builtin_with_pipe(t_data *data, t_cmd *cmd)
 		close(tmp_fd_out);
 	}
 	return (SUCCESS);
+}
+
+void	exit_process(t_data *data, int *tube_fd, t_exec *exec)
+{
+	t_cmd	*cmd;
+
+	cmd = data->cmd;
+	while (cmd)
+	{
+		if (cmd->infos.fd_in > STDIN_FILENO)
+			close(cmd->infos.fd_in);
+		if (cmd->infos.fd_out > STDOUT_FILENO)
+			close(cmd->infos.fd_out);
+		if (cmd->right)
+			cmd = cmd->right->right;
+		else
+			cmd = cmd->right;
+	}
+	if (tube_fd)
+	{
+		close(tube_fd[READ]);
+		close(tube_fd[WRITE]);
+	}
+	if (exec)
+		free_excve_infos(exec);
+	escape_to_brazil(data);
+	exit(g_exit_status);
 }
