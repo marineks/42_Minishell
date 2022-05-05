@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmanolis <tmanolis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:09:00 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/04 18:18:54 by tmanolis         ###   ########.fr       */
+/*   Updated: 2022/05/05 19:13:09 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ static int	set_up_readline_and_tokenize(t_data *data)
 	}
 	add_history(data->line);
 	if (tokenize(data, data->line) != SUCCESS)
+	{
+		free(data->line);
 		return (FAILURE);
+	}
 	return (SUCCESS);
 }
 
@@ -67,7 +70,11 @@ int	main(int argc, char **argv, char *envp[])
 		while (1)
 		{
 			if (set_up_readline_and_tokenize(&data) == FAILURE)
+			{
+				escape_to_amsterdam(&data);
 				continue ;
+			}
+				
 			if (specify(&data.token) == FAILURE)
 			{
 				escape_to_amsterdam(&data);

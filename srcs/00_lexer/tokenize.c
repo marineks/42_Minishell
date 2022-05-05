@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 12:54:12 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/04 15:41:02 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/05 19:12:47 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ int	tokenize(t_data *data, char *line)
 		i++;
 	}
 	if (state != DEFAULT)
+	{
+		free(data->line);
 		return (printf("Minishell : syntax error : the quotes are unclosed\n"));
+	}	
 	return (SUCCESS);
 }
