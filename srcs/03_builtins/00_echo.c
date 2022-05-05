@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:40:09 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/03 17:01:23 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/05 11:05:02 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ void	get_echo(t_cmd *cmd)
 
 	print_newline = true;
 	i = 0;
-	if (cmd->infos.flags && check_nl(cmd->infos.flags[i]) == SUCCESS)
+	while (cmd->infos.flags && cmd->infos.flags[i]
+		&& check_nl(cmd->infos.flags[i]) == SUCCESS)
 	{
 		print_newline = false;
 		i++;
