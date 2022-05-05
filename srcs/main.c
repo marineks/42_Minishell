@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:09:00 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/05 19:13:09 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/05 19:20:26 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ static int	set_up_readline_and_tokenize(t_data *data)
 	add_history(data->line);
 	if (tokenize(data, data->line) != SUCCESS)
 	{
-		free(data->line);
+		if (data->line)
+		{
+			free(data->line);
+			data->line = NULL;
+		}
 		return (FAILURE);
 	}
 	return (SUCCESS);
@@ -49,7 +53,7 @@ static int	check_envp_and_init(char *envp[], t_data *data)
 	if (*envp == NULL)
 	{
 		ft_putstr_fd(ENV_MSG, STDERR_FILENO);
-		return (-1);
+		exit(1);
 	}
 	g_exit_status = 0;
 	ft_memset(data, 0, sizeof(t_data));
