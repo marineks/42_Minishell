@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:46:58 by msanjuan          #+#    #+#             */
-/*   Updated: 2022/05/02 14:47:19 by msanjuan         ###   ########.fr       */
+/*   Updated: 2022/05/05 11:09:43 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ int	specify(t_token **tk_list)
 	t_token	*tmp;
 
 	tmp = *tk_list;
+	if (tmp->type == PIPE)
+	{
+		printf("Syntax error near unexpected token `%s'\n", tmp->str);
+		return (FAILURE);
+	}
 	while (tmp)
 	{
 		check_var_type(&tmp);
